@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Copy dotfiles
+sudo apt install stow
+stow .
+
 # Install zsh and plugins
 sudo apt install zsh
 sudo chsh --shell /bin/zsh $USER
@@ -26,5 +30,8 @@ fi
 
 # Install tmux and plugins using tpm
 sudo apt install tmux
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-sh ~/.tmux/plugins/tpm/bin/install_plugins
+TPM_PATH=$HOME/.tmux/plugins/tpm
+if [ ! -d $TPM_PATH ]; then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+bash ~/.tmux/plugins/tpm/bin/install_plugins
