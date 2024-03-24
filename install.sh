@@ -23,3 +23,8 @@ if [ ! -d $SYNTAX_PATH ]; then
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $SYNTAX_PATH
 fi
 
+
+# Install tmux and plugins using tpm
+sudo apt install tmux
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+sh ~/.tmux/plugins/tpm/bin/install_plugins
