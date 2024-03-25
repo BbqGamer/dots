@@ -52,8 +52,7 @@ set $right l
 set $term alacritty -e "tmux" "new-session" "-A" "-s" "main"
 set $menu fuzzel | xargs swaymsg exec --
 set $suspend systemctl suspend
-set $lock swaylock -ef -c $polar_dark
-
+set $lock swaylock -ef -c 2e3440
 
 ### IDLE
 exec swayidle -w timeout 600 '$lock' \
