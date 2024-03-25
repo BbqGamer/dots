@@ -17,6 +17,7 @@ SAVEHIST=1000000
 export PATH=/usr/local/bin:/usr/bin:/bin:~/.local/bin
 export FZF_DEFAULT_OPTS='--color=bg+:#5e81ac,gutter:#2e3440,pointer:#d8dee9'
 export XDG_CURRENT_DESKTOP=sway
+export EDITOR=vim
 
 # Enable colors in man pages
 export LESS_TERMCAP_mb=$'\E[01;32m'
