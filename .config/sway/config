@@ -20,6 +20,10 @@ exec rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
 # turn off bluetooth
 exec echo "power off" | bluetoothctl
 
+input type:keyboard {
+    xkb_layout "pl"
+}
+
 ### VARIABLES
 # Colors
 set $polar_dark    #2e3440
