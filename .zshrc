@@ -43,6 +43,7 @@ alias cls='clear'
 alias cz='chezmoi'
 alias t='todo.sh'
 alias gpt='terminalgpt'
+alias ssh='TERM=xterm-256color ssh'
 
 # Alias if you forget sudo for basic commands
 alias \
