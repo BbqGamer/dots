@@ -1,9 +1,5 @@
-[user]
-	email = "korba.adam@gmail.com"
-	name = "BbqGamer"
-
-[includeIf "gitdir:~/work/"]
-    path = ~/.gitconfig-work
+[include]
+    path = ~/.gituser
 
 [core]
 	editor = vim
