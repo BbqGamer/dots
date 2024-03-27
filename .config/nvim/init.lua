@@ -40,10 +40,12 @@ vim.opt.timeoutlen = 250
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
-vim.keymap.set("n", "<leader>e", vim.cmd.Ex)
-vim.keymap.set("n", "<leader>c", ":tabnew<CR>")
-vim.keymap.set("n", "<leader>|", ":vsplit<CR>")
-vim.keymap.set("n", "<leader>_", ":split<CR>")
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+vim.keymap.set("n", "<leader>c", vim.cmd.tabnew)
+vim.keymap.set("n", "<leader>|", vim.cmd.vsplit)
+vim.keymap.set("n", "<leader>_", vim.cmd.split)
 vim.keymap.set("n", "<leader>1", "1gt")
 vim.keymap.set("n", "<leader>2", "2gt")
 vim.keymap.set("n", "<leader>3", "3gt")
@@ -76,6 +78,18 @@ require("lazy").setup({
         end,
     },
     {
+        "nvim-tree/nvim-tree.lua",
+        version = "*",
+        lazy = false,
+        dependencies = {
+            "nvim-tree/nvim-web-devicons",
+        },
+        config = function()
+            vim.keymap.set("n", "<leader>e", vim.cmd.NvimTreeToggle)
+            require("nvim-tree").setup {}
+        end,
+    },
+    {
         "mbbill/undotree",
         init = function()
             vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
@@ -89,7 +103,7 @@ require("lazy").setup({
 
             -- Document existing key chains
             require("which-key").register({
-                ["<leader>s"] = { name = "[S]earch", _ = "which_key_ignore" },
+                ["<leader>p"] = { name = "Search", _ = "which_key_ignore" },
             })
         end,
     },
@@ -124,15 +138,15 @@ require("lazy").setup({
 
             -- See `:help telescope.builtin`
             local builtin = require("telescope.builtin")
-            vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
-            vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
-            vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
-            vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
-            vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
-            vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
-            vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
-            vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
-            vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+            vim.keymap.set("n", "<leader>ph", builtin.help_tags, { desc = "[H]elp" })
+            vim.keymap.set("n", "<leader>pk", builtin.keymaps, { desc = "[K]eymaps" })
+            vim.keymap.set("n", "<leader>pf", builtin.find_files, { desc = "[F]iles" })
+            vim.keymap.set("n", "<leader>ps", builtin.builtin, { desc = "[S]elect Telescope" })
+            vim.keymap.set("n", "<leader>pw", builtin.grep_string, { desc = "Current [W]ord" })
+            vim.keymap.set("n", "<leader>pg", builtin.live_grep, { desc = "[G]rep" })
+            vim.keymap.set("n", "<leader>pd", builtin.diagnostics, { desc = "[D]iagnostics" })
+            vim.keymap.set("n", "<leader>pr", builtin.resume, { desc = "[R]esume" })
+            vim.keymap.set("n", "<leader>p.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
             vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
 
             -- Slightly advanced example of overriding default behavior and theme
@@ -146,17 +160,17 @@ require("lazy").setup({
 
             -- It's also possible to pass additional configuration options.
             --  See `:help telescope.builtin.live_grep()` for information about particular keys
-            vim.keymap.set("n", "<leader>s/", function()
+            vim.keymap.set("n", "<leader>p/", function()
                 builtin.live_grep({
                     grep_open_files = true,
                     prompt_title = "Live Grep in Open Files",
                 })
-            end, { desc = "[S]earch [/] in Open Files" })
+            end, { desc = "[/] in Open Files" })
 
             -- Shortcut for searching your Neovim configuration files
-            vim.keymap.set("n", "<leader>sn", function()
+            vim.keymap.set("n", "<leader>pn", function()
                 builtin.find_files({ cwd = vim.fn.stdpath("config") })
-            end, { desc = "[S]earch [N]eovim files" })
+            end, { desc = "[N]eovim files" })
         end,
     },
     {
@@ -228,11 +242,14 @@ require("lazy").setup({
                 formatting = lsp_zero.cmp_format({ details = true }),
                 mapping = cmp.mapping.preset.insert({
                     ["<CR>"] = cmp.mapping.confirm({ select = true }),
+                    ['<C-y>'] = cmp.mapping.confirm { select = true },
                     ["<C-Space>"] = cmp.mapping.complete(),
                     ["<C-u>"] = cmp.mapping.scroll_docs(-4),
                     ["<C-d>"] = cmp.mapping.scroll_docs(4),
                     ["<C-f>"] = cmp_action.luasnip_jump_forward(),
                     ["<C-b>"] = cmp_action.luasnip_jump_backward(),
+                    ['<C-j>'] = cmp.mapping.select_next_item(),
+                    ['<C-k>'] = cmp.mapping.select_prev_item(),
                 }),
             })
         end,
