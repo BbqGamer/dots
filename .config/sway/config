@@ -130,6 +130,10 @@ bindsym $mod+Shift+c reload
 
 # Exit sway (logs you out of your Wayland session)
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+
+workspace 1 output HDMI-A-2 DP-4 DP-5
+workspace 2 output HDMI-A-2 DP-4 DP-5
+
 #
 # Moving around:
 #
