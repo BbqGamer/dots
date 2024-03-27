@@ -41,6 +41,13 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 
 vim.keymap.set("n", "<leader>e", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>c", ":tabnew<CR>")
+vim.keymap.set("n", "<leader>|", ":vsplit<CR>")
+vim.keymap.set("n", "<leader>_", ":split<CR>")
+vim.keymap.set("n", "<leader>1", "1gt")
+vim.keymap.set("n", "<leader>2", "2gt")
+vim.keymap.set("n", "<leader>3", "3gt")
+vim.keymap.set("n", "<leader>4", "4gt")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
