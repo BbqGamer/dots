@@ -74,3 +74,4 @@ SYNTAX_HIGHLIGHTING=$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.z
 [[ -f $HOME/.config/zsh-local ]] && source $HOME/.config/zsh-local 
 [[ -f $HOME/.env  ]] && source $HOME/.env
 
+[[ -f venv/bin/activate ]] && source venv/bin/activate
