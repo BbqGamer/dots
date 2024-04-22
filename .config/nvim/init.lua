@@ -212,6 +212,7 @@ require("lazy").setup({
 				python = { "isort", "black" },
 				yaml = { "yamlfmt" },
 				json = { "jq" },
+				tex = { "latexindent" },
 			},
 		},
 	},
