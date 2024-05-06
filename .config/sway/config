@@ -134,6 +134,9 @@ bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. 
 workspace 1 output HDMI-A-2 DP-4 DP-5
 workspace 2 output HDMI-A-2 DP-4 DP-5
 
+output DP-4 pos 0 0
+output eDP-1 pos 2560 0
+
 #
 # Moving around:
 #
