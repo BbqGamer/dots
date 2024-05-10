@@ -94,7 +94,7 @@ bindsym XF86MonBrightnessUp exec brightnessctl set 5%+ | sed -En 's/.*\(([0-9]+)
 
 # Screenshots (requires grim, slurp, swappy and wl-clipboard)
 bindsym Print exec grim -g "$(slurp)" -t png - | wl-copy -t image/png
-bindsym $mod+Print exec screenshot_menu 
+bindsym Ctrl+Print exec grim -g "$(slurp)" -t png - | swappy -f - -o - | wl-copy -t image/png
 
 # Run scripts
 bindsym $mod+x exec window_switcher
