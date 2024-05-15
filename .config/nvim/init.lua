@@ -85,6 +85,12 @@ require("lazy").setup({
 		end,
 	},
 	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		config = true,
+		opts = {},
+	},
+	{
 		"nvim-tree/nvim-tree.lua",
 		version = "*",
 		lazy = false,
