@@ -291,6 +291,13 @@ require("lazy").setup({
 					{ name = "path" },
 				},
 			})
+
+			cmp.setup.filetype({ "sql" }, {
+				sources = {
+					{ name = "vim-dadbod-completion" },
+					{ name = "buffer" },
+				},
+			})
 		end,
 	},
 	{ -- LSP Configuration & Plugins
@@ -373,4 +380,7 @@ require("lazy").setup({
 			})
 		end,
 	},
+	"tpope/vim-dadbod",
+	"kristijanhusak/vim-dadbod-ui",
+	"kristijanhusak/vim-dadbod-completion",
 })
