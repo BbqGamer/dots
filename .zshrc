@@ -6,13 +6,17 @@ if [[ -d $HOME/.zsh/pure ]]; then
 fi
 
 # Completions
-autoload -U compinit; compinit
 fpath=(~/repos/zsh-completions/src $fpath)
+autoload -U compinit; compinit
 
 #Environment variables
-HISTFILE="$HOME/.cache/zsh_history"
 HISTSIZE=1000000
-SAVEHIST=1000000
+HISTFILE="$HOME/.cache/zsh_history"
+SAVEHIST=$HISTSIZE
+setopt appendhistory
+setopt sharehistory
+
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}' # Case insensitive match
 
 export PATH=/usr/local/bin:/usr/bin:/bin:~/.local/bin
 export FZF_DEFAULT_OPTS='--color=bg+:#5e81ac,gutter:#2e3440,pointer:#d8dee9'
