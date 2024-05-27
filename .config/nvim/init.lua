@@ -40,8 +40,10 @@ vim.opt.timeoutlen = 250
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
+-- Disable netrw and set shortcut for opening links in the browser
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+vim.keymap.set("n", "gx", [[:silent execute '!firefox ' . shellescape(expand('<cfile>'), 1)<CR>]])
 
 vim.keymap.set("n", "<leader>c", vim.cmd.tabnew)
 vim.keymap.set("n", "<leader>|", vim.cmd.vsplit)
