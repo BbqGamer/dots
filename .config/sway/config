@@ -105,9 +105,13 @@ bindsym $mod+End exec $lock
 
 # Suspend (works even when locked by swaylock)
 bindsym --locked $mod+Shift+End exec $suspend
+# First disable PowerKey in '/etc/systemd/logind.conf' with 'HandlePowerKey=ignore'
+bindsym --locked XF86PowerOff exec $suspend
 
 # Toggle between activation of the main screen (works even when locked)
-bindsym --locked $mod+m exec swaymsg output "eDP-1" toggle
+bindsym --locked $mod+m exec swaymsg output eDP-1 toggle
+bindswitch lid:on output eDP-1 disable
+bindswitch lid:off output eDP-1 enable
 
 # Start terminal
 bindsym $mod+Return exec $term
@@ -131,8 +135,8 @@ bindsym $mod+Shift+c reload
 # Exit sway (logs you out of your Wayland session)
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
-workspace 1 output HDMI-A-2 DP-4 DP-5
-workspace 2 output HDMI-A-2 DP-4 DP-5
+workspace 1 output HDMI-A-2 DP-4 DP-5 DP-8 DP-9
+workspace 2 output HDMI-A-2 DP-4 DP-5 DP-8 DP-9
 
 output DP-4 pos 0 0
 output eDP-1 pos 2560 0
