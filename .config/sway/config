@@ -20,6 +20,9 @@ exec rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
 # turn off bluetooth
 exec echo "power off" | bluetoothctl
 
+# Automatic color temperature adjustment
+exec 'wlsunset -l 52.4 -L 16.9'
+
 input type:keyboard {
     xkb_layout "pl"
 }
@@ -237,3 +240,6 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
+
+for_window [app_id="pavucontrol"] floating enable
+
