@@ -138,10 +138,11 @@ bindsym $mod+Shift+c reload
 # Exit sway (logs you out of your Wayland session)
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
-workspace 1 output HDMI-A-2 DP-4 DP-5 DP-8 DP-9
-workspace 2 output HDMI-A-2 DP-4 DP-5 DP-8 DP-9
+set $monitor "Fujitsu Siemens Computers GmbH P27T-7 LED YV6F012604"
+workspace 1 output $monitor
+workspace 2 output $monitor
 
-output DP-4 pos 0 0
+output $monitor pos 0 0
 output eDP-1 pos 2560 0
 
 #
