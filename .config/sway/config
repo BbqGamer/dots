@@ -25,6 +25,8 @@ exec 'wlsunset -l 52.4 -L 16.9'
 
 input type:keyboard {
     xkb_layout "pl"
+    xkb_options altwin:swap_lalt_lwin
+
 }
 
 ### VARIABLES
@@ -101,7 +103,7 @@ bindsym Ctrl+Print exec grim -g "$(slurp)" -t png - | swappy -f - -o - | wl-copy
 
 # Run scripts
 bindsym $mod+x exec window_switcher
-bindsym Mod1+tab workspace back_and_forth
+bindsym Mod4+tab workspace back_and_forth
 
 # Lock screen
 bindsym $mod+End exec $lock
