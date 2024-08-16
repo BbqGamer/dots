@@ -79,3 +79,6 @@ SYNTAX_HIGHLIGHTING=$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.z
 [[ -f $HOME/.env  ]] && source $HOME/.env
 
 [[ -f venv/bin/activate ]] && source venv/bin/activate
+
+export GOPATH="$HOME/.go"
+export PATH="$GOPATH/bin:$PATH"
