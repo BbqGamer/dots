@@ -82,3 +82,6 @@ SYNTAX_HIGHLIGHTING=$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.z
 
 export GOPATH="$HOME/.go"
 export PATH="$GOPATH/bin:$PATH"
+
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent
