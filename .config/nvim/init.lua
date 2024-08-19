@@ -135,25 +135,13 @@ require("lazy").setup({
 		},
 		config = function()
 			require("oil").setup({})
-			vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+			vim.keymap.set("n", "-", "<CMD>Oil<CR>")
 		end,
 	},
 	{
 		"mbbill/undotree",
 		init = function()
 			vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
-		end,
-	},
-	{
-		"folke/which-key.nvim",
-		event = "VimEnter",
-		config = function()
-			require("which-key").setup()
-
-			-- Document existing key chains
-			require("which-key").register({
-				["<leader>p"] = { name = "Search", _ = "which_key_ignore" },
-			})
 		end,
 	},
 	{
@@ -187,16 +175,16 @@ require("lazy").setup({
 
 			-- See `:help telescope.builtin`
 			local builtin = require("telescope.builtin")
-			vim.keymap.set("n", "<leader>ph", builtin.help_tags, { desc = "[H]elp" })
-			vim.keymap.set("n", "<leader>pk", builtin.keymaps, { desc = "[K]eymaps" })
-			vim.keymap.set("n", "<leader>pf", builtin.find_files, { desc = "[F]iles" })
-			vim.keymap.set("n", "<leader>ps", builtin.builtin, { desc = "[S]elect Telescope" })
-			vim.keymap.set("n", "<leader>pw", builtin.grep_string, { desc = "Current [W]ord" })
-			vim.keymap.set("n", "<leader>pg", builtin.live_grep, { desc = "[G]rep" })
-			vim.keymap.set("n", "<leader>pd", builtin.diagnostics, { desc = "[D]iagnostics" })
-			vim.keymap.set("n", "<leader>pr", builtin.resume, { desc = "[R]esume" })
-			vim.keymap.set("n", "<leader>p.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-			vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
+			vim.keymap.set("n", "<leader>ph", builtin.help_tags)
+			vim.keymap.set("n", "<leader>pk", builtin.keymaps)
+			vim.keymap.set("n", "<leader>pf", builtin.find_files)
+			vim.keymap.set("n", "<leader>ps", builtin.builtin)
+			vim.keymap.set("n", "<leader>pw", builtin.grep_string)
+			vim.keymap.set("n", "<leader>pg", builtin.live_grep)
+			vim.keymap.set("n", "<leader>pd", builtin.diagnostics)
+			vim.keymap.set("n", "<leader>pr", builtin.resume)
+			vim.keymap.set("n", "<leader>p.", builtin.oldfiles)
+			vim.keymap.set("n", "<leader><leader>", builtin.buffers)
 
 			-- Slightly advanced example of overriding default behavior and theme
 			vim.keymap.set("n", "<leader>/", function()
@@ -205,7 +193,7 @@ require("lazy").setup({
 					winblend = 10,
 					previewer = false,
 				}))
-			end, { desc = "[/] Fuzzily search in current buffer" })
+			end)
 
 			-- It's also possible to pass additional configuration options.
 			--  See `:help telescope.builtin.live_grep()` for information about particular keys
@@ -214,12 +202,12 @@ require("lazy").setup({
 					grep_open_files = true,
 					prompt_title = "Live Grep in Open Files",
 				})
-			end, { desc = "[/] in Open Files" })
+			end)
 
 			-- Shortcut for searching your Neovim configuration files
 			vim.keymap.set("n", "<leader>pn", function()
 				builtin.find_files({ cwd = vim.fn.stdpath("config") })
-			end, { desc = "[N]eovim files" })
+			end)
 		end,
 	},
 	{
