@@ -85,3 +85,12 @@ export PATH="$GOPATH/bin:$PATH"
 
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+pyenv() {
+    # this is made so pyenv doesn't slow down zsh startup
+    # https://github.com/pyenv/pyenv/issues/2918#issuecomment-1977029534
+    eval "$(command pyenv init -)"
+    pyenv "$@"
+}
