@@ -11,7 +11,7 @@ autoload -U compinit; compinit
 
 #Environment variables
 HISTSIZE=1000000
-HISTFILE="$HOME/.cache/zsh_history"
+HISTFILE="$HOME/.zsh/zsh_history"
 SAVEHIST=$HISTSIZE
 setopt appendhistory
 setopt sharehistory
