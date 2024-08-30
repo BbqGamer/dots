@@ -161,7 +161,8 @@ require("lazy").setup({
 			{ "nvim-tree/nvim-web-devicons", enabled = true },
 		},
 		config = function()
-			require("telescope").setup({
+			local telescope = require("telescope")
+			telescope.setup({
 				extensions = {
 					["ui-select"] = {
 						require("telescope.themes").get_dropdown(),
@@ -177,10 +178,16 @@ require("lazy").setup({
 			local builtin = require("telescope.builtin")
 			vim.keymap.set("n", "<leader>ph", builtin.help_tags)
 			vim.keymap.set("n", "<leader>pk", builtin.keymaps)
-			vim.keymap.set("n", "<leader>pf", builtin.find_files)
+			vim.keymap.set("n", "<leader>pf", function()
+				builtin.find_files({ hidden = true })
+			end)
 			vim.keymap.set("n", "<leader>ps", builtin.builtin)
 			vim.keymap.set("n", "<leader>pw", builtin.grep_string)
-			vim.keymap.set("n", "<leader>pg", builtin.live_grep)
+			vim.keymap.set("n", "<leader>pg", function()
+				builtin.live_grep({
+					additional_args = { "--hidden" },
+				})
+			end)
 			vim.keymap.set("n", "<leader>pd", builtin.diagnostics)
 			vim.keymap.set("n", "<leader>pr", builtin.resume)
 			vim.keymap.set("n", "<leader>p.", builtin.oldfiles)
