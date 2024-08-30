@@ -12,3 +12,4 @@ password=$(printf '%s\n' "${password_files[@]}" | fuzzel -d --fuzzy-max-distance
 [[ -n $password ]] || exit
 
 pass show -c "$password" 2>/dev/null
+# echo type $(pass show "$password" | head -1) | dotool
