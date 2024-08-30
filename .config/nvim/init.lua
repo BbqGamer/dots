@@ -176,6 +176,8 @@ require("lazy").setup({
 
 			-- See `:help telescope.builtin`
 			local builtin = require("telescope.builtin")
+			vim.keymap.set("n", "<leader>pc", builtin.commands)
+			vim.keymap.set("n", "<leader>pm", builtin.man_pages)
 			vim.keymap.set("n", "<leader>ph", builtin.help_tags)
 			vim.keymap.set("n", "<leader>pk", builtin.keymaps)
 			vim.keymap.set("n", "<leader>pf", function()
