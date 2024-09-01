@@ -82,8 +82,9 @@ require("lazy").setup({
 		-- setting the keybinding for LazyGit with 'keys' is recommended in
 		-- order to load the plugin when the command is run for the first time
 		keys = {
-			{ "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
-			{ "<leader>lc", "<cmd>LazyGitFilterCurrentFile<cr>", desc = "CurrentFile" },
+			{ "<leader>lg", "<cmd>LazyGitCurrentFile<cr>"},
+			{ "<leader>lc", "<cmd>LazyGitFilter<cr>"},
+			{ "<leader>lf", "<cmd>LazyGitFilterCurrentFile<cr>"},
 		},
 	},
 	{
