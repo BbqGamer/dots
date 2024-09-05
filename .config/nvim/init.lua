@@ -82,9 +82,9 @@ require("lazy").setup({
 		-- setting the keybinding for LazyGit with 'keys' is recommended in
 		-- order to load the plugin when the command is run for the first time
 		keys = {
-			{ "<leader>lg", "<cmd>LazyGitCurrentFile<cr>"},
-			{ "<leader>lc", "<cmd>LazyGitFilter<cr>"},
-			{ "<leader>lf", "<cmd>LazyGitFilterCurrentFile<cr>"},
+			{ "<leader>lg", "<cmd>LazyGitCurrentFile<cr>" },
+			{ "<leader>lc", "<cmd>LazyGitFilter<cr>" },
+			{ "<leader>lf", "<cmd>LazyGitFilterCurrentFile<cr>" },
 		},
 	},
 	{
@@ -178,7 +178,9 @@ require("lazy").setup({
 			-- See `:help telescope.builtin`
 			local builtin = require("telescope.builtin")
 			vim.keymap.set("n", "<leader>pc", builtin.commands)
-			vim.keymap.set("n", "<leader>pm", builtin.man_pages)
+			vim.keymap.set("n", "<leader>pm", function()
+				builtin.man_pages({ sections = { "ALL" } })
+			end)
 			vim.keymap.set("n", "<leader>ph", builtin.help_tags)
 			vim.keymap.set("n", "<leader>pk", builtin.keymaps)
 			vim.keymap.set("n", "<leader>pf", function()
