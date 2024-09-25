@@ -1,5 +1,14 @@
 vim.opt.nu = true
 vim.opt.relativenumber = true
+vim.opt.cursorline = true
+
+vim.cmd([[
+augroup nord-theme-overrides
+  autocmd!
+  " Use 'nord7' as foreground color for Vim comment titles.
+  autocmd ColorScheme nord highlight signColumn ctermfg=14 guifg=#A3BE8C
+augroup END
+]])
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
