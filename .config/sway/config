@@ -60,11 +60,14 @@ set $suspend systemctl suspend
 set $lock swaylock -ef -c 2e3440
 
 ### IDLE
-exec swayidle -w timeout 600 '$lock' \
-    timeout 900 'swaymsg "output * dpms off"' \
-        resume 'swaymsg "output * dpms on"'\
+exec swayidle -w timeout 300 '$lock' \
+    timeout 450 'swaymsg "output * dpms off"' \
+         resume 'swaymsg "output * dpms on"'\
     before-sleep '$lock'
 
+# Don't go idle when some app is in fullscren (for example when watching movie)
+for_window [class=".*"] inhibit_idle fullscreen
+for_window [app_id=".*"] inhibit_idle fullscreen
 
 ### APPEARANCE
 font pango:Roboto Mono NerdFont 11
