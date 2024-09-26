@@ -28,9 +28,32 @@ return {
 		local dap = require("dap")
 		dap.listeners.before.attach.dapui_config = dapui.open
 		dap.listeners.before.launch.dapui_config = dapui.open
-		dap.listeners.before.event_terminated.dapui_config = dapui.close
-		dap.listeners.before.event_exited.dapui_config = dapui.close
 
 		require("dap-python").setup("python")
+
+		dap.adapters.python = {
+			type = "executable",
+			command = vim.fn.stdpath("data") .. "/mason/bin/debugpy-adapter",
+		}
+
+		dap.configurations.python = {
+			{
+				type = "python",
+				request = "launch",
+				name = "Launch file",
+				program = "${file}",
+				console = "integratedTerminal", -- needed to use dap terminal (for io)
+				pythonPath = function()
+					local cwd = vim.fn.getcwd()
+					if vim.fn.executable(cwd .. "/venv/bin/python") == 1 then
+						return cwd .. "/venv/bin/python"
+					elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
+						return cwd .. "/.venv/bin/python"
+					else
+						return "/usr/bin/python"
+					end
+				end,
+			},
+		}
 	end,
 }

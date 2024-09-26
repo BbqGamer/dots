@@ -1,6 +1,5 @@
 return {
 	"nvim-telescope/telescope.nvim",
-	event = "VimEnter",
 	branch = "0.1.x",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
@@ -92,7 +91,5 @@ return {
 		-- Enable Telescope extensions if they are installed
 		pcall(require("telescope").load_extension, "fzf")
 		pcall(require("telescope").load_extension, "ui-select")
-
-		-- See `:help telescope.builtin`
 	end,
 }
