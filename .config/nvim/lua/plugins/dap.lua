@@ -5,29 +5,32 @@ return {
 		"mfussenegger/nvim-dap",
 		"mfussenegger/nvim-dap-python",
 	},
+	keys = function(_, keys)
+		local dap = require("dap")
+		local dapui = require("dapui")
+		return {
+			-- Basic debugging keymaps, feel free to change to your liking!
+			{ "<F1>", dap.step_into, desc = "Debug: Step Into" },
+			{ "<F2>", dap.step_over, desc = "Debug: Step Over" },
+			{ "<F3>", dap.step_out, desc = "Debug: Step Out" },
+			{ "<F4>", dap.step_back, desc = "Debug: Step Back" },
+			{ "<F5>", dap.continue, desc = "Debug: Start/Continue" },
+			{ "<leader>b", dap.toggle_breakpoint, desc = "Debug: Toggle Breakpoint" },
+			{ "<F6>", dapui.toggle, desc = "Debug: See last session result." },
+			{ "<F12>", dap.restart, desc = "Debug: Restart" },
+			unpack(keys),
+		}
+	end,
 	config = function()
 		local dapui = require("dapui")
 		dapui.setup()
-		vim.keymap.set("n", "<leader>du", dapui.toggle)
-		vim.keymap.set("n", "<leader>dc", dapui.close)
-		vim.keymap.set("n", "<leader>do", dapui.open)
-
-		require("dap-python").setup("python")
 
 		local dap = require("dap")
-		vim.keymap.set("n", "<leader>db", dap.set_breakpoint)
-		vim.keymap.set("n", "<F1>", dap.continue)
-		vim.keymap.set("n", "<F2>", dap.step_into)
-		vim.keymap.set("n", "<F3>", dap.step_over)
-		vim.keymap.set("n", "<F4>", dap.step_out)
-		vim.keymap.set("n", "<F5>", dap.step_back)
-		vim.keymap.set("n", "<F12>", dap.restart)
+		dap.listeners.before.attach.dapui_config = dapui.open
+		dap.listeners.before.launch.dapui_config = dapui.open
+		dap.listeners.before.event_terminated.dapui_config = dapui.close
+		dap.listeners.before.event_exited.dapui_config = dapui.close
 
-		dap.listeners.before.attach.dapui_config = function()
-			dapui.open()
-		end
-		dap.listeners.before.launch.dapui_config = function()
-			dapui.open()
-		end
+		require("dap-python").setup("python")
 	end,
 }

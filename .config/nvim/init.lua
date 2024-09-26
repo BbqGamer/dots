@@ -59,8 +59,6 @@ vim.g.loaded_netrwPlugin = 1
 vim.keymap.set("n", "gx", [[:silent execute '!firefox ' . shellescape(expand('<cfile>'), 1)<CR>]])
 
 vim.keymap.set("n", "<leader>c", vim.cmd.tabnew)
-vim.keymap.set("n", "<leader>|", vim.cmd.vsplit)
-vim.keymap.set("n", "<leader>_", vim.cmd.split)
 vim.keymap.set("n", "<leader>1", "1gt")
 vim.keymap.set("n", "<leader>2", "2gt")
 vim.keymap.set("n", "<leader>3", "3gt")
