@@ -64,7 +64,11 @@ vim.keymap.set("n", "<leader>2", "2gt")
 vim.keymap.set("n", "<leader>3", "3gt")
 vim.keymap.set("n", "<leader>4", "4gt")
 
-vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
+vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-n>")
+vim.keymap.set("t", "<C-w>h", "<C-\\><C-n><C-w>h", { silent = true })
+vim.keymap.set("t", "<C-w>j", "<C-\\><C-n><C-w>j", { silent = true })
+vim.keymap.set("t", "<C-w>k", "<C-\\><C-n><C-w>k", { silent = true })
+vim.keymap.set("t", "<C-w>l", "<C-\\><C-n><C-w>l", { silent = true })
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
