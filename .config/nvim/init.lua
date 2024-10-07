@@ -70,6 +70,10 @@ vim.keymap.set("t", "<C-w>j", "<C-\\><C-n><C-w>j", { silent = true })
 vim.keymap.set("t", "<C-w>k", "<C-\\><C-n><C-w>k", { silent = true })
 vim.keymap.set("t", "<C-w>l", "<C-\\><C-n><C-w>l", { silent = true })
 
+vim.keymap.set("t", "<C-h>", "<C-\\><C-n><C-w>h", { silent = true })
+vim.keymap.set("t", "<C-j>", "<C-\\><C-n><C-w>j", { silent = true })
+vim.keymap.set("t", "<C-w>", "<C-\\><C-n><C-w>k", { silent = true })
+vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l", { silent = true })
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
