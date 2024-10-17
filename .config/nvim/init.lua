@@ -71,6 +71,9 @@ vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l", { silent = true })
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
+-- Duplicating a line
+vim.keymap.set("n", "<C-p>", ":t.<CR>")
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
