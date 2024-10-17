@@ -9,6 +9,10 @@ fi
 fpath=(~/repos/zsh-completions/src $fpath)
 autoload -U compinit; compinit
 
+# Allow sh like reverse search
+bindkey -v
+bindkey '^R' history-incremental-search-backward
+
 #Environment variables
 HISTSIZE=1000000
 HISTFILE="$HOME/.zsh/zsh_history"
@@ -49,6 +53,8 @@ alias cz='chezmoi'
 alias t='todo.sh'
 alias gpt='terminalgpt'
 alias ssh='TERM=xterm-256color ssh'
+alias c='selected=$(find ~ -maxdepth 3 -type d | fzf) && cd $selected'
+alias d='selected=$(find -maxdepth 3 -type d | fzf) && cd $selected'
 
 # Alias if you forget sudo for basic commands
 alias \
@@ -76,7 +82,6 @@ SYNTAX_HIGHLIGHTING=$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.z
 
 [[ -f $HOME/.config/aliases  ]] && source $HOME/.config/aliases
 [[ -f $HOME/.config/zsh-local ]] && source $HOME/.config/zsh-local 
-[[ -f $HOME/.env  ]] && source $HOME/.env
 
 [[ -f venv/bin/activate ]] && source venv/bin/activate
 

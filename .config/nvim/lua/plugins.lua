@@ -17,9 +17,11 @@ return {
 		end,
 	},
 	{
-		"nordtheme/vim",
+		"gbprod/nord.nvim",
+		lazy = false,
 		priority = 1000,
-		init = function()
+		config = function()
+			require("nord").setup({})
 			vim.cmd.colorscheme("nord")
 		end,
 	},
