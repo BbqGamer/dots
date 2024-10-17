@@ -19,6 +19,7 @@ return {
 			yaml = { "yamlfmt" },
 			json = { "jq" },
 			tex = { "latexindent" },
+			c = { "clang-format" },
 		},
 	},
 	init = function()
