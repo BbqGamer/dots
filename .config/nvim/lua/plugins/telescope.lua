@@ -41,8 +41,21 @@ return {
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		{ "nvim-tree/nvim-web-devicons", enabled = true },
+		{
+			"nvim-telescope/telescope-ui-select.nvim",
+			config = function()
+				require("telescope").setup({
+					extenstions = {
+						["ui-select"] = {
+							require("telescope.themes").get_dropdown({}),
+						},
+					},
+				})
+				require("telescope").load_extension("ui-select")
+			end,
+		},
 	},
-	keys = function(_, keys)
+	keys = function()
 		return {
 			{ "<leader>pc", builtin.commands },
 			{ "<leader>pp", M.cwd },
