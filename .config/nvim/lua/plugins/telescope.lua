@@ -3,20 +3,9 @@ return {
 	branch = "0.1.x",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		{
-			"nvim-telescope/telescope-fzf-native.nvim",
-			build = "make",
-			cond = function()
-				return vim.fn.executable("make") == 1
-			end,
-		},
-		{ "nvim-telescope/telescope-ui-select.nvim" },
 		{ "nvim-tree/nvim-web-devicons", enabled = true },
 	},
 	keys = function(_, keys)
-		local builtin = require("telescope.builtin")
-
-		-- Slightly advanced example of overriding default behavior and theme
 		return {
 			{ "<leader>pc", builtin.commands },
 			{
@@ -50,15 +39,12 @@ return {
 			{
 				"<leader>/",
 				function()
-					-- You can pass additional configuration to Telescope to change the theme, layout, etc.
 					builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
 						winblend = 10,
 						previewer = false,
 					}))
 				end,
 			},
-			-- It's also possible to pass additional configuration options.
-			--  See `:help telescope.builtin.live_grep()` for information about particular keys
 			{
 				"<leader>p/",
 				function()
@@ -68,7 +54,6 @@ return {
 					})
 				end,
 			},
-			-- Shortcut for searching your Neovim configuration files
 			{
 				"<leader>pn",
 				function()
@@ -76,20 +61,5 @@ return {
 				end,
 			},
 		}
-	end,
-
-	config = function()
-		local telescope = require("telescope")
-		telescope.setup({
-			extensions = {
-				["ui-select"] = {
-					require("telescope.themes").get_dropdown(),
-				},
-			},
-		})
-
-		-- Enable Telescope extensions if they are installed
-		pcall(require("telescope").load_extension, "fzf")
-		pcall(require("telescope").load_extension, "ui-select")
 	end,
 }
