@@ -1,3 +1,40 @@
+local builtin = require("telescope.builtin")
+
+local M = {}
+
+function M.cwd(opts)
+	local pickers = require("telescope.pickers")
+	local finders = require("telescope.finders")
+	local sorters = require("telescope.sorters")
+	local actions = require("telescope.actions")
+	local action_state = require("telescope.actions.state")
+	local find_command = { "find", "/home/adam", "-maxdepth", "3", "-type", "d" }
+
+	opts = opts or {}
+	pickers
+		.new(opts, {
+			prompt_title = "cd to directory",
+			finder = finders.new_oneshot_job(find_command, {}),
+			sorter = sorters.get_fuzzy_file({}),
+			attach_mappings = function(prompt_bufnr, map)
+				-- On Enter, set the cwd to the selected directory
+				local function set_cwd()
+					local selection = action_state.get_selected_entry()
+					actions.close(prompt_bufnr)
+					vim.cmd("cd " .. selection[1])
+					print("Changed directory to: " .. selection[1])
+				end
+
+				-- Map <CR> (Enter) to the set_cwd function
+				map("i", "<CR>", set_cwd)
+				map("n", "<CR>", set_cwd)
+
+				return true
+			end,
+		})
+		:find()
+end
+
 return {
 	"nvim-telescope/telescope.nvim",
 	branch = "0.1.x",
@@ -8,6 +45,7 @@ return {
 	keys = function(_, keys)
 		return {
 			{ "<leader>pc", builtin.commands },
+			{ "<leader>pp", M.cwd },
 			{
 				"<leader>pm",
 				function()
