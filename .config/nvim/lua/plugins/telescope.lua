@@ -57,8 +57,8 @@ return {
 	},
 	keys = function()
 		return {
-			{ "<leader>pc", builtin.commands },
-			{ "<leader>pp", M.cwd },
+			{ "<F1>", builtin.commands },
+			{ "<leader>pc", M.cwd },
 			{
 				"<leader>pm",
 				function()
@@ -67,16 +67,18 @@ return {
 			},
 			{ "<leader>ph", builtin.help_tags },
 			{ "<leader>pk", builtin.keymaps },
+			{ "<leader>pf", builtin.find_files },
 			{
-				"<leader>pf",
+				"<leader>pF",
 				function()
 					builtin.find_files({ hidden = true })
 				end,
 			},
 			{ "<leader>ps", builtin.builtin },
 			{ "<leader>pw", builtin.grep_string },
+			{ "<leader>pg", builtin.live_grep },
 			{
-				"<leader>pg",
+				"<leader>pG",
 				function()
 					builtin.live_grep({
 						additional_args = { "--hidden" },
