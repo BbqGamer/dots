@@ -1,0 +1,7 @@
+zenity --question --text="Do you want to kill the window?" --title="Kill Window" --width=100
+
+if [ $? -eq 0 ]; then
+    swaymsg kill
+else
+    exit 0
+fi
