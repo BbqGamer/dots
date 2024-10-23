@@ -8,7 +8,7 @@ function M.cwd(opts)
 	local sorters = require("telescope.sorters")
 	local actions = require("telescope.actions")
 	local action_state = require("telescope.actions.state")
-	local find_command = { "find", "/home/adam", "-maxdepth", "3", "-type", "d" }
+	local find_command = { "find", os.getenv("HOME"), "-maxdepth", "3", "-type", "d" }
 
 	opts = opts or {}
 	pickers
@@ -111,6 +111,12 @@ return {
 				"<leader>pn",
 				function()
 					builtin.find_files({ cwd = vim.fn.stdpath("config") })
+				end,
+			},
+			{
+				"<leader>pl",
+				function()
+					builtin.find_files({ cwd = os.getenv("HOME") .. "/life" })
 				end,
 			},
 		}
