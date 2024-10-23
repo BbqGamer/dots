@@ -28,6 +28,7 @@ return { -- LSP Configuration & Plugins
 			{ "<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction" },
 			{ "K", vim.lsp.buf.hover, "Hover Documentation" },
 			{ "gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration" },
+			{ "<leader>th", vim.lsp.buf.typehierarchy, "[T] [H]ierarchy" },
 			unpack(keys),
 		}
 	end,
