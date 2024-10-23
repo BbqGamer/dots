@@ -74,7 +74,9 @@ return {
 					builtin.find_files({ hidden = true })
 				end,
 			},
-			{ "<leader>ps", builtin.builtin },
+			{ "<leader>ps", builtin.lsp_document_symbols },
+			{ "<leader>pS", builtin.lsp_dynamic_workspace_symbols },
+			{ "<leader>pt", builtin.builtin },
 			{ "<leader>pw", builtin.grep_string },
 			{ "<leader>pg", builtin.live_grep },
 			{
