@@ -18,11 +18,11 @@ font:
 
   italic:
     family: FiraCode Nerd Font
-    style: Italic
+    style: Light
 
   bold_italic:
     family: FiraCode Nerd Font
     style: Bold Italic
 
-  size: 12
+  size: 13
 
