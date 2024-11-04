@@ -1,0 +1,67 @@
+{
+  "workbench.sideBar.location": "right",
+  "terminal.integrated.inheritEnv": false,
+  "julia.symbolCacheDownload": true,
+  "julia.enableTelemetry": false,
+  "editor.inlineSuggest.enabled": true,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": true,
+    "markdown": true,
+    "scminput": false,
+    "yaml": false,
+    "c": true,
+    "python": false,
+    "java": true,
+    "cpp": true,
+    "rust": true,
+    "awk": true
+  },
+  "[c]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools"
+  },
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java"
+  },
+  "editor.inlayHints.enabled": "offUnlessPressed",
+  "workbench.colorTheme": "Nord",
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.list.smoothScrolling": true,
+  "editor.smoothScrolling": true,
+  "editor.fontFamily": "'Iosevka'",
+  "window.menuBarVisibility": "toggle",
+  "window.titleBarStyle": "custom",
+  "extensions.ignoreRecommendations": true,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true
+  },
+  "open-in-browser.default": "firefox",
+  "python.analysis.inlayHints.functionReturnTypes": true,
+  "python.analysis.inlayHints.variableTypes": true,
+  "python.analysis.inlayHints.pytestParameters": true,
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.autoImportCompletions": true,
+  "mypy.enabled": false,
+  "vim.handleKeys": {
+    "<C-d>": true,
+    "<C-s>": false,
+    "<C-z>": false,
+    "<C-b>": false,
+    "<C-k>": false,
+    "<C-p>": false
+  },
+  "vim.useSystemClipboard": true,
+  "gitlens.plusFeatures.enabled": false,
+  "editor.fontLigatures": true,
+  "haskell.manageHLS": "GHCup",
+  "redhat.telemetry.enabled": true,
+  "notebook.lineNumbers": "on",
+  "git.openRepositoryInParentFolders": "never",
+  "github.copilot.editor.enableAutoCompletions": true,
+  "git.autofetch": true,
+  "git.autorefresh": true,
+  "window.customTitleBarVisibility": "auto",
+  "editor.minimap.enabled": false
+}
+
