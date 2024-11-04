@@ -99,3 +99,5 @@ pyenv() {
     eval "$(command pyenv init -)"
     pyenv "$@"
 }
+
+eval "$(direnv hook zsh)"
