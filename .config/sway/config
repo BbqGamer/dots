@@ -130,6 +130,7 @@ bindsym $mod+Shift+q exec confirm_kill_window
 # Start your launcher
 bindsym $mod+d exec $menu
 bindsym $mod+p exec passmenu
+bindsym $mod+c exec codemenu
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.

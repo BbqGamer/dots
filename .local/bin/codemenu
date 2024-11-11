@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+BASE_DIR="$HOME"
+TARGET_DIR=$(find $BASE_DIR -type d -name ".git" -execdir pwd \; -maxdepth 4 | fuzzel -d --fuzzy-max-distance 2)
+
+if [ -n "$TARGET_DIR" ]; then
+  code $TARGET_DIR
+else
+  echo "No git repository found in $BASE_DIR"
+fi
