@@ -11,7 +11,7 @@
     "scminput": false,
     "yaml": false,
     "c": true,
-    "python": false,
+    "python": true,
     "java": true,
     "cpp": true,
     "rust": true,
@@ -24,17 +24,19 @@
     "editor.defaultFormatter": "redhat.java"
   },
   "editor.inlayHints.enabled": "offUnlessPressed",
-  "workbench.colorTheme": "Nord",
   "workbench.iconTheme": "material-icon-theme",
   "workbench.list.smoothScrolling": true,
   "editor.smoothScrolling": true,
   "editor.fontFamily": "'Iosevka'",
-  "window.menuBarVisibility": "toggle",
   "window.titleBarStyle": "custom",
   "extensions.ignoreRecommendations": true,
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter",
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "charliermarsh.ruff"
   },
   "open-in-browser.default": "firefox",
   "python.analysis.inlayHints.functionReturnTypes": true,
@@ -62,6 +64,8 @@
   "git.autofetch": true,
   "git.autorefresh": true,
   "window.customTitleBarVisibility": "auto",
-  "editor.minimap.enabled": false
+  "editor.minimap.enabled": false,
+  "workbench.colorTheme": "Nord",
+  "python.createEnvironment.trigger": "off",
 }
 
