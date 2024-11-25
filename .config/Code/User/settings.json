@@ -1,6 +1,10 @@
 {
   "workbench.sideBar.location": "right",
   "terminal.integrated.inheritEnv": false,
+  "terminal.integrated.commandsToSkipShell": [
+    "workbench.action.toggleSidebarVisibility",
+    "-workbench.action.quickOpen",
+  ],
   "julia.symbolCacheDownload": true,
   "julia.enableTelemetry": false,
   "editor.inlineSuggest.enabled": true,
