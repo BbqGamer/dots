@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-BASE_DIR="$HOME"
+BASE_DIR="$PWD"
 
 DMENU="fuzzel -d --fuzzy-max-distance 2"
 SELECTION=$(echo -e " File\n Git repo\n Directory" | eval $DMENU)
