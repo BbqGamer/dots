@@ -1,0 +1,58 @@
+#!/bin/bash
+
+DRIVE_UUID="A6F622F8F622C87F"
+PATHS_TO_BACKUP="/home/adam/life /home/adam/media /home/adam/studies /home/adam/var/playground"
+PASS_ENTRY="backup/restic-toshiba"
+
+check_drive() {
+    lsblk -o UUID,NAME | grep "$DRIVE_UUID" &> /dev/null
+    return $?
+}
+
+mount_drive() {
+    echo "Mounting drive..."
+    MOUNT_PATH=$(udisksctl mount -b /dev/disk/by-uuid/$DRIVE_UUID | cut -d ' ' -f 4)
+    if [ $? -eq 0 ]; then
+        echo "Drive mounted at $MOUNT_PATH"
+        return 0
+    else
+        echo "Failed to mount drive."
+        return 1
+    fi
+}
+
+unmount_drive() {
+    echo "Unmounting drive..."
+    udisksctl unmount -b /dev/disk/by-uuid/$DRIVE_UUID > /dev/null
+    if [ $? -eq 0 ]; then
+        echo "Drive unmounted."
+        return 0
+    else
+        echo "Failed to unmount drive."
+        return 1
+    fi
+}
+
+perform_backup() {
+    echo "Performing backup..."
+    pass $PASS_ENTRY | restic backup -r $MOUNT_PATH/restic-backup $PATHS_TO_BACKUP
+    if [ $? -eq 0 ]; then
+        echo "Backup successful."
+        return 0
+    else
+        echo "Backup failed."
+        return 1
+    fi
+}
+
+if check_drive; then
+    echo "Drive detected."
+
+    mount_drive
+    if [ $? -eq 0 ]; then
+        perform_backup
+        unmount_drive
+    fi
+else
+    echo "Drive not detected. (UUID: $DRIVE_UUID)"
+fi
