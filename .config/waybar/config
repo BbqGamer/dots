@@ -3,7 +3,6 @@
         "sway/workspaces",
         "sway/mode",
         "custom/media",
-        "sway/window"
     ],
     "modules-center": [
     ],
@@ -24,7 +23,7 @@
         "spacing": 10
     },
     "clock": {
-        "format": "{: %I:%M %p 󰃭 %d/%m/%Y}",
+        "format": "{: %H:%M 󰃭 %d/%m/%Y}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
     "cpu": {
