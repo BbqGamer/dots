@@ -84,7 +84,7 @@ client.background       #2e3440
 default_border pixel
 
 bar {
-    status_command i3status
+    swaybar_command waybar
     position top
 }
 
