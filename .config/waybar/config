@@ -5,6 +5,7 @@
         "custom/media",
     ],
     "modules-center": [
+        "clock"
     ],
     "modules-right": [
         "network#wired",
@@ -14,7 +15,6 @@
         "wireplumber",
         "battery",
         "tray",
-        "clock"
     ],
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
@@ -28,12 +28,12 @@
     },
     "cpu": {
         "interval": 5,
-        "format": "{usage}% ",
-        "tooltip": false,
+        "format": " {usage}%",
+        "tooltip": true,
         "on-click": "alacritty -e htop"
     },
     "memory": {
-        "format": "{percentage}% ",
+        "format": " {percentage}%",
         "tooltip": true,
         "tooltip-format": " RAM used: {used:0.2f}/{total:0.2f} GB ({avail:0.2f} avail)\nSwap used: {swapUsed:0.2f}/{swapTotal:0.2f} GB ({swapAvail:0.2f} avail)",
         "on-click": "alacritty -e htop",
@@ -70,7 +70,7 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "{capacity}% {icon} ",
+        "format": "{icon}  {capacity}%",
         "format-charging": "{capacity}% 󰂄",
         "format-plugged": "{capacity}% ",
         "format-alt": "{time} {icon}",
@@ -86,7 +86,7 @@
         "interface": "enp*",
         "format-ethernet": "{ifname}: {ipaddr}/{cidr} 󰈀",
         "format-linked": "{ifname} (No IP)",
-        "format-disconnected": "{ifname}",
+        "format-disconnected": "󰈀",
         "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
         "on-click": "alacritty -e nmtui"
     },
@@ -94,7 +94,7 @@
         "interface": "wlp*",
         "format-wifi": "{essid} ({signalStrength}%) ",
         "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "{ifname}",
+        "format-disconnected": "󰖪",
         "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
         "on-click": "alacritty -e nmtui"
     },
