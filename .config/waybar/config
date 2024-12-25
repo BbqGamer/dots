@@ -10,11 +10,9 @@
     "modules-right": [
         "network#wired",
         "network#wireless",
-        "custom/vpn",
         "cpu",
         "memory",
         "wireplumber",
-        "bluetooth",
         "sway/language",
         "battery",
         "tray",
