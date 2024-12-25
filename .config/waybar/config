@@ -13,7 +13,6 @@
         "cpu",
         "memory",
         "wireplumber",
-        "sway/language",
         "battery",
         "tray",
         "clock"
