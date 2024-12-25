@@ -28,13 +28,15 @@
     },
     "cpu": {
         "interval": 5,
-        "format": "{usage}% ",
+        "format": "{usage}% ",
         "tooltip": false,
         "on-click": "alacritty -e htop"
     },
     "memory": {
-        "format": "{used} GB ",
-        "on-click": "alacritty -e htop"
+        "format": "{percentage}% ",
+        "tooltip": true,
+        "tooltip-format": " RAM used: {used:0.2f}/{total:0.2f} GB ({avail:0.2f} avail)\nSwap used: {swapUsed:0.2f}/{swapTotal:0.2f} GB ({swapAvail:0.2f} avail)",
+        "on-click": "alacritty -e htop",
     },
     "temperature": {
         "critical-threshold": 80,
