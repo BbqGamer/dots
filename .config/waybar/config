@@ -59,7 +59,7 @@
     "wireplumber": {
         "format": " {volume}% ({node_name})",
         "format-muted": " muted ({node_name})",
-        "on-click": "qpwgraph"
+        "on-click": "pavucontrol"
     },
     "bluetooth": {
         "format": " {status} {device_alias}",
