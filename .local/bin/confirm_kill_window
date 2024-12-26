@@ -1,7 +1,8 @@
 APP_ID=$(swaymsg -t get_tree | jq -r '.. | select(.focused?) | .app_id')
+APP_ID_LOWER=$(echo "$APP_ID" | tr '[:upper:]' '[:lower:]')
 APPS_TO_CONFIRM=("firefox-esr" "code")
 
-if [[ " ${APPS_TO_CONFIRM[@]} " =~ " ${APP_ID} " ]]; then
+if [[ " ${APPS_TO_CONFIRM[@]} " =~ " ${APP_ID_LOWER} " ]]; then
     # prompt user to confirm closing the window
     zenity --question --text="Do you want to kill the window?" --title="Kill Window" --width=100
 
