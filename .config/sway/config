@@ -254,4 +254,6 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 for_window [app_id="pavucontrol"] floating enable
+for_window [app_id="nm-connection-editor"] floating enable
+for_window [app_id="Bitwarden"] floating enable
 
