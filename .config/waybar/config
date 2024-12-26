@@ -92,11 +92,12 @@
     },
     "network#wireless": {
         "interface": "wlp*",
-        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-wifi": "{essid} {icon}",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "󰖪",
-        "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "alacritty -e nmtui"
+        "tooltip-format-wifi": "{ifname}: {ipaddr}/{cidr}\nStrength: {signaldBm} dBm ({signalStrength}%)\nFrequency: {frequency} MHz",
+        "on-click": "alacritty -e nmtui",
+        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"]
     },
     "custom/vpn": {
         "format": "󰖂 {}",

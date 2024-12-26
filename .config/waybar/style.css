@@ -1,6 +1,6 @@
 * {
     border: none;
-    border-radius: 4px;
+    border-radius: 4;
     font-family: "RobotoMono Nerd Font", Helvetica, Arial, sans-serif;
     font-size: 14px;
     min-height: 0;
@@ -71,8 +71,8 @@ window#waybar.chromium {
 #custom-vpn,
 #mpd {
     padding: 0 10px;
-    margin: 6px 2px; 
-    color: #333333;
+    margin: 6px 3px; 
+    color: #ffffff;
 }
 
 #window,
@@ -92,34 +92,14 @@ window#waybar.chromium {
 
 #clock {
     font-weight: bold;
-    background-color: #bbccdd;
 }
 
 #wireplumber {
-    background-color: #bbccdd;
-}
-
-#custom-vpn.disconnected,
-#bluetooth.off,
-#bluetooth.disabled,
-#wireplumber.muted {
-    background-color: #4c566a;	
-}
-
-#bluetooth.on,
-#bluetooth.discoverable,
-#bluetooth.pairable,
-#bluetooth.discovering {
-    background-color: #88c0d0;
-}
-
-#bluetooth.connected {
-    background-color: #5e81ac;
+    background-color: #4c566a;
 }
 
 #battery {
-    background-color: #bbccdd;
-    color: #333333;
+    background-color: #4c566a;
 }
 
 #battery.charging {
@@ -148,25 +128,14 @@ label:focus {
     background-color: #000000;
 }
 
-#cpu {
-    background-color: #a3be8c;
-    color: #333333;
-}
-
-#memory {
-    background-color: #5e81ac;
-}
-
-#network {
-    background-color: #8fbcbb;
-}
-
 #network.linked {
-    background-color: #ebcb8b;
+    background-color: #ffffff;
 }
 
-#network.disconnected {
+#network.wifi {
     background-color: #4c566a;
+    color: #8fbcbb;
+
 }
 
 #temperature {
@@ -175,21 +144,4 @@ label:focus {
 
 #temperature.critical {
     background-color: #eb4d4b;
-}
-
-#tray {
-    background-color: #2980b9;
-}
-
-#language {
-    font-family: Helvetica, sans-serif;
-    background: #bbccdd;
-    color: #333333;
-    padding: 0 3px;
-    margin: 6px 3px;
-    min-width: 16px;
-}
-
-#custom-vpn.connected {
-    background-color: #A3BE8C;
 }
