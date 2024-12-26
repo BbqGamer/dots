@@ -54,7 +54,7 @@ set $left h
 set $down j
 set $up k
 set $right l
-set $term alacritty -e "tmux" "new-session" "-A" "-s" "main"
+set $term alacritty
 set $menu fuzzel | xargs swaymsg exec --
 set $suspend systemctl suspend
 set $lock swaylock -f -c 2e3440
