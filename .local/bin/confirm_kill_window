@@ -1,3 +1,5 @@
+#!/bin/bash
+
 APP_ID=$(swaymsg -t get_tree | jq -r '.. | select(.focused?) | .app_id')
 APP_ID_LOWER=$(echo "$APP_ID" | tr '[:upper:]' '[:lower:]')
 APPS_TO_CONFIRM=("firefox-esr" "code")
