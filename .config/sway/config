@@ -12,6 +12,7 @@ exec dbus-update-activation-environment WAYLAND_DISPLAY
 exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
 exec hash dbus-update-activation-environment 2>/dev/null && \
         dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec nm-applet --indicator
 
 # Setup wobsock
 set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
