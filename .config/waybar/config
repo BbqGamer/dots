@@ -8,13 +8,11 @@
         "clock"
     ],
     "modules-right": [
-        "network#wired",
-        "network#wireless",
+        "tray",
         "cpu",
         "memory",
-        "wireplumber",
+        "pulseaudio",
         "battery",
-        "tray",
     ],
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
@@ -56,10 +54,10 @@
             ""
         ]
     },
-    "wireplumber": {
-        "format": " {volume}% ({node_name})",
-        "format-muted": " muted ({node_name})",
-        "on-click": "pavucontrol"
+    "pulseaudio": {
+        "format": " {volume}%",
+        "format-muted": " muted",
+        "on-click": "pavucontrol",
     },
     "bluetooth": {
         "format": " {status} {device_alias}",
