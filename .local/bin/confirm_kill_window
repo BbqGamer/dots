@@ -1,7 +1,16 @@
-zenity --question --text="Do you want to kill the window?" --title="Kill Window" --width=100
+APP_ID=$(swaymsg -t get_tree | jq -r '.. | select(.focused?) | .app_id')
+APPS_TO_CONFIRM=("firefox-esr" "code")
 
-if [ $? -eq 0 ]; then
-    swaymsg kill
+if [[ " ${APPS_TO_CONFIRM[@]} " =~ " ${APP_ID} " ]]; then
+    # prompt user to confirm closing the window
+    zenity --question --text="Do you want to kill the window?" --title="Kill Window" --width=100
+
+    if [ $? -eq 0 ]; then
+        swaymsg kill
+    else
+        exit 0
+    fi
 else
-    exit 0
+    # close the window immediately
+    swaymsg kill
 fi
