@@ -257,6 +257,9 @@ bindsym $mod+r mode "resize"
 exec swaync
 bindsym $mod+Shift+n exec swaync-client -t -sw
 
+# https://github.com/swaywm/sway/issues/4034
+for_window [app_id=".*"] split toggle
+
 for_window [app_id="pavucontrol"] floating enable
 for_window [app_id="nm-connection-editor"] floating enable
 for_window [app_id="Bitwarden"] floating enable
