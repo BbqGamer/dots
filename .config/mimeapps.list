@@ -1,0 +1,10 @@
+[Default Applications]
+application/pdf=firefox-esr.desktop
+x-scheme-handler/http=firefox-esr.desktop;
+x-scheme-handler/https=firefox-esr.desktop;
+text/html=firefox-esr.desktop;
+application/xhtml+xml=firefox-esr.desktop;
+application/xhtml_xml=firefox-esr.desktop;
+image/tiff=feh
+x-scheme-handler/discord-1176718791388975124=discord-1176718791388975124.desktop
+application/lrf=calibre-lrfviewer.desktop
