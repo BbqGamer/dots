@@ -55,6 +55,8 @@ alias gpt='terminalgpt'
 alias ssh='TERM=xterm-256color ssh'
 alias c='selected=$(find ~ -maxdepth 3 -type d | fzf) && cd $selected'
 alias d='selected=$(find -maxdepth 3 -type d | fzf) && cd $selected'
+alias ez='$EDITOR ~/.zshrc && source ~/.zshrc'
+alias so='source ~/.zshrc'
 
 # Alias if you forget sudo for basic commands
 alias \
