@@ -69,11 +69,11 @@
   "git.autorefresh": true,
   "window.customTitleBarVisibility": "auto",
   "editor.minimap.enabled": false,
-  "workbench.colorTheme": "Nord",
   "python.createEnvironment.trigger": "off",
   "search.exclude": {
     "*.venv": true
   },
   "clangd.path": "/home/adam/.config/Code/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/18.1.3/clangd_18.1.3/bin/clangd",
+  "workbench.colorTheme": "Nord",
 }
 
