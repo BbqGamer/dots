@@ -35,7 +35,10 @@ unmount_drive() {
 
 perform_backup() {
     echo "Performing backup..."
-    bw get password $BW_PASS_NAME | restic backup -r $MOUNT_PATH/restic-backup $PATHS_TO_BACKUP
+    bw_session=$(bw unlock --raw)
+    bw export --session $bw_session --format encrypted_json --output $MOUNT_PATH/bw/
+    restic_pwd=$(bw get password $BW_PASS_NAME --session $bw_session)
+    echo $restic_pwd | restic backup -r $MOUNT_PATH/restic-backup $PATHS_TO_BACKUP
     if [ $? -eq 0 ]; then
         echo "Backup successful."
         return 0
