@@ -1,0 +1,13 @@
+#!/bin/bash
+
+DRIVE_UUID="60de9138-ba67-4862-baf0-4f644fcfe965"
+PATHS_TO_BACKUP="/home/adam/life /home/adam/media /home/adam/studies /home/adam/var/playground"
+BW_PASS_NAME="TOSHIBA restic backup"
+
+MOUNT_PATH=$(udisksctl mount -b /dev/disk/by-uuid/$DRIVE_UUID | cut -d ' ' -f 4)
+export RESTIC_REPOSITORY=$MOUNT_PATH/restic-backup
+export RESTIC_PASSWORD=$(bw get password $BW_PASS_NAME)
+
+bash
+
+udisksctl unmount -b /dev/disk/by-uuid/$DRIVE_UUID
