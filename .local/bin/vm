@@ -1,0 +1,58 @@
+#!/bin/python3
+# A docker CLI like wrapper for vboxmanage
+# I made this because I don't want to have to remember all vbox commands
+# For instance, instead of typing `vboxmanage list runninvms` I type `vm ps`
+
+import argparse
+import subprocess
+
+def subcommand_ps(args):
+    if args.a:
+        subprocess.run(["vboxmanage", "list", "vms"])
+    else:
+        subprocess.run(["vboxmanage", "list", "runningvms"])
+
+def subcommand_start(args):
+    cmd = ["vboxmanage", "startvm", args.vm]
+    if args.d:
+        cmd.append("--type=headless")
+    subprocess.run(cmd)
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    
+    subparsers = parser.add_subparsers(
+        title="subcommands",
+        dest="command",
+        required=True,
+        help="Sub-command to run"
+    )
+
+    parser_ps = subparsers.add_parser(
+        "ps",
+        help="List all VMs."
+    )
+    parser_ps.add_argument(
+        "-a", action="store_true", help="Show all vms (default shows just running)"
+    )
+    parser_ps.set_defaults(func=subcommand_ps)
+
+    parser_start = subparsers.add_parser(
+        "start",
+        help="Start a VM"
+    )
+    parser_start.add_argument(
+        "vm", help="VM to start"
+    )
+    parser_start.add_argument(
+        "-d", action="store_true", help="Detach (headless mode)"
+    )
+    parser_start.set_defaults(func=subcommand_start)
+
+    args = parser.parse_args()
+    args.func(args)
+
+
+if __name__ == "__main__":
+    main()
