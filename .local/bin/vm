@@ -13,11 +13,16 @@ def subcommand_ps(args):
         subprocess.run(["vboxmanage", "list", "runningvms"])
 
 def subcommand_start(args):
-    cmd = ["vboxmanage", "startvm", args.vm]
-    if args.d:
-        cmd.append("--type=headless")
-    subprocess.run(cmd)
+    for vm in args.vms:
+        cmd = ["vboxmanage", "startvm", vm]
+        if args.d:
+            cmd.append("--type=headless")
+        subprocess.run(cmd)
 
+def subcommand_stop(args):
+    for vm in args.vms:
+        cmd = ["vboxmanage", "controlvm", vm, "acpipowerbutton"]
+        subprocess.run(cmd)
 
 def main():
     parser = argparse.ArgumentParser()
@@ -43,12 +48,20 @@ def main():
         help="Start a VM"
     )
     parser_start.add_argument(
-        "vm", help="VM to start"
+        "vms", nargs="+", help="VMs to start"
     )
     parser_start.add_argument(
         "-d", action="store_true", help="Detach (headless mode)"
     )
     parser_start.set_defaults(func=subcommand_start)
+
+    parser_stop = subparsers.add_parser(
+        "stop", help="Stop a VM"
+    )
+    parser_stop.add_argument(
+        "vms", nargs="+", help="VMs to stop"
+    )
+    parser_stop.set_defaults(func=subcommand_stop)
 
     args = parser.parse_args()
     args.func(args)
