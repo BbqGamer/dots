@@ -133,6 +133,7 @@ bindsym $mod+d exec $menu
 bindsym $mod+p exec passmenu
 bindsym $mod+c exec codemenu
 bindsym $mod+o exec cd && find -maxdepth 4 -not -path '*/.*' | fuzzel -dmenu | xargs -0 xdg-open
+bindsym $mod+i exec pick_emoji
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
