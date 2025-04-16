@@ -1,14 +1,6 @@
 return {
-	"github/copilot.vim",
 	"tpope/vim-commentary",
 	"christoomey/vim-tmux-navigator",
-	{
-		"jpalardy/vim-slime",
-		init = function()
-			vim.g.slime_target = "tmux"
-			vim.g.slime_python_ipython = 1
-		end,
-	},
 	{
 		"gbprod/nord.nvim",
 		lazy = false,
