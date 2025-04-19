@@ -67,6 +67,7 @@ return {
 			{ "<leader>ph", builtin.help_tags },
 			{ "<leader>pk", builtin.keymaps },
 			{ "<leader>pf", builtin.find_files },
+            { "<leader>pq", builtin.quickfix },
 			{
 				"<leader>pF",
 				function()

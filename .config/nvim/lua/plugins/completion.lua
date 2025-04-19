@@ -1,5 +1,6 @@
 return { -- Autocompletion
 	"hrsh7th/nvim-cmp",
+    enabled = false,
 	event = "InsertEnter",
 	dependencies = {
 		{
@@ -56,10 +57,6 @@ return { -- Autocompletion
 				end, { "i", "s" }),
 			}),
 			sources = {
-				{
-					name = "lazydev",
-					group_index = 0,
-				},
 				{ name = "nvim_lsp" },
 				{ name = "luasnip" },
 				{ name = "path" },

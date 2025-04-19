@@ -1,7 +1,12 @@
 return {
 	"tpope/vim-commentary",
 	"christoomey/vim-tmux-navigator",
-	{
+    {
+        "m4xshen/hardtime.nvim",
+        dependencies = { "MunifTanjim/nui.nvim" },
+        opts = {}
+    },
+    {
 		"gbprod/nord.nvim",
 		lazy = false,
 		priority = 1000,
@@ -9,17 +14,5 @@ return {
 			require("nord").setup({})
 			vim.cmd.colorscheme("nord")
 		end,
-	},
-	{
-		"windwp/nvim-autopairs",
-		event = "InsertEnter",
-		config = true,
-		opts = {},
-	},
-	{
-		"mbbill/undotree",
-		keys = {
-			{ "<leader>u", vim.cmd.UndotreeToggle },
-		},
 	},
 }

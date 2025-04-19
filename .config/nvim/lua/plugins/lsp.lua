@@ -6,15 +6,6 @@ return { -- LSP Configuration & Plugins
 		-- Automatically install LSPs and related tools to stdpath for Neovim
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
-		{
-			"folke/lazydev.nvim",
-			ft = "lua",
-			opts = {
-				library = {
-					{ path = "luvit-meta/library", words = { "vim%.uv" } },
-				},
-			},
-		},
 	},
 	-- keys = function(_, keys)
 	-- 	local builtin = require("telescope.builtin")
