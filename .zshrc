@@ -23,7 +23,7 @@ setopt sharehistory
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}' # Case insensitive match
 
 export PATH=/usr/local/bin:/usr/bin:/bin:~/.local/bin
-export FZF_DEFAULT_OPTS='--color=bg+:#5e81ac,gutter:#2e3440,pointer:#d8dee9'
+export FZF_DEFAULT_OPTS='--color=bg+:#5e81ac,gutter:-1,pointer:#d8dee9'
 export XDG_CURRENT_DESKTOP=sway
 export EDITOR=vim
 
