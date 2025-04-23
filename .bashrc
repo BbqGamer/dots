@@ -101,6 +101,18 @@ if ! shopt -oq posix; then
   fi
 fi
 
+reset=$(tput sgr0)
+bold=$(tput bold)
+
+red=$(tput setaf 1)
+green=$(tput setaf 2)
+blue=$(tput setaf 4)
+gray=$(tput setaf 8)
+
+bind "set show-mode-in-prompt on"
+bind "set vi-ins-mode-string \"\1${green}\2>\1${reset}\2 \""
+bind "set vi-cmd-mode-string \"\1${red}\2<\1${reset}\2 \""
+
 GIT_PS1_SHOWDIRTYSTATE=1
 GIT_PS1_SHOWSTASHSTATE=1
 GIT_PS1_SHOWUNTRACKEDFILES=1
@@ -111,20 +123,12 @@ GIT_PS1_SHOWCOLORHINTS=1
 
 set_bash_prompt() {
     local exit=$? 
-    local reset=$(tput sgr0)
-    local  bold=$(tput bold)
-
-    local  red=$(tput setaf 1)
-    local  green=$(tput setaf 2)
-    local  blue=$(tput setaf 4)
-    local  gray=$(tput setaf 8)
-
     local symbol=""
     if [[ $exit -ne 0 ]]; then
         symbol="${red}✗($exit)${reset} "
     fi
     
-    __git_ps1 "${symbol}${elapsed}${gray}\u@\h${reset}:${blue}\w${reset}" "\n> "
+    __git_ps1 "${symbol}${elapsed}${gray}\u@\h${reset}:${blue}\w${reset}" "\n"
 }
 
 PROMPT_COMMAND=set_bash_prompt
