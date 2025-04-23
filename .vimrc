@@ -14,18 +14,12 @@ endif
 " load plugins
 call plug#begin(expand('~/.vim/plugged'))
 Plug 'arcticicestudio/nord-vim'
-Plug 'preservim/nerdtree'
-Plug 'ledger/vim-ledger'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'maxboisvert/vim-simple-complete'
-Plug 'LunarWatcher/auto-pairs'
 Plug 'tpope/vim-fugitive'
-Plug 'jpalardy/vim-slime'
+Plug 'tpope/vim-commentary'
 Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
-
-let g:slime_target = "tmux"
 
 nnoremap <C-p> <Nop>
 let mapleader = " "
@@ -46,14 +40,6 @@ nmap <silent> <c-j> :wincmd j<CR>
 nmap <silent> <c-h> :wincmd h<CR>
 nmap <silent> <c-l> :wincmd l<CR>
 
-" Nerd tree keymaps
-nnoremap <leader>e :NERDTreeFocus<CR>
-nnoremap <leader>b :NERDTreeToggle<CR>
-nnoremap <leader>f :NERDTreeFind<CR>
-
-nnoremap <leader>p :Files<CR>
-nnoremap <leader>g :GFiles<CR>
-
 " Quickfix
 nnoremap <leader>q :copen<CR>
 
@@ -66,4 +52,6 @@ nnoremap <leader>q :copen<CR>
 :set shiftwidth=4
 
 syntax on
+
+map <leader>pf :Files<CR>
 
