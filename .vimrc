@@ -5,10 +5,12 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-if !isdirectory(expand('~/.vim/pack/vim-wayland-clipboard'))
-  silent! call mkdir(expand('~/vim/pack/vim-wayland-clipboard/start/'), 'p') 
-  echo 'Installing vim-wayland-clipboard...'
-  silent! execute '!git clone https://github.com/jasonccox/vim-wayland-clipboard.git ~/.vim/pack/vim-wayland-clipboard/start/vim-wayland-clipboard'
+if !empty($WAYLAND_DISPLAY)
+    if !isdirectory(expand('~/.vim/pack/vim-wayland-clipboard'))
+      silent! call mkdir(expand('~/vim/pack/vim-wayland-clipboard/start/'), 'p') 
+      echo 'Installing vim-wayland-clipboard...'
+      silent! execute '!git clone https://github.com/jasonccox/vim-wayland-clipboard.git ~/.vim/pack/vim-wayland-clipboard/start/vim-wayland-clipboard'
+    endif
 endif
 
 " load plugins
