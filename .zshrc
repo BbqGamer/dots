@@ -76,6 +76,8 @@ alias \
     ipython="ipython --TerminalInteractiveShell.editing_mode=vi"
     
 
+export BAT_THEME="Nord" 
+
 # plugins
 AUTOSUGGESTIONS=$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 [[ -f $AUTOSUGGESTIONS ]] && source $AUTOSUGGESTIONS
