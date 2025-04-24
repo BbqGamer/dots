@@ -128,7 +128,7 @@ set_bash_prompt() {
         symbol="${red}✗($exit)${reset} "
     fi
     
-    __git_ps1 "${symbol}${elapsed}${gray}\u@\h${reset}:${blue}\w${reset}" "\n"
+    __git_ps1 "${symbol}${blue}\w${reset}" " ${gray}\u@\h${reset}:\n"
 }
 
 PROMPT_COMMAND=set_bash_prompt
