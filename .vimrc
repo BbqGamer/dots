@@ -44,6 +44,7 @@ nmap <silent> <c-l> :wincmd l<CR>
 
 " Quickfix
 nnoremap <leader>q :copen<CR>
+tnoremap <leader><Esc> <C-\><C-n>
 
 " turn hybrid line numbers on
 :set number relativenumber
