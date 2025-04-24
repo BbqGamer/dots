@@ -53,6 +53,7 @@ tnoremap <leader><Esc> <C-\><C-n>
 :set expandtab
 :set tabstop=4
 :set shiftwidth=4
+:set incsearch
 
 syntax on
 
