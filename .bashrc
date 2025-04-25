@@ -101,6 +101,12 @@ if ! shopt -oq posix; then
   fi
 fi
 
+alias c='selected=$(find ~ -maxdepth 3 -type d | fzf) && cd $selected'
+alias d='selected=$(find -maxdepth 3 -type d | fzf) && cd $selected'
+
+export EDITOR=vim
+export FZF_DEFAULT_OPTS='--color=bg+:#5e81ac,gutter:-1,pointer:#d8dee9'
+
 reset=$(tput sgr0)
 bold=$(tput bold)
 
@@ -132,3 +138,7 @@ set_bash_prompt() {
 }
 
 PROMPT_COMMAND=set_bash_prompt
+
+if command -v direnv > /dev/null 2>&1; then
+    eval "$(direnv hook bash)"
+fi 
