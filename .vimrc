@@ -44,6 +44,8 @@ nmap <silent> <c-j> :wincmd j<CR>
 nmap <silent> <c-h> :wincmd h<CR>
 nmap <silent> <c-l> :wincmd l<CR>
 
+nmap - :Explore<CR>
+
 " Quickfix
 nnoremap <leader>q :copen<CR>
 tnoremap <leader><Esc> <C-\><C-n>
