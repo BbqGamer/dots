@@ -59,6 +59,12 @@ tnoremap <leader><Esc> <C-\><C-n>
 :set shiftwidth=4
 :set incsearch
 
+:set backup
+:set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp 
+:set backupskip=/tmp/*,/private/tmp/*
+:set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+:set writebackup
+
 syntax on
 
 map <leader>pf :Files<CR>
