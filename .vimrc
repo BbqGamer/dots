@@ -23,6 +23,8 @@ Plug 'tpope/vim-commentary'
 Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
+runtime ftplugin/man.vim
+
 nnoremap <C-p> <Nop>
 let mapleader = " "
 
