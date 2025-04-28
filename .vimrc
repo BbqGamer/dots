@@ -68,4 +68,5 @@ tnoremap <leader><Esc> <C-\><C-n>
 syntax on
 
 map <leader>pf :Files<CR>
+map <leader>pg :RG<CR>
 
