@@ -127,6 +127,8 @@ GIT_PS1_SHOWCONFLICTSTATE=yes
 GIT_PS1_DESCRIBE_STYLE=branch
 GIT_PS1_SHOWCOLORHINTS=1
 
+set -o vi
+
 set_bash_prompt() {
     local exit=$? 
     local symbol=""
