@@ -4,25 +4,22 @@ env:
 selection:
   save_to_clipboard: false
 
-import:
-  - ~/.config/alacritty/themes/nord.yaml
-
 font:
   normal:
-    family: FiraCode Nerd Font
+    family: Iosevka
     style: Regular
 
   bold:
-    family: FiraCode Nerd Font
+    family: Iosevka
     style: Bold
 
   italic:
-    family: FiraCode Nerd Font
+    family: Iosevka
     style: Light
 
   bold_italic:
-    family: FiraCode Nerd Font
+    family: Iosevka
     style: Bold Italic
 
-  size: 13
+  size: 14
 
