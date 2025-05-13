@@ -15,12 +15,10 @@ endif
 
 " load plugins
 call plug#begin(expand('~/.vim/plugged'))
-Plug 'arcticicestudio/nord-vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
-Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
 runtime ftplugin/man.vim
@@ -28,7 +26,7 @@ runtime ftplugin/man.vim
 nnoremap <C-p> <Nop>
 let mapleader = " "
 
-colorscheme nord
+colorscheme habamax
 
 map <C-1> 1gt
 map <C-2> 2gt
@@ -53,6 +51,7 @@ tnoremap <leader><Esc> <C-\><C-n>
 " turn hybrid line numbers on
 :set number relativenumber
 :set nu rnu
+:set mouse=a
 
 :set expandtab
 :set tabstop=4
@@ -67,6 +66,10 @@ tnoremap <leader><Esc> <C-\><C-n>
 
 syntax on
 
+map <leader>pr :GFiles<CR>
 map <leader>pf :Files<CR>
+map <leader>pt :Tags<CR>
 map <leader>pg :RG<CR>
+map <leader>pb :Buffers<CR>
+map <leader>pc :Commits<CR>
 
