@@ -154,11 +154,11 @@ set $monitor "Fujitsu Siemens Computers GmbH P27T-7 LED YV6F012604"
 workspace 1 output $monitor
 workspace 2 output $monitor
 
-output $monitor pos -2560 0
+output $monitor pos 0 0
 bindsym $mod+greater move workspace to output right
 bindsym $mod+less move workspace to output left
 
-output eDP-1 pos 0 0
+output eDP-1 pos 2560 0
 
 #
 # Moving around:
