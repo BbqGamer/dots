@@ -1,0 +1,15 @@
+auto-reload yes
+
+text-width 88
+
+bind-key j down
+bind-key k up
+bind-key d pagedown
+bind-key u pageup
+bind-key G end
+bind-key g home
+
+color listfocus black yellow standout bold
+color listnormal_unread blue default
+color listfocus_unread yellow default bold
+color info color246 black bold
