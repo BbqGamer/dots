@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DRIVE_UUID="60de9138-ba67-4862-baf0-4f644fcfe965"
-PATHS_TO_BACKUP="/home/adam/life /home/adam/media /home/adam/studies /home/adam/var/playground"
+PATHS_TO_BACKUP="/home/adam/life /home/adam/media /home/adam/studies /home/adam/var/playground /home/adam/Mail"
 BW_PASS_NAME="TOSHIBA restic backup"
 
 check_drive() {
