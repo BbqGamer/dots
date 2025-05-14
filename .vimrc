@@ -52,6 +52,7 @@ tnoremap <leader><Esc> <C-\><C-n>
 :set number relativenumber
 :set nu rnu
 :set mouse=a
+:set colorcolumn=88
 
 :set expandtab
 :set tabstop=4
