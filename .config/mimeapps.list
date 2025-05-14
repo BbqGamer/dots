@@ -8,3 +8,6 @@ application/xhtml_xml=firefox-esr.desktop;
 image/tiff=feh
 x-scheme-handler/discord-1176718791388975124=discord-1176718791388975124.desktop
 application/lrf=calibre-lrfviewer.desktop
+
+[Added Associations]
+image/png=feh.desktop;display-im6.q16.desktop;firefox-esr.desktop;
