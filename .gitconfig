@@ -1,4 +1,8 @@
 [include]
+    # Put your identity in ~/.gituser
+    #[user]
+    #    name = ...
+    #    email = ...
     path = ~/.gituser
 
 [core]
