@@ -103,6 +103,7 @@ fi
 
 alias c='selected=$(find ~ -maxdepth 3 -type d | fzf) && cd $selected'
 alias d='selected=$(find -maxdepth 3 -type d | fzf) && cd $selected'
+alias o='selected=$(find -maxdepth 4 -type f | fzf) && xdg-open $selected'
 
 export EDITOR=vim
 export FZF_DEFAULT_OPTS='--color=bg+:#5e81ac,gutter:-1,pointer:#d8dee9'
