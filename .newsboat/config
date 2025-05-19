@@ -9,7 +9,19 @@ bind-key u pageup
 bind-key G end
 bind-key g home
 
-color listfocus black yellow standout bold
-color listnormal_unread blue default
-color listfocus_unread yellow default bold
-color info color246 black bold
+color listfocus         black white
+color listfocus_unread  black  white
+
+color info              black yellow
+
+color background        default default
+color article           default default
+
+highlight article "^(Feed|Title|Author|Link|Date): .+" yellow default bold
+highlight article "^(Feed|Title|Author|Link|Date):"    yellow default bold
+
+highlight article "\\((link|image|video)\\)" red default
+highlight article "https?://[^ ]+" red default
+highlight article "\[[0-9]+\]" red default bold
+
+user-agent "Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0"
