@@ -57,7 +57,7 @@ set $left h
 set $down j
 set $up k
 set $right l
-set $term alacritty
+set $term foot
 set $menu fuzzel | xargs swaymsg exec --
 set $suspend systemctl suspend
 set $lock swaylock -f -c 2e3440
