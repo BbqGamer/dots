@@ -127,8 +127,8 @@ bindswitch lid:off output eDP-1 enable
 # Start terminal
 bindsym $mod+Return exec $term
 
-# Kill focused window
-bindsym $mod+Shift+q exec ~/.local/bin/confirm_kill_window
+#Kill focused window
+bindsym $mod+Shift+q exec bash -c '[[ -x ~/.local/bin/confirm_kill_window ]] && exec ~/.local/bin/confirm_kill_window || swaymsg kill'
 
 # Start your launcher
 bindsym $mod+d exec $menu
