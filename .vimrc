@@ -25,6 +25,7 @@ runtime ftplugin/man.vim
 
 nnoremap <C-p> <Nop>
 let mapleader = " "
+let c_no_curly_error=1
 
 colorscheme habamax
 
