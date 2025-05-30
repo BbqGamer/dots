@@ -69,6 +69,10 @@ tnoremap <leader><Esc> <C-\><C-n>
 " reload file when changed
 :set autoread
 
+" load project specific configuration (put settings in .exrc in project root)
+:set exrc
+:set secure
+
 syntax on
 
 map <leader>pr :GFiles<CR>
