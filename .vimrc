@@ -66,6 +66,9 @@ tnoremap <leader><Esc> <C-\><C-n>
 :set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 :set writebackup
 
+" reload file when changed
+:set autoread
+
 syntax on
 
 map <leader>pr :GFiles<CR>
