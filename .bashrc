@@ -102,7 +102,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-alias c='selected=$(find ~ -maxdepth 3 -type d | fzf) && cd $selected'
+alias c='selected=$(find ~ -maxdepth 3 -type d | fzf) && cd "$selected"'
 alias d='selected=$(find -maxdepth 3 -type d | fzf) && cd $selected'
 alias o='selected=$(find -maxdepth 4 -type f | fzf) && xdg-open $selected'
 
