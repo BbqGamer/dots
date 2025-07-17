@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh -f
+#!/usr/bin/env bash
 # Purpose: 	get the RSS feed for a YouTube page
 # Inspired By: 	https://eggfreckles.net/notes/youtube-rss/
 # Gist: 	https://gist.github.com/tjluoma/fdbc63ceb78a2aecd3d638fd18b6ec6e
