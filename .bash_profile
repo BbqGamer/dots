@@ -1,5 +1,10 @@
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
 
 . ~/.bashrc
+
+export ELECTRON_OZONE_PLATFORM_HINT=auto
 
 # >>> juliaup initialize >>>
 
