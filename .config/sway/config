@@ -18,9 +18,6 @@ exec nm-applet --indicator
 set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
 exec rm -f $WOBSOCK && mkfifo $WOBSOCK && tail -f $WOBSOCK | wob
 
-# turn off bluetooth
-exec echo "power off" | bluetoothctl
-
 # Automatic color temperature adjustment
 exec 'wlsunset -l 52.4 -L 16.9'
 
@@ -57,7 +54,7 @@ set $left h
 set $down j
 set $up k
 set $right l
-set $term foot
+set $term alacritty
 set $menu fuzzel | xargs swaymsg exec --
 set $suspend systemctl suspend
 set $lock swaylock -f -c 2e3440
@@ -90,6 +87,9 @@ bar {
     swaybar_command waybar
     position top
 }
+
+bindsym $mod+Shift+b exec pkill waybar || waybar
+bindsym $mod+Shift+i exec choice=$(localectl list-x11-keymap-layouts | fuzzel -d) && swaymsg input type:keyboard xkb_layout $choice
 
 ### KEYBINDINGS
 
