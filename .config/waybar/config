@@ -14,15 +14,14 @@
         "pulseaudio",
         "battery",
     ],
+    "clock": {
+        "format": "{:%H:%M - %d/%m/%Y}"
+    },
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },
     "tray": {
         "spacing": 10
-    },
-    "clock": {
-        "format": "{: %H:%M 󰃭 %d/%m/%Y}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
     "cpu": {
         "interval": 5,
