@@ -1,10 +1,10 @@
 [Default Applications]
-application/pdf=firefox-esr.desktop
-x-scheme-handler/http=firefox-esr.desktop
-x-scheme-handler/https=firefox-esr.desktop
-text/html=firefox-esr.desktop
+application/pdf=firefox.desktop
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
+text/html=firefox.desktop
 application/xhtml+xml=userapp-Firefox-C6XH92.desktop
-application/xhtml_xml=firefox-esr.desktop;
+application/xhtml_xml=firefox.desktop;
 image/tiff=feh
 x-scheme-handler/discord-1176718791388975124=discord-1176718791388975124.desktop
 application/lrf=calibre-lrfviewer.desktop
@@ -16,8 +16,9 @@ application/x-extension-html=userapp-Firefox-C6XH92.desktop
 application/x-extension-shtml=userapp-Firefox-C6XH92.desktop
 application/x-extension-xhtml=userapp-Firefox-C6XH92.desktop
 application/x-extension-xht=userapp-Firefox-C6XH92.desktop
-x-scheme-handler/about=firefox-esr.desktop
-x-scheme-handler/unknown=firefox-esr.desktop
+x-scheme-handler/about=firefox.desktop
+x-scheme-handler/unknown=firefox.desktop
+application/zip=gcr-prompter.desktop
 
 [Added Associations]
 x-scheme-handler/http=userapp-Firefox-C6XH92.desktop;
@@ -30,3 +31,4 @@ application/x-extension-shtml=userapp-Firefox-C6XH92.desktop;
 application/xhtml+xml=userapp-Firefox-C6XH92.desktop;
 application/x-extension-xhtml=userapp-Firefox-C6XH92.desktop;
 application/x-extension-xht=userapp-Firefox-C6XH92.desktop;
+application/zip=xarchiver.desktop;gcr-prompter.desktop;
