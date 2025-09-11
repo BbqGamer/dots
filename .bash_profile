@@ -5,6 +5,9 @@ fi
 . ~/.bashrc
 
 export ELECTRON_OZONE_PLATFORM_HINT=auto
+export QT_QPA_PLATFORM=wayland
+export GDK_BACKEND=wayland
+export XDG_CURRENT_DESKTOP=sway
 
 # >>> juliaup initialize >>>
 
