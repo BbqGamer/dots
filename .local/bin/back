@@ -2,13 +2,7 @@
 
 DRIVE_UUID="60de9138-ba67-4862-baf0-4f644fcfe965"
 
-PATHS_TO_BACKUP=$(cat <<- EOM
-/home/adam/life /home/adam/media /home/adam/studies
-/home/adam/var/playground /home/adam/Mail /home/adam/.abook /home/adam/.mbsyncrc
-EOM
-)
-
-BW_PASS_NAME="TOSHIBA restic backup"
+BACKUP_PATHS=/home/adam
 
 check_drive() {
     lsblk -o UUID,NAME | grep "$DRIVE_UUID" &> /dev/null
@@ -40,11 +34,9 @@ unmount_drive() {
 }
 
 perform_backup() {
+    read -s -p "Enter your password: " restic_pwd
     echo "Performing backup..."
-    bw_session=$(bw unlock --raw || bw login --raw)
-    bw export --session "$bw_session" --format encrypted_json --output "$MOUNT_PATH/bw/"
-    restic_pwd=$(bw get password "$BW_PASS_NAME" --session "$bw_session")
-    echo "$restic_pwd" | restic backup -r "$MOUNT_PATH/restic-backup" $PATHS_TO_BACKUP --exclude 'site-packages'
+    echo "$restic_pwd" | restic backup -r "$MOUNT_PATH/restic-backup" $BACKUP_PATHS --exclude-file ~/.config/restic/exclude
     if [ $? -eq 0 ]; then
         echo "Backup successful."
         return 0
