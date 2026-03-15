@@ -112,7 +112,7 @@ return {
 			{
 				"<leader>pn",
 				function()
-					builtin.find_files({ cwd = vim.fn.stdpath("config") })
+					builtin.find_files({ cwd = vim.fn.stdpath("config"), follow = true})
 				end,
 			},
 			{

@@ -94,4 +94,132 @@ require("lazy").setup({
 	spec = {
 		{ import = "plugins" },
 	},
+	rocks = {
+		enabled = false,  -- Disable luarocks support if you don't need it
+	},
 })
+
+-- LSP Keybindings - Set up when LSP attaches to buffer
+vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
+    callback = function(event)
+        local map = function(keys, func, desc)
+            vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+        end
+
+        -- Jump to definition
+        map('gd', vim.lsp.buf.definition, 'Goto Definition')
+        map('gr', vim.lsp.buf.references, 'Goto References')
+        map('gI', vim.lsp.buf.implementation, 'Goto Implementation')
+        map('gD', vim.lsp.buf.declaration, 'Goto Declaration')
+        map('<leader>D', vim.lsp.buf.type_definition, 'Type Definition')
+        map('<leader>ds', vim.lsp.buf.document_symbol, 'Document Symbols')
+        map('<leader>ws', vim.lsp.buf.workspace_symbol, 'Workspace Symbols')
+
+        -- Hover and signature help
+        map('K', vim.lsp.buf.hover, 'Hover Documentation')
+        map('<C-k>', vim.lsp.buf.signature_help, 'Signature Help')
+
+        -- Code actions and refactoring
+        map('<leader>rn', vim.lsp.buf.rename, 'Rename')
+        map('<leader>ca', vim.lsp.buf.code_action, 'Code Action')
+
+        -- Diagnostic navigation
+        map('[d', vim.diagnostic.goto_prev, 'Previous Diagnostic')
+        map(']d', vim.diagnostic.goto_next, 'Next Diagnostic')
+        map('<leader>e', vim.diagnostic.open_float, 'Show Diagnostic')
+        map('<leader>q', vim.diagnostic.setloclist, 'Diagnostic List')
+
+        -- Formatting
+        map('<leader>f', function()
+            vim.lsp.buf.format({ async = true })
+        end, 'Format')
+
+        -- Highlight references on hover
+        local client = vim.lsp.get_client_by_id(event.data.client_id)
+        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+            local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
+            vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+                buffer = event.buf,
+                group = highlight_augroup,
+                callback = vim.lsp.buf.document_highlight,
+            })
+            vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+                buffer = event.buf,
+                group = highlight_augroup,
+                callback = vim.lsp.buf.clear_references,
+            })
+            vim.api.nvim_create_autocmd('LspDetach', {
+                group = vim.api.nvim_create_augroup('lsp-detach', { clear = true }),
+                callback = function(event2)
+                    vim.lsp.buf.clear_references()
+                    vim.api.nvim_clear_autocmds({ group = 'lsp-highlight', buffer = event2.buf })
+                end,
+            })
+        end
+    end,
+})
+
+-- Configure diagnostic display
+vim.diagnostic.config({
+    virtual_text = true,
+    signs = true,
+    underline = true,
+    update_in_insert = false,
+    severity_sort = true,
+    float = {
+        border = 'rounded',
+        source = 'always',
+    },
+})
+
+-- Configure LSP servers
+vim.lsp.config.pyright = {
+    cmd = { 'pyright-langserver', '--stdio' },
+    filetypes = { 'python' },
+    root_markers = { 'pyproject.toml', 'setup.py', 'setup.cfg', 'requirements.txt', 'pyrightconfig.json', '.git' },
+    settings = {
+        python = {
+            analysis = {
+                autoSearchPaths = true,
+                useLibraryCodeForTypes = true,
+                diagnosticMode = 'workspace',
+            },
+        },
+    },
+}
+
+vim.lsp.config.lua_ls = {
+    cmd = { 'lua-language-server' },
+    filetypes = { 'lua' },
+    root_markers = { '.luarc.json', '.luarc.jsonc', '.luacheckrc', '.stylua.toml', 'stylua.toml', 'selene.toml', 'selene.yml', '.git' },
+    settings = {
+        Lua = {
+            runtime = {
+                version = 'LuaJIT',
+            },
+            workspace = {
+                checkThirdParty = false,
+                library = {
+                    vim.env.VIMRUNTIME,
+                },
+            },
+            completion = {
+                callSnippet = 'Replace',
+            },
+            diagnostics = {
+                globals = { 'vim' },
+            },
+        },
+    },
+}
+
+vim.lsp.config.ts_ls = {
+    cmd = { 'typescript-language-server', '--stdio' },
+    filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+    root_markers = { 'package.json', 'tsconfig.json', 'jsconfig.json', '.git' },
+}
+
+-- Enable LSP servers
+vim.lsp.enable({ 'pyright', 'lua_ls', 'ts_ls' })
+

@@ -1,25 +1,9 @@
 return {
-	"tpope/vim-commentary",
     "tpope/vim-fugitive",
     cmd = {
         "G",
         "Git",
     },
-    {
-		"MeanderingProgrammer/render-markdown.nvim",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		---@module 'render-markdown'
-		---@type render.md.UserConfig
-		opts = {
-			latex = {
-				enabled = true,
-				converter = "latex2text",
-				highlight = "RenderMarkdownMath",
-				top_pad = 0,
-				bottom_pad = 0,
-			},
-		},
-	},
     {
         "stevearc/oil.nvim",
         lazy = false,
@@ -47,15 +31,6 @@ return {
         },
     },
 	"christoomey/vim-tmux-navigator",
-    {
-		"gbprod/nord.nvim",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			require("nord").setup({})
-			vim.cmd.colorscheme("nord")
-		end,
-	},
 	{
 		"lewis6991/gitsigns.nvim",
 		opts = {
