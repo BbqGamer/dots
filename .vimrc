@@ -72,6 +72,7 @@ tnoremap <leader><Esc> <C-\><C-n>
 " load project specific configuration (put settings in .exrc in project root)
 :set exrc
 :set secure
+:set path+=**
 
 syntax on
 
@@ -81,4 +82,9 @@ map <leader>pt :Tags<CR>
 map <leader>pg :RG<CR>
 map <leader>pb :Buffers<CR>
 map <leader>pc :Commits<CR>
+
+let g:netrw_banner=0       " disable annoying banner
+let g:netrw_altv=1         " open horizontal splits (v) to the right
+let g:netrw_alto=1         " open vertical splits (o) to the right
+let g:netrw_liststyle=3    " tree view
 

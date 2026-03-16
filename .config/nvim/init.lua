@@ -1,3 +1,8 @@
+-- Disable unused providers to suppress optional warnings
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
+
 vim.opt.nu = true
 vim.opt.relativenumber = true
 vim.opt.cursorline = true
@@ -137,7 +142,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         -- Highlight references on hover
         local client = vim.lsp.get_client_by_id(event.data.client_id)
-        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+        if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
             local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
                 buffer = event.buf,

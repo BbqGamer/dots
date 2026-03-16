@@ -13,6 +13,7 @@ exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
 exec hash dbus-update-activation-environment 2>/dev/null && \
         dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
 exec nm-applet
+exec copyq --start-server
 
 # Setup wobsock
 set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
@@ -60,9 +61,8 @@ set $suspend systemctl suspend
 set $lock swaylock -f -c 2e3440
 
 ### IDLE
-exec swayidle -w timeout 300 '$lock' \
-    timeout 450 'swaymsg "output * dpms off"' \
-         resume 'swaymsg "output * dpms on"'\
+exec swayidle -w \
+    timeout 300 '$lock' \
     before-sleep '$lock'
 
 # Don't go idle when some app is in fullscren (for example when watching movie)
@@ -82,6 +82,10 @@ client.placeholder      #000000      #000000  #ffffff      #000000       #000000
 client.background       #2e3440
 
 default_border pixel
+
+exec_always {
+    gsettings set org.gnome.desktop.interface gtk-theme 'Nordic-master'
+}
 
 bar {
     swaybar_command waybar
@@ -133,9 +137,9 @@ bindsym $mod+Shift+q exec bash -c '[[ -x ~/.local/bin/confirm_kill_window ]] && 
 # Start your launcher
 bindsym $mod+d exec $menu
 bindsym $mod+p exec passmenu
-bindsym $mod+c exec codemenu
 bindsym $mod+o exec cd && find -maxdepth 4 -not -path '*/.*' | fuzzel -dmenu | xargs -0 xdg-open
 bindsym $mod+i exec pick_emoji
+bindsym $mod+c exec copyq show
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
@@ -257,10 +261,6 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-# Setup sway-notification-center
-exec swaync
-bindsym $mod+Shift+n exec swaync-client -t -sw
-
 # https://github.com/swaywm/sway/issues/4034
 for_window [app_id=".*"] split toggle
 default_orientation vertical
@@ -270,4 +270,5 @@ for_window [app_id="pavucontrol"] floating enable
 for_window [app_id="nm-connection-editor"] floating enable
 for_window [app_id="Bitwarden"] floating enable
 for_window [app_id="Todoist"] floating enable
+for_window [app_id="copyq"] floating enable
 for_window [app_id="thunderbird" title="^(?!.*Thunderbird).*$"] floating enable

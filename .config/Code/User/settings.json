@@ -9,13 +9,13 @@
   "julia.enableTelemetry": false,
   "editor.inlineSuggest.enabled": true,
   "github.copilot.enable": {
-    "*": true,
+    "*": false,
     "plaintext": true,
     "markdown": true,
     "scminput": false,
     "yaml": false,
     "c": true,
-    "python": true,
+    "python": false,
     "java": true,
     "cpp": true,
     "rust": true,
@@ -97,5 +97,37 @@
   "docker.extension.enableComposeLanguageServer": false,
   "explorer.confirmDragAndDrop": false,
   "github.copilot.nextEditSuggestions.enabled": true,
+  "python.analysis.diagnosticsSource": "Pyright",
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportArgumentType": "none",
+    "reportAssignmentType": "none"
+  },
+  "mdb.mcp.server": "autoStartDisabled",
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    },
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "gitlens.ai.model": "vscode",
+  "gitlens.ai.vscode.model": "copilot:gpt-4.1",
+  "chat.mcp.gallery.enabled": true,
+  "chat.mcp.serverSampling": {
+    "GitKraken (bundled with GitLens): GitKraken": {
+      "allowedModels": [
+        "copilot/gpt-5-mini"
+      ]
+    }
+  },
+  "terminal.integrated.suggest.enabled": false,
+  "jupyter.askForKernelRestart": false
 }
 
