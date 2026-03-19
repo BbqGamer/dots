@@ -5,6 +5,17 @@ return {
         "Git",
     },
     {
+      "neanias/everforest-nvim",
+      version = false,
+      lazy = false,
+      priority = 1000,
+      config = function()
+        require("everforest").setup({
+            background = "soft"
+        })
+      end,
+    },
+    {
         "stevearc/oil.nvim",
         lazy = false,
         ---@module 'oil'

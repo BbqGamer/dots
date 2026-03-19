@@ -19,6 +19,7 @@ application/x-extension-xht=userapp-Firefox-C6XH92.desktop
 x-scheme-handler/about=firefox.desktop
 x-scheme-handler/unknown=firefox.desktop
 application/zip=gcr-prompter.desktop
+x-scheme-handler/discord-1216669957799018608=discord-1216669957799018608.desktop
 
 [Added Associations]
 x-scheme-handler/http=userapp-Firefox-C6XH92.desktop;
@@ -32,3 +33,5 @@ application/xhtml+xml=userapp-Firefox-C6XH92.desktop;
 application/x-extension-xhtml=userapp-Firefox-C6XH92.desktop;
 application/x-extension-xht=userapp-Firefox-C6XH92.desktop;
 application/zip=xarchiver.desktop;gcr-prompter.desktop;
+application/ics=thunderbird.desktop;
+image/jpeg=feh.desktop;
