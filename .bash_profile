@@ -4,11 +4,6 @@ fi
 
 . ~/.bashrc
 
-export ELECTRON_OZONE_PLATFORM_HINT=auto
-export QT_QPA_PLATFORM=wayland
-export GDK_BACKEND=wayland
-export XDG_CURRENT_DESKTOP=sway
-
 # >>> juliaup initialize >>>
 
 # !! Contents within this block are managed by juliaup !!
@@ -23,3 +18,8 @@ case ":$PATH:" in
 esac
 
 # <<< juliaup initialize <<<
+
+# Start Sway automatically on TTY1
+if [ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]; then
+    exec sway
+fi
