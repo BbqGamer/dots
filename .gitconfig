@@ -6,7 +6,7 @@
     path = ~/.gituser
 
 [core]
-	editor = vim
+	editor = nvim
 	excludesfile = ~/.config/git/gitignore
 
 [credential]
