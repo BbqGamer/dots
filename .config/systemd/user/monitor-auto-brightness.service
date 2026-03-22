@@ -1,0 +1,9 @@
+[Unit]
+Description=Automatic monitor brightness adjustment
+After=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/monitor-auto-brightness
+StandardOutput=journal
+StandardError=journal

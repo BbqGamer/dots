@@ -1,0 +1,27 @@
+#!/bin/bash
+# Automatic monitor brightness adjustment based on time of day
+# Uses monitor-brightness command: bright (100%), normal (70%), dim (30%)
+
+set -euo pipefail
+
+# Get current hour (24-hour format)
+CURRENT_HOUR=$(date +%H | sed 's/^0//')
+
+# Determine appropriate brightness preset
+if [ "$CURRENT_HOUR" -ge 5 ] && [ "$CURRENT_HOUR" -lt 17 ]; then
+    # Morning/Daytime (6 AM - 5 PM) - bright (100%)
+    PRESET="bright"
+    TIME_PERIOD="daytime"
+elif [ "$CURRENT_HOUR" -ge 17 ] && [ "$CURRENT_HOUR" -lt 21 ]; then
+    # Evening (5 PM - 10 PM) - normal (70%)
+    PRESET="normal"
+    TIME_PERIOD="evening"
+else
+    # Night (9 PM - 5 AM) - dim (30%)
+    PRESET="dim"
+    TIME_PERIOD="night"
+fi
+
+# Apply brightness to all monitors using monitor-brightness command
+echo "$(date '+%Y-%m-%d %H:%M:%S') - Setting all monitors to $PRESET ($TIME_PERIOD mode)"
+~/.local/bin/monitor-brightness "$PRESET"

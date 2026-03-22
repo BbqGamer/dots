@@ -1,0 +1,86 @@
+#!/bin/bash
+# Manual monitor brightness control script for ALL monitors (external + laptop)
+# Usage: monitor-brightness [0-100]
+#   Or:  monitor-brightness dim    (sets to 30%)
+#        monitor-brightness normal (sets to 70%)
+#        monitor-brightness bright (sets to 100%)
+
+set -euo pipefail
+
+# Function to set laptop screen brightness using brightnessctl
+set_laptop_brightness() {
+    local brightness_percent=$1
+    
+    # Set brightness for backlight devices only
+    if brightnessctl --class=backlight --list &>/dev/null; then
+        brightnessctl --class=backlight set "${brightness_percent}%" -q
+        echo "  Laptop screen: ${brightness_percent}%"
+    fi
+}
+
+# Function to set external monitor brightness via DDC
+set_external_brightness() {
+    local brightness_percent=$1
+    
+    # Get list of DDC-capable displays
+    local displays=$(ddcutil detect 2>/dev/null | grep "Display " | wc -l)
+    
+    if [ "$displays" -gt 0 ]; then
+        ddcutil setvcp 10 "$brightness_percent" 2>/dev/null
+        echo "  External monitor(s): ${brightness_percent}%"
+    fi
+}
+
+if [ $# -eq 0 ]; then
+    # Show current brightness for all monitors
+    echo "Current brightness:"
+    echo ""
+    
+    # Show laptop screen brightness
+    if brightnessctl --class=backlight --list &>/dev/null; then
+        current=$(brightnessctl --class=backlight get)
+        max=$(brightnessctl --class=backlight max)
+        laptop_brightness=$((current * 100 / max))
+        echo "  Laptop screen: ${laptop_brightness}%"
+    fi
+    
+    # Show external monitor brightness
+    ext_brightness=$(ddcutil getvcp 10 2>/dev/null | grep -oP 'current value =\s+\K\d+' || echo "")
+    if [ -n "$ext_brightness" ]; then
+        echo "  External monitor: ${ext_brightness}%"
+    fi
+    
+    echo ""
+    echo "Usage: monitor-brightness [0-100|dim|normal|bright]"
+    echo "  dim    = 30%"
+    echo "  normal = 70%"
+    echo "  bright = 100%"
+    exit 0
+fi
+
+case "$1" in
+    dim)
+        BRIGHTNESS=30
+        BACKLIGHT=50
+        ;;
+    normal)
+        BRIGHTNESS=70
+        BACKLIGHT=80
+        ;;
+    bright)
+        BRIGHTNESS=100
+        BACKLIGHT=100
+        ;;
+    [0-9]|[0-9][0-9]|100)
+        BRIGHTNESS=$1
+        ;;
+    *)
+        echo "Error: Invalid brightness value. Use 0-100, dim, normal, or bright"
+        exit 1
+        ;;
+esac
+
+echo "Setting all monitors to ${BRIGHTNESS}%..."
+set_laptop_brightness "$BACKLIGHT"
+set_external_brightness "$BRIGHTNESS"
+echo "Done!"

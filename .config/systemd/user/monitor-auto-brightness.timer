@@ -1,0 +1,10 @@
+[Unit]
+Description=Run monitor brightness adjustment every hour
+Requires=monitor-auto-brightness.service
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+
+[Install]
+WantedBy=timers.target
