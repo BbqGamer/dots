@@ -16,6 +16,7 @@ return {
 				python = { "ruff", "isort", "black" },
 				rust = { "rustfmt", lsp_format = "fallback" },
 				javascript = { "prettier" },
+                typescript = { "prettier" },
 				json = { "prettier" },
 			},
 		},
