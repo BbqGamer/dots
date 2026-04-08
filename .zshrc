@@ -69,3 +69,5 @@ PURE_PROMPT_VICMD_SYMBOL="<"
 autoload -U promptinit; promptinit
 prompt pure
 
+
+. "$HOME/.local/bin/env"
