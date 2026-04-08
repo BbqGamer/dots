@@ -13,7 +13,7 @@ return {
 		opts = {
 			formatters_by_ft = {
 				lua = { "stylua" },
-				python = { "ruff", "isort", "black" },
+				python = { "ruff" },
 				rust = { "rustfmt", lsp_format = "fallback" },
 				javascript = { "prettier" },
                 typescript = { "prettier" },
