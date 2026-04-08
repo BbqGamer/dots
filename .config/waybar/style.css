@@ -69,6 +69,7 @@ window#waybar.chromium {
 #wireplumber,
 #bluetooth,
 #custom-vpn,
+#custom-voxtype,
 #mpd {
     padding: 0 10px;
     margin: 6px 3px; 
@@ -96,6 +97,27 @@ window#waybar.chromium {
 
 #wireplumber {
     background-color: #4c566a;
+}
+
+#custom-voxtype {
+    background-color: #4c566a;
+}
+
+#custom-voxtype.recording {
+    color: #ff5555;
+    animation: blink 1s linear infinite;
+}
+
+#custom-voxtype.transcribing {
+    color: #f1fa8c;
+}
+
+#custom-voxtype.idle {
+    color: #a3be8c;
+}
+
+#custom-voxtype.stopped {
+    color: #6272a4;
 }
 
 #battery {

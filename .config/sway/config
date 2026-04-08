@@ -96,6 +96,10 @@ bar {
 bindsym $mod+Shift+b exec pkill waybar || waybar
 bindsym $mod+Shift+i exec choice=$(localectl list-x11-keymap-layouts | fuzzel -d) && swaymsg input type:keyboard xkb_layout $choice
 
+# voxtype
+bindsym $mod+z exec voxtype record start
+bindsym --release $mod+z exec voxtype record stop
+
 ### KEYBINDINGS
 
 # Volume control (requires wob being setup)
