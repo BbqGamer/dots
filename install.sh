@@ -12,11 +12,7 @@ mkdir -p ~/.zsh
 
 PLUGIN_PATH=$HOME/.zsh
 
-THEME_PATH=$PLUGIN_PATH/pure
-if [ ! -d $THEME_PATH ]; then
-    git clone https://github.com/sindresorhus/pure.git $THEME_PATH
-fi
-
+# Pure is vendored in this repo at .zsh/pure and stowed into ~/.zsh/pure.
 AUTOSUGG_PATH=$PLUGIN_PATH/zsh-autosuggestions
 if [ ! -d $AUTOSUGG_PATH ]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions.git $AUTOSUGG_PATH
