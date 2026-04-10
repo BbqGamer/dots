@@ -61,13 +61,15 @@ path=("$HOME/.opencode/bin" "$HOME/.cargo/bin" $path)
 export PATH
 
 # pure prompt
-fpath+=("$HOME/.zsh/pure")
+if [[ -d "$HOME/.zsh/pure" ]]; then
+    fpath+=("$HOME/.zsh/pure")
 
-PURE_PROMPT_SYMBOL=">"
-PURE_PROMPT_VICMD_SYMBOL="<"
+    PURE_PROMPT_SYMBOL=">"
+    PURE_PROMPT_VICMD_SYMBOL="<"
 
-autoload -U promptinit; promptinit
-prompt pure
+    autoload -U promptinit; promptinit
+    prompt pure
+fi
 
 
-. "$HOME/.local/bin/env"
+[[ -r "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env"
