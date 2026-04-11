@@ -136,6 +136,7 @@ bindswitch lid:off output eDP-1 enable
 
 # Start terminal
 bindsym $mod+Return exec $term
+bindsym $mod+Shift+Return exec $term -e tmux
 
 #Kill focused window
 bindsym $mod+Shift+q exec bash -c '[[ -x ~/.local/bin/confirm_kill_window ]] && exec ~/.local/bin/confirm_kill_window || swaymsg kill'
