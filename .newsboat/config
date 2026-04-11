@@ -25,3 +25,4 @@ highlight article "https?://[^ ]+" red default
 highlight article "\[[0-9]+\]" red default bold
 
 user-agent "Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0"
+browser "firefox --new-tab %u"
