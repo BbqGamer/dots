@@ -66,8 +66,7 @@ window#waybar.chromium {
 #tray,
 #mode,
 #idle_inhibitor,
-#wireplumber,
-#bluetooth,
+#custom-wireplumber,
 #custom-vpn,
 #custom-voxtype,
 #mpd {
@@ -95,7 +94,7 @@ window#waybar.chromium {
     font-weight: bold;
 }
 
-#wireplumber {
+#custom-wireplumber {
     background-color: #4c566a;
 }
 

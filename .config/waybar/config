@@ -12,8 +12,7 @@
         "tray",
         "cpu",
         "memory",
-        "wireplumber",
-        "bluetooth",
+        "custom/wireplumber",
         "battery",
     ],
     "clock": {
@@ -55,16 +54,12 @@
             ""
         ]
     },
-    "wireplumber": {
-        "format": " {volume}%",
-        "format-muted": " muted",
+    "custom/wireplumber": {
+        "exec": "~/.config/waybar/wireplumber_status.sh",
+        "return-type": "json",
+        "interval": 2,
         "on-click": "select-default-audio",
         "on-click-right": "pavucontrol"
-    },
-    "bluetooth": {
-        "format": " {status} {device_alias}",
-        "on-click": "alacritty -e bluetoothctl",
-        "on-click-right": "select-default-audio"
     },
     "battery": {
         "states": {
