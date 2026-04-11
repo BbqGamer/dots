@@ -12,7 +12,8 @@
         "tray",
         "cpu",
         "memory",
-        "pulseaudio",
+        "wireplumber",
+        "bluetooth",
         "battery",
     ],
     "clock": {
@@ -54,14 +55,16 @@
             ""
         ]
     },
-    "pulseaudio": {
+    "wireplumber": {
         "format": " {volume}%",
         "format-muted": " muted",
-        "on-click": "pavucontrol",
+        "on-click": "select-default-audio",
+        "on-click-right": "pavucontrol"
     },
     "bluetooth": {
         "format": " {status} {device_alias}",
-        "on-click": "alacritty -e bluetoothctl"
+        "on-click": "alacritty -e bluetoothctl",
+        "on-click-right": "select-default-audio"
     },
     "battery": {
         "states": {
