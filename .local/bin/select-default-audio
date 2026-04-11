@@ -1,2 +1,63 @@
 #!/usr/bin/env bash
-exec select-default-sink "$@"
+set -euo pipefail
+
+for cmd in fuzzel wpctl jq pw-dump; do
+  command -v "$cmd" >/dev/null 2>&1 || {
+    echo "missing required command: $cmd" >&2
+    exit 1
+  }
+done
+
+node_list() {
+  local kind="$1"
+  pw-dump | jq -r --arg kind "$kind" '
+    .[]
+    | select(.type == "PipeWire:Interface:Node")
+    | select(.info.props["media.class"] == $kind)
+    | [
+        (.id|tostring),
+        (.info.props["node.description"] // .info.props["node.name"] // ("Node " + (.id|tostring)))
+      ]
+    | @tsv
+  ' | sort -k2,2f
+}
+
+menu="$({
+  printf 'clear-both\tClear both defaults (fallback to priorities)\n'
+  printf 'clear-output\tClear output default (fallback to priorities)\n'
+  printf 'clear-input\tClear input default (fallback to priorities)\n'
+  node_list 'Audio/Sink' | while IFS=$'\t' read -r id label; do
+    printf 'set-output:%s\tOUT: %s\n' "$id" "$label"
+  done
+  node_list 'Audio/Source' | while IFS=$'\t' read -r id label; do
+    printf 'set-input:%s\tIN: %s\n' "$id" "$label"
+  done
+  command -v pavucontrol >/dev/null 2>&1 && printf 'pavucontrol\tOpen pavucontrol\n'
+} | fuzzel --dmenu --prompt='audio> ' || true)"
+
+[[ -n "${menu:-}" ]] || exit 0
+key="${menu%%$'\t'*}"
+
+case "$key" in
+  clear-both)
+    wpctl clear-default
+    ;;
+  clear-output)
+    wpctl clear-default 0
+    ;;
+  clear-input)
+    wpctl clear-default 1
+    ;;
+  set-output:*)
+    wpctl set-default "${key#set-output:}"
+    ;;
+  set-input:*)
+    wpctl set-default "${key#set-input:}"
+    ;;
+  pavucontrol)
+    exec pavucontrol
+    ;;
+  *)
+    exit 0
+    ;;
+esac
