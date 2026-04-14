@@ -46,6 +46,23 @@ o() {
     [[ -n "$selected" ]] && xdg-open "$selected"
 }
 
+gco() {
+    local selected type branch
+    selected=$( {
+        git for-each-ref --format='local	%(refname:short)' refs/heads
+        git for-each-ref --format='remote	%(refname:short)' refs/remotes | grep -v '/HEAD$'
+    } | fzf --height 40% --reverse --delimiter=$'\t' --with-nth=2.. --prompt='branch> ' \
+        --preview 'git log --oneline --decorate --graph --max-count=12 --color=always {2}' \
+        --preview-window=right:60%) || return
+
+    IFS=$'\t' read -r type branch <<<"$selected"
+
+    case "$type" in
+        remote) git switch --track -c "${branch#*/}" "$branch" ;;
+        *)      git switch "$branch" ;;
+    esac
+}
+
 export EDITOR=vim
 export FZF_DEFAULT_OPTS='--color=bg+:#5e81ac,gutter:-1,pointer:#d8dee9'
 
