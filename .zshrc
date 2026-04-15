@@ -30,19 +30,19 @@ fi
 
 c() {
     local selected
-    selected=$(find ~ -maxdepth 3 -type d | fzf) || return
+    selected=$(find ~ -maxdepth 3 -type d 2> /dev/null | fzf) || return
     [[ -n "$selected" ]] && cd "$selected"
 }
 
 d() {
     local selected
-    selected=$(find -maxdepth 3 -type d | fzf) || return
+    selected=$(find -maxdepth 3 -type d 2> /dev/null | fzf) || return
     [[ -n "$selected" ]] && cd "$selected"
 }
 
 o() {
     local selected
-    selected=$(find -maxdepth 4 -type f | fzf) || return
+    selected=$(find -maxdepth 4 -type f 2> /dev/null | fzf) || return
     [[ -n "$selected" ]] && xdg-open "$selected"
 }
 
