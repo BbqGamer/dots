@@ -73,6 +73,7 @@ for_window [app_id=".*"] inhibit_idle fullscreen
 ### APPEARANCE
 font pango:Roboto Mono NerdFont 11
 output * bg $polar_dark solid_color
+mouse_warping container
 
 # class                 border	     backgr   text	       indica.	     child_border
 client.focused          $polar_light $frost_4 $storm_light $aurora_green $frost_4
