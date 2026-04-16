@@ -10,6 +10,7 @@
     ],
     "modules-right": [
         "tray",
+        "network#wireless",
         "cpu",
         "memory",
         "custom/wireplumber",
@@ -83,16 +84,15 @@
         "format-ethernet": "{ifname}: {ipaddr}/{cidr} 󰈀",
         "format-linked": "{ifname} (No IP)",
         "format-disconnected": "󰈀",
-        "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "alacritty -e nmtui"
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}"
     },
     "network#wireless": {
-        "interface": "wlp*",
+        "interface": "wl*",
         "format-wifi": "{essid} {icon}",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "󰖪",
         "tooltip-format-wifi": "{ifname}: {ipaddr}/{cidr}\nStrength: {signaldBm} dBm ({signalStrength}%)\nFrequency: {frequency} MHz",
-        "on-click": "alacritty -e nmtui",
+        "on-click": "alacritty -e impala",
         "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"]
     },
     "custom/vpn": {

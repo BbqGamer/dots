@@ -12,7 +12,6 @@ exec dbus-update-activation-environment WAYLAND_DISPLAY
 exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
 exec hash dbus-update-activation-environment 2>/dev/null && \
         dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
-exec nm-applet
 exec copyq --start-server
 exec mako
 
@@ -275,7 +274,6 @@ default_orientation vertical
 
 for_window [app_id="firefox-esr" title="Extension:"] floating enable
 for_window [app_id="pavucontrol"] floating enable
-for_window [app_id="nm-connection-editor"] floating enable
 for_window [app_id="Bitwarden"] floating enable
 for_window [app_id="Todoist"] floating enable
 for_window [app_id="copyq"] floating enable
