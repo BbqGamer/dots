@@ -17,7 +17,7 @@ return {
 						},
 					},
 				},
-				extenstions = {
+				extensions = {
 					["ui-select"] = {
 						require("telescope.themes").get_dropdown({}),
 					},
@@ -49,7 +49,7 @@ return {
                         local function set_cwd()
                             local selection = action_state.get_selected_entry()
                             actions.close(prompt_bufnr)
-                            vim.cmd("cd " .. selection[1])
+					vim.cmd("cd " .. vim.fn.fnameescape(selection[1]))
                             print("Changed directory to: " .. selection[1])
                         end
 

@@ -16,7 +16,7 @@ return {
 				python = { "ruff" },
 				rust = { "rustfmt", lsp_format = "fallback" },
 				javascript = { "prettier" },
-                typescript = { "prettier" },
+				typescript = { "prettier" },
 				json = { "prettier" },
 			},
 		},

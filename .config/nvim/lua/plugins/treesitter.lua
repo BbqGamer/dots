@@ -3,9 +3,16 @@ return {
     build = ":TSUpdate",
     lazy = false,
     config = function()
-        require("nvim-treesitter.config").setup({
-            highlight = { enable = true },
-            auto_install = true,
-        })
+        vim.schedule(function()
+            local ok, configs = pcall(require, "nvim-treesitter.configs")
+            if not ok then
+                return
+            end
+
+            configs.setup({
+                highlight = { enable = true },
+                auto_install = true,
+            })
+        end)
     end,
 }
