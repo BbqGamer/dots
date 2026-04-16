@@ -1,124 +1,99 @@
 ---
 name: commit
-description: 'Execute git commit with conventional commit message analysis, intelligent staging, and message generation. Use when user asks to commit changes, create a git commit, or mentions "/commit". Supports: (1) Auto-detecting type and scope from changes, (2) Generating conventional commit messages from diff, (3) Interactive commit with optional type/scope/description overrides, (4) Intelligent file staging for logical grouping'
+description: 'Create git commits using Conventional Commits. Use when the user asks to commit changes or mentions "/commit". Analyze the diff, stage the right files, and generate a clear commit message.'
 license: MIT
 allowed-tools: Bash
 ---
 
-# Git Commit with Conventional Commits
+# Commit Changes
 
-## Overview
+Create a git commit using the Conventional Commits format.
 
-Create standardized, semantic git commits using the Conventional Commits specification. Analyze the actual diff to determine appropriate type, scope, and message.
+## Format
 
-## Conventional Commit Format
-
-```
+```text
 <type>[optional scope]: <description>
-
-[optional body]
-
-[optional footer(s)]
 ```
 
-## Commit Types
+Add a body or footer only when needed.
 
-| Type       | Purpose                        |
-| ---------- | ------------------------------ |
-| `feat`     | New feature                    |
-| `fix`      | Bug fix                        |
-| `docs`     | Documentation only             |
-| `style`    | Formatting/style (no logic)    |
-| `refactor` | Code refactor (no feature/fix) |
-| `perf`     | Performance improvement        |
-| `test`     | Add/update tests               |
-| `build`    | Build system/dependencies      |
-| `ci`       | CI/config changes              |
-| `chore`    | Maintenance/misc               |
-| `revert`   | Revert commit                  |
+## Types
 
-## Breaking Changes
+- `feat` — new feature
+- `fix` — bug fix
+- `docs` — documentation only
+- `style` — formatting only
+- `refactor` — internal code change without feature or fix
+- `perf` — performance improvement
+- `test` — tests added or updated
+- `build` — build tooling or dependencies
+- `ci` — CI or automation changes
+- `chore` — maintenance work
+- `revert` — revert a previous commit
 
-```
-# Exclamation mark after type/scope
+## Breaking changes
+
+Use `!` for breaking changes:
+
+```text
 feat!: remove deprecated endpoint
+```
 
-# BREAKING CHANGE footer
-feat: allow config to extend other configs
+Or add a footer:
 
-BREAKING CHANGE: `extends` key behavior changed
+```text
+BREAKING CHANGE: explain what changed
 ```
 
 ## Workflow
 
-### 1. Analyze Diff
+### 1. Inspect changes
 
 ```bash
-# If files are staged, use staged diff
-git diff --staged
-
-# If nothing staged, use working tree diff
-git diff
-
-# Also check status
 git status --porcelain
+git diff --staged
+git diff
 ```
 
-### 2. Stage Files (if needed)
+Prefer the staged diff if files are already staged.
 
-If nothing is staged or you want to group changes differently:
+### 2. Stage files if needed
 
 ```bash
-# Stage specific files
-git add path/to/file1 path/to/file2
-
-# Stage by pattern
-git add *.test.*
-git add src/components/*
-
-# Interactive staging
+git add path/to/file
 git add -p
 ```
 
-**Never commit secrets** (.env, credentials.json, private keys).
+Stage only the files that belong in the commit.
 
-### 3. Generate Commit Message
+Never commit secrets such as `.env` files, credentials, or private keys.
 
-Analyze the diff to determine:
+### 3. Choose the message
 
-- **Type**: What kind of change is this?
-- **Scope**: What area/module is affected?
-- **Description**: One-line summary of what changed (present tense, imperative mood, <72 chars)
+Pick:
+- **type** from the diff
+- **scope** if one clear area/module is affected
+- **description** in imperative mood, under 72 characters
 
-### 4. Execute Commit
+Examples:
+- `fix(auth): handle expired session token`
+- `docs: clarify extension setup`
+- `refactor(parser): simplify config loading`
+
+### 4. Commit
 
 ```bash
-# Single line
 git commit -m "<type>[scope]: <description>"
-
-# Multi-line with body/footer
-git commit -m "$(cat <<'EOF'
-<type>[scope]: <description>
-
-<optional body>
-
-<optional footer>
-EOF
-)"
 ```
 
-## Best Practices
+Use a multi-line commit only when extra context is useful.
+
+## Rules
 
 - One logical change per commit
-- Present tense: "add" not "added"
-- Imperative mood: "fix bug" not "fixes bug"
-- Reference issues: `Closes #123`, `Refs #456`
-- Keep description under 72 characters
-
-## Git Safety Protocol
-
-- NEVER update git config
-- NEVER run destructive commands (--force, hard reset) without explicit request
-- NEVER skip hooks (--no-verify) unless user asks
-- NEVER force push to main/master
-- If commit fails due to hooks, fix and create NEW commit (don't amend)
+- Use present-tense imperative wording: `add`, `fix`, `update`
+- Do not change git config
+- Do not use destructive git commands unless the user explicitly asks
+- Do not use `--no-verify` unless the user explicitly asks
+- Do not force-push to `main` or `master`
+- If hooks fail, fix the issue and make a new commit instead of amending
