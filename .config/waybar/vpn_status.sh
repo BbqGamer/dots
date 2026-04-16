@@ -1,10 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
 state=$(piactl get connectionstate)
 
 if [[ "$state" == "Connected" ]]; then
-  REGION=$(piactl get region)
-  echo -n '{"text": "'$REGION'", "class": "connected"}'
+  region=$(piactl get region)
+  printf '{"text":"%s","class":"connected"}\n' "$region"
 else
-  echo -n '{"text": "VPN off", "class": "disconnected"}'
+  printf '{"text":"VPN off","class":"disconnected"}\n'
 fi

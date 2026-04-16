@@ -144,7 +144,7 @@ bindsym $mod+Shift+q exec bash -c '[[ -x ~/.local/bin/confirm_kill_window ]] && 
 # Start your launcher
 bindsym $mod+space exec $menu
 bindsym $mod+p exec passmenu
-bindsym $mod+o exec cd && find -maxdepth 4 -not -path '*/.*' | fuzzel -dmenu | xargs -0 xdg-open
+bindsym $mod+o exec sh -c 'selected=$(find "$HOME" -maxdepth 4 -not -path "*/.*" -type f | fuzzel -dmenu) && [ -n "$selected" ] && xdg-open "$selected"'
 bindsym $mod+i exec pick_emoji
 bindsym $mod+c exec copyq show
 

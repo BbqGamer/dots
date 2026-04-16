@@ -1,6 +1,6 @@
 * {
     border: none;
-    border-radius: 4;
+    border-radius: 4px;
     font-family: "RobotoMono Nerd Font", Helvetica, Arial, sans-serif;
     font-size: 14px;
     min-height: 0;
@@ -17,15 +17,6 @@ window#waybar {
 
 window#waybar.hidden {
     opacity: 0.2;
-}
-
-window#waybar.termite {
-    background-color: #3F3F3F;
-}
-
-window#waybar.chromium {
-    background-color: #000000;
-    border: none;
 }
 
 #workspaces button {

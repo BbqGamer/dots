@@ -13,10 +13,13 @@ fi
 
 autoload -Uz colors compinit
 colors
-compinit
+if [[ -n ${ZSH_COMPDUMP:-} ]]; then
+    compinit -C -d "$ZSH_COMPDUMP"
+else
+    compinit -C
+fi
 
 bindkey -v
-bindkey '^R' history-incremental-search-backward
 bindkey -M viins '^R' history-incremental-search-backward
 bindkey -M vicmd '^R' history-incremental-search-backward
 

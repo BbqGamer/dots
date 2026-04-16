@@ -92,7 +92,7 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
+test -r ~/.dir_colors && eval "$(dircolors -b ~/.dir_colors)"
 
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -103,8 +103,8 @@ if ! shopt -oq posix; then
 fi
 
 alias c='selected=$(find ~ -maxdepth 3 -type d | fzf) && cd "$selected"'
-alias d='selected=$(find -maxdepth 3 -type d | fzf) && cd $selected'
-alias o='selected=$(find -maxdepth 4 -type f | fzf) && xdg-open $selected'
+alias d='selected=$(find -maxdepth 3 -type d | fzf) && cd "$selected"'
+alias o='selected=$(find -maxdepth 4 -type f | fzf) && xdg-open "$selected"'
 
 export EDITOR=nvim
 export FZF_DEFAULT_OPTS='--color=bg+:#5e81ac,gutter:-1,pointer:#d8dee9'
@@ -153,9 +153,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # opencode
-export PATH=/home/adam/.opencode/bin:$PATH
-
-export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.opencode/bin:$HOME/.cargo/bin:$PATH"
 
 # >>> juliaup initialize >>>
 
