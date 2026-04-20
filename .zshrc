@@ -11,12 +11,14 @@ if [[ -z "${debian_chroot:-}" && -r /etc/debian_chroot ]]; then
     debian_chroot="$(</etc/debian_chroot)"
 fi
 
+fpath=("$HOME/.zsh/completions" $fpath)
+
 autoload -Uz colors compinit
 colors
 if [[ -n ${ZSH_COMPDUMP:-} ]]; then
-    compinit -C -d "$ZSH_COMPDUMP"
+    compinit -d "$ZSH_COMPDUMP"
 else
-    compinit -C
+    compinit
 fi
 
 bindkey -v
