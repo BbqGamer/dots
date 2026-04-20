@@ -11,7 +11,11 @@ if [[ -z "${debian_chroot:-}" && -r /etc/debian_chroot ]]; then
     debian_chroot="$(</etc/debian_chroot)"
 fi
 
-fpath=("$HOME/.zsh/completions" $fpath)
+fpath=(
+    "$HOME/.zsh/completions"
+    "$HOME/.zsh/plugins/zsh-completions/src"
+    $fpath
+)
 
 autoload -Uz colors compinit
 colors
