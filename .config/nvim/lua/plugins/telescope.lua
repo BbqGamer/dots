@@ -45,10 +45,12 @@ return {
     "nvim-lua/plenary.nvim",
     { "nvim-tree/nvim-web-devicons", enabled = true },
     "nvim-telescope/telescope-ui-select.nvim",
+    { "nvim-telescope/telescope-live-grep-args.nvim", version = "^1.0.0" },
   },
   opts = function()
     local actions = require("telescope.actions")
     local themes = require("telescope.themes")
+    local lga_actions = require("telescope-live-grep-args.actions")
 
     return {
       defaults = {
@@ -61,6 +63,17 @@ return {
       },
       extensions = {
         ["ui-select"] = themes.get_dropdown({}),
+        live_grep_args = {
+          auto_quoting = false,
+          mappings = {
+            i = {
+              ["<C-k>"] = lga_actions.quote_prompt(),
+              ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+              ["<C-h>"] = lga_actions.quote_prompt({ postfix = " --hidden " }),
+              ["<C-space>"] = lga_actions.to_fuzzy_refine,
+            },
+          },
+        },
       },
     }
   end,
@@ -69,6 +82,7 @@ return {
 
     telescope.setup(opts)
     telescope.load_extension("ui-select")
+    telescope.load_extension("live_grep_args")
   end,
   keys = {
     { "<leader>:", function() require("telescope.builtin").commands() end, desc = "Commands" },
@@ -87,7 +101,13 @@ return {
     { "<leader>ps", function() require("telescope.builtin").lsp_dynamic_workspace_symbols() end, desc = "Workspace symbols" },
     { "<leader>pt", function() require("telescope.builtin").builtin() end, desc = "Telescope pickers" },
     { "<leader>pw", function() require("telescope.builtin").grep_string() end, desc = "Grep word under cursor" },
-    { "<leader>pg", function() require("telescope.builtin").live_grep() end, desc = "Live grep" },
+    {
+      "<leader>pg",
+      function()
+        require("telescope").extensions.live_grep_args.live_grep_args()
+      end,
+      desc = "Live grep with args",
+    },
     {
       "<leader>pG",
       function()
