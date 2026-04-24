@@ -71,7 +71,7 @@ return {
     telescope.load_extension("ui-select")
   end,
   keys = {
-    { "<F1>", function() require("telescope.builtin").commands() end, desc = "Commands" },
+    { "<leader>:", function() require("telescope.builtin").commands() end, desc = "Commands" },
     {
       "<leader>pm",
       function()
