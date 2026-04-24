@@ -28,6 +28,16 @@ local function cwd_picker()
     :find()
 end
 
+local function find_files_with_hidden_last()
+  require("telescope.builtin").find_files({
+    find_command = {
+      "sh",
+      "-c",
+      "rg --files && rg --files --hidden -g '!.git' | awk 'seen[$0]++ == 0'",
+    },
+  })
+end
+
 return {
   "nvim-telescope/telescope.nvim",
   branch = "master",
@@ -72,15 +82,8 @@ return {
     { "<leader>pc", cwd_picker, desc = "Change working directory" },
     { "<leader>ph", function() require("telescope.builtin").help_tags() end, desc = "Help tags" },
     { "<leader>pk", function() require("telescope.builtin").keymaps() end, desc = "Keymaps" },
-    { "<leader>pf", function() require("telescope.builtin").find_files() end, desc = "Find files" },
+    { "<leader>pf", find_files_with_hidden_last, desc = "Find files" },
     { "<leader>pq", function() require("telescope.builtin").quickfix() end, desc = "Quickfix list" },
-    {
-      "<leader>pF",
-      function()
-        require("telescope.builtin").find_files({ hidden = true })
-      end,
-      desc = "Find files (hidden)",
-    },
     { "<leader>ps", function() require("telescope.builtin").lsp_dynamic_workspace_symbols() end, desc = "Workspace symbols" },
     { "<leader>pt", function() require("telescope.builtin").builtin() end, desc = "Telescope pickers" },
     { "<leader>pw", function() require("telescope.builtin").grep_string() end, desc = "Grep word under cursor" },
