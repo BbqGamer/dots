@@ -44,6 +44,7 @@ return {
 
 		return {
 			defaults = {
+				file_ignore_patterns = { "^.git" },
 				mappings = {
 					i = {
 						["<C-j>"] = actions.move_selection_next,
