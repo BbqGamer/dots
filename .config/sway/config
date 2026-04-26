@@ -32,22 +32,21 @@ input type:keyboard {
 
 ### VARIABLES
 # Colors
-set $polar_dark    #2e3440
-set $polar         #3b4252
-set $polar_medium  #434c5e
-set $polar_light   #4c566a
-set $storm_high    #d8dee9
-set $storm         #e5e9f0
-set $storm_light   #eceff4
-set $frost_1       #8fbcbb
-set $frost_2       #88c0d0
-set $frost_3       #81a1c1
-set $frost_4       #5e81ac
-set $aurora_red    #bf616a
-set $aurora_orange #d08770
-set $aurora_yellow #ebcb8b
-set $aurora_green  #a3be8c
-set $aurora_pink   #b48ead
+include /home/adam/dotfiles/kanagawa.sway
+
+set $background        $sumiInk1
+set $background_alt    $sumiInk2
+set $surface           $sumiInk3
+set $border            $sumiInk4
+set $text              $fujiWhite
+set $text_muted        $oldWhite
+set $text_subtle       $fujiGray
+set $accent            $crystalBlue
+set $accent_alt        $waveBlue2
+set $accent_indicator  $springBlue
+set $success           $autumnGreen
+set $warning           $roninYellow
+set $urgent            $samuraiRed
 
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
@@ -58,7 +57,7 @@ set $right l
 set $term alacritty
 set $menu fuzzel | xargs swaymsg exec --
 set $suspend systemctl suspend
-set $lock swaylock -f -c 2e3440
+set $lock swaylock -f -c 1F1F28
 
 ### IDLE
 exec swayidle -w \
@@ -71,22 +70,19 @@ for_window [app_id=".*"] inhibit_idle fullscreen
 
 ### APPEARANCE
 font pango:Roboto Mono NerdFont 11
-output * bg $polar_dark solid_color
+output * bg $background solid_color
 mouse_warping container
 
-# class                 border	     backgr   text	       indica.	     child_border
-client.focused          $polar_light $frost_4 $storm_light $aurora_green $frost_4
-client.focused_inactive $polar_light $polar   #888888      #000000       #000000
-client.unfocused        $polar_light $polar   #ffffff      #000000       #000000
-client.urgent           #ffffff      #ffffff  #000000      #ffffff       #ffffff
-client.placeholder      #000000      #000000  #ffffff      #000000       #000000
-client.background       #2e3440
+# class                 border   background   text         indicator         child_border
+client.focused          $accent  $accent_alt  $text        $warning          $accent
+client.focused_inactive $border  $background  $text_muted  $surface          $border
+client.unfocused        $border  $background  $text_muted  $surface          $border
+client.urgent           $urgent  $urgent      $text        $warning          $urgent
+client.placeholder      $surface $surface     $text_subtle $surface          $surface
+client.background       $background
 
 default_border pixel
 
-exec_always {
-    gsettings set org.gnome.desktop.interface gtk-theme 'Nordic-master'
-}
 
 bar {
     swaybar_command waybar

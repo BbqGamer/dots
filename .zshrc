@@ -29,13 +29,10 @@ bindkey -v
 bindkey -M viins '^R' history-incremental-search-backward
 bindkey -M vicmd '^R' history-incremental-search-backward
 
-if (( ${+commands[dircolors]} )); then
-    [[ -r ~/.dir_colors ]] && eval "$(dircolors -b ~/.dir_colors)"
-    alias ls='ls --color=auto'
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
 
 c() {
     local selected
