@@ -32,7 +32,7 @@ input type:keyboard {
 
 ### VARIABLES
 # Colors
-include /home/adam/dotfiles/.config/sway/themes/kanagawa.sway
+include ~/.config/sway/themes/kanagawa.sway
 
 set $background        $sumiInk1
 set $background_alt    $sumiInk2
@@ -57,7 +57,7 @@ set $right l
 set $term alacritty
 set $menu fuzzel | xargs swaymsg exec --
 set $suspend systemctl suspend
-set $lock swaylock -f -c 1F1F28
+set $lock swaylock -f -C ~/.config/swaylock/config
 
 ### IDLE
 exec swayidle -w \
@@ -70,7 +70,7 @@ for_window [app_id=".*"] inhibit_idle fullscreen
 
 ### APPEARANCE
 font pango:Roboto Mono NerdFont 11
-output * bg $background solid_color
+output * bg ~/.config/backgrounds/hokusai-great-wave.jpg fill
 mouse_warping container
 
 # class                 border   background   text         indicator         child_border
