@@ -103,7 +103,7 @@ bindsym XF86AudioRaiseVolume exec amixer sset Master 5%+ | sed -En 's/.*\[([0-9]
 bindsym XF86AudioLowerVolume exec amixer sset Master 5%- | sed -En 's/.*\[([0-9]+)%\].*/\1/p' | head -1 > $WOBSOCK
 bindsym XF86AudioMute exec amixer sset Master toggle | sed -En '/\[on\]/ s/.*\[([0-9]+)%\].*/\1/ p; /\[off\]/ s/.*/0/p' > $WOBSOCK
 bindsym XF86AudioMicMute exec amixer set Capture toggle
-bindsym $mod+a exec select-default-audio
+bindsym $mod+a exec ~/.local/bin/select-default-audio
 
 # Brightnes control (requires brighnessctl)
 bindsym XF86MonBrightnessDown exec brightnessctl set 5%- | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
@@ -114,7 +114,7 @@ bindsym Print exec grim -g "$(slurp)" -t png - | wl-copy -t image/png
 bindsym Ctrl+Print exec grim -g "$(slurp)" -t png - | swappy -f - -o - | wl-copy -t image/png
 
 # Run scripts
-bindsym $mod+x exec window_switcher
+bindsym $mod+x exec ~/.local/bin/window_switcher
 bindsym Mod4+tab workspace back_and_forth
 
 # Lock screen
@@ -139,7 +139,7 @@ bindsym $mod+Shift+q exec bash -c '[[ -x ~/.local/bin/confirm_kill_window ]] && 
 
 # Start your launcher
 bindsym $mod+space exec $menu
-bindsym $mod+p exec passmenu
+bindsym $mod+p exec ~/.local/bin/passmenu
 bindsym $mod+o exec sh -c 'selected=$(find "$HOME" -maxdepth 4 -not -path "*/.*" -type f | fuzzel -dmenu) && [ -n "$selected" ] && xdg-open "$selected"'
 bindsym $mod+i exec pick_emoji
 bindsym $mod+c exec ~/.local/bin/copyq-fuzzel
