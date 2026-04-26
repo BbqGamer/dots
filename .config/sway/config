@@ -32,7 +32,7 @@ input type:keyboard {
 
 ### VARIABLES
 # Colors
-include /home/adam/dotfiles/kanagawa.sway
+include /home/adam/dotfiles/.config/sway/themes/kanagawa.sway
 
 set $background        $sumiInk1
 set $background_alt    $sumiInk2
