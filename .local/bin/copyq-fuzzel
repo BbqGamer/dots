@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+count=$(copyq count)
+(( count > 0 )) || exit 0
+
+separator=$'\n__COPYQ_FUZZEL_SEPARATOR__\n'
+rows=($(seq 0 $((count - 1))))
+raw=$(copyq separator "$separator" read text/plain "${rows[@]}" 2>/dev/null || true)
+
+items=$(awk -v sep="__COPYQ_FUZZEL_SEPARATOR__" '
+  BEGIN {
+    row = 0
+  }
+
+  $0 == sep {
+    row++
+    next
+  }
+
+  {
+    if (entry[row] != "") {
+      entry[row] = entry[row] " ↵ " $0
+    } else {
+      entry[row] = $0
+    }
+  }
+
+  END {
+    for (i = 0; i <= row; i++) {
+      text = entry[i]
+      gsub(/\r/, "", text)
+      gsub(/\t/, " ", text)
+
+      if (text == "") {
+        text = "[non-text item]"
+      }
+
+      if (length(text) > 120) {
+        text = substr(text, 1, 120)
+      }
+
+      printf "%03d %s\n", i, text
+    }
+  }
+' <<< "$raw")
+
+selection=$(printf '%s\n' "$items" | fuzzel --dmenu -p 'Clipboard: ')
+[[ -n $selection ]] || exit 0
+
+row=${selection%% *}
+copyq select "$row"
