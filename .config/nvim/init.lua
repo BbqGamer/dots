@@ -185,8 +185,8 @@ vim.diagnostic.config({
 })
 
 -- Configure LSP servers
-vim.lsp.config.pyright = {
-	cmd = { "pyright-langserver", "--stdio" },
+vim.lsp.config.basedpyright = {
+	cmd = { "basedpyright-langserver", "--stdio" },
 	filetypes = { "python" },
 	root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "pyrightconfig.json", ".git" },
 	settings = {
@@ -241,4 +241,4 @@ vim.lsp.config.ts_ls = {
 }
 
 -- Enable LSP servers
-vim.lsp.enable({ "pyright", "lua_ls", "ts_ls" })
+vim.lsp.enable({ "basedpyright", "lua_ls", "ts_ls" })
