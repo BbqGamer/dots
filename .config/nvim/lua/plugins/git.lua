@@ -3,7 +3,12 @@ return {
     "NeogitOrg/neogit",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "sindrets/diffview.nvim",
+      {
+          "sindrets/diffview.nvim",
+          cmd = {
+              "DiffviewOpen"
+          }
+      },
       "esmuellert/codediff.nvim",
       "m00qek/baleia.nvim",
       "nvim-telescope/telescope.nvim",
