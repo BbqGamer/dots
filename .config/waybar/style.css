@@ -60,6 +60,7 @@ window#waybar.hidden {
 #idle_inhibitor,
 #custom-wireplumber,
 #custom-vpn,
+#custom-wired,
 #custom-voxtype,
 #mpd {
     padding: 0 10px;
@@ -142,6 +143,11 @@ window#waybar.hidden {
 
 label:focus {
     background-color: #16161D;
+}
+
+#custom-wired {
+    background-color: #2A2A37;
+    color: #7FB4CA;
 }
 
 #network.linked {

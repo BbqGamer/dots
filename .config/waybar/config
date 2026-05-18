@@ -10,6 +10,7 @@
     ],
     "modules-right": [
         "tray",
+        "custom/wired",
         "network#wireless",
         "cpu",
         "memory",
@@ -79,12 +80,10 @@
             ""
         ]
     },
-    "network#wired": {
-        "interface": "enp*",
-        "format-ethernet": "{ifname}: {ipaddr}/{cidr} 󰈀",
-        "format-linked": "{ifname} (No IP)",
-        "format-disconnected": "󰈀",
-        "tooltip-format": "{ifname}: {ipaddr}/{cidr}"
+    "custom/wired": {
+        "exec": "~/.config/waybar/wired_status.sh",
+        "return-type": "json",
+        "interval": 5
     },
     "network#wireless": {
         "interface": "wl*",
