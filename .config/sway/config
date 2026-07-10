@@ -84,6 +84,8 @@ client.background       $background
 default_border pixel
 
 
+exec_always --no-startup-id pkill -x waybar
+
 bar {
     swaybar_command waybar
     position top
