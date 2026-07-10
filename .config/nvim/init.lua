@@ -72,7 +72,7 @@ vim.keymap.set("t", "<C-w>l", "<C-\\><C-n><C-w>l", { silent = true })
 
 vim.keymap.set("t", "<C-h>", "<C-\\><C-n><C-w>h", { silent = true })
 vim.keymap.set("t", "<C-j>", "<C-\\><C-n><C-w>j", { silent = true })
-vim.keymap.set("t", "<C-w>", "<C-\\><C-n><C-w>k", { silent = true })
+vim.keymap.set("t", "<C-k>", "<C-\\><C-n><C-w>k", { silent = true })
 vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l", { silent = true })
 
 -- Moving lines in visual mode
@@ -129,7 +129,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 		-- Hover and signature help
 		map("K", vim.lsp.buf.hover, "Hover Documentation")
-		map("<C-k>", vim.lsp.buf.signature_help, "Signature Help")
+		map("<leader>sh", vim.lsp.buf.signature_help, "Signature Help")
 
 		-- Code actions and refactoring
 		map("<leader>rn", vim.lsp.buf.rename, "Rename")

@@ -61,7 +61,7 @@ set $lock swaylock -f -C ~/.config/swaylock/config
 
 ### IDLE
 exec swayidle -w \
-    timeout 300 '$lock' \
+    timeout 900 '$lock' \
     before-sleep '$lock'
 
 # Don't go idle when some app is in fullscren (for example when watching movie)
@@ -115,6 +115,7 @@ bindsym Ctrl+Print exec grim -g "$(slurp)" -t png - | swappy -f - -o - | wl-copy
 
 # Run scripts
 bindsym $mod+x exec ~/.local/bin/window_switcher
+bindsym $mod+Shift+m exec ~/.local/bin/sway-toggle-mirror
 bindsym Mod4+tab workspace back_and_forth
 
 # Lock screen
