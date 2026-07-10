@@ -233,5 +233,11 @@ vim.lsp.config.ts_ls = {
 	root_markers = { "package.json", "tsconfig.json", "jsconfig.json", ".git" },
 }
 
+vim.lsp.config.clangd = {
+	cmd = { "clangd-20" },
+	filetypes = { "c", "c++" },
+	root_markers = { ".git" },
+}
+
 -- Enable LSP servers
-vim.lsp.enable({ "ty", "lua_ls", "ts_ls" })
+vim.lsp.enable({ "ty", "lua_ls", "ts_ls", "clangd" })
