@@ -81,7 +81,7 @@ export NVM_DIR="$HOME/.nvm"
 [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
 [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
 
-path=("$HOME/.opencode/bin" "$HOME/.cargo/bin" $path)
+path=("$HOME/.local/bin" "$HOME/.opencode/bin" "$HOME/.cargo/bin" $path)
 export PATH
 
 # pure prompt
