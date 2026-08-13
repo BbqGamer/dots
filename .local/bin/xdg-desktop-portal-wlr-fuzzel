@@ -1,0 +1,256 @@
+#!/usr/bin/env python3
+"""Fuzzel chooser for xdg-desktop-portal-wlr screencasts.
+
+xdg-desktop-portal-wlr calls dmenu-style choosers with labels like:
+  Monitor: eDP-1 Built-in display
+  Window: Project - Firefox (<foreign-toplevel-identifier>)
+
+The chooser must print the selected label back exactly.  This wrapper keeps the
+label intact while adding fuzzel sizing and icon metadata.
+"""
+
+from __future__ import annotations
+
+import configparser
+import json
+import os
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+APP_FALLBACK_ICON = "application-x-executable"
+MONITOR_ICON = "video-display"
+
+TITLE_ICON_HINTS = {
+    "alacritty": "Alacritty",
+    "chromium": "chromium",
+    "firefox": "firefox",
+    "google chrome": "google-chrome",
+    "slack": "com.slack.Slack",
+    "telegram": "telegram",
+    "thunderbird": "thunderbird",
+    "visual studio code": "vscode",
+    "zoom": "Zoom",
+}
+
+
+def walk_tree(node):
+    yield node
+    for child in node.get("nodes", []) + node.get("floating_nodes", []):
+        yield from walk_tree(child)
+
+
+def sway_toplevel_app_ids() -> dict[str, str]:
+    """Map ext-foreign-toplevel identifiers to app IDs using Sway's tree."""
+    try:
+        proc = subprocess.run(
+            ["swaymsg", "-t", "get_tree"],
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL,
+            text=True,
+        )
+        tree = json.loads(proc.stdout)
+    except Exception:
+        return {}
+
+    app_ids: dict[str, str] = {}
+    for node in walk_tree(tree):
+        identifier = node.get("foreign_toplevel_identifier")
+        if not identifier:
+            continue
+        app_id = node.get("app_id")
+        if not app_id:
+            app_id = node.get("window_properties", {}).get("class")
+        if app_id:
+            app_ids[str(identifier)] = str(app_id)
+    return app_ids
+
+
+def desktop_icon_index() -> dict[str, str]:
+    """Index desktop files by likely app_id/WM class/name keys."""
+    dirs = [Path("/usr/share/applications")]
+    data_home = Path(os.environ.get("XDG_DATA_HOME", Path.home() / ".local/share"))
+    dirs.append(data_home / "applications")
+    for item in os.environ.get("XDG_DATA_DIRS", "/usr/local/share:/usr/share").split(":"):
+        if item:
+            dirs.append(Path(item) / "applications")
+
+    index: dict[str, str] = {}
+    seen: set[Path] = set()
+    for directory in dirs:
+        if not directory.is_dir() or directory in seen:
+            continue
+        seen.add(directory)
+        for desktop in directory.glob("*.desktop"):
+            parser = configparser.ConfigParser(interpolation=None)
+            parser.optionxform = str  # preserve case
+            try:
+                parser.read(desktop, encoding="utf-8")
+                entry = parser["Desktop Entry"]
+            except Exception:
+                continue
+
+            icon = entry.get("Icon", "").strip()
+            if not icon:
+                continue
+
+            keys = {
+                desktop.stem,
+                entry.get("StartupWMClass", ""),
+                entry.get("Name", ""),
+            }
+            for key in keys:
+                key = key.strip()
+                if key:
+                    index.setdefault(key.lower(), icon)
+    return index
+
+
+def icon_for_app(app_id: str | None, line: str, desktop_icons: dict[str, str]) -> str:
+    if app_id:
+        keys = [app_id, app_id.rsplit(".", 1)[-1]]
+        for key in keys:
+            icon = desktop_icons.get(key.lower())
+            if icon:
+                return icon
+        # Many icon themes use the app_id itself as the icon name.
+        return app_id
+
+    # Last-resort fallback for older/mismatched compositors where we can't map
+    # the portal's toplevel identifier back to a Sway app_id.  Avoid relying on
+    # a hand-maintained list: also match against installed .desktop names,
+    # StartupWMClass values, and desktop-file basenames.
+    lower_line = line.lower()
+    for hint, icon in TITLE_ICON_HINTS.items():
+        if hint in lower_line:
+            return icon
+    for key, icon in sorted(desktop_icons.items(), key=lambda item: len(item[0]), reverse=True):
+        if len(key) >= 4 and key in lower_line:
+            return icon
+    return APP_FALLBACK_ICON
+
+
+def parse_window_identifier(line: str) -> str | None:
+    match = re.search(r" \(([^()]*)\)\s*$", line)
+    return match.group(1) if match else None
+
+
+def icon_for_line(line: str, toplevel_app_ids: dict[str, str], desktop_icons: dict[str, str]) -> str:
+    if line.startswith("Monitor: "):
+        return MONITOR_ICON
+
+    if line.startswith("Window: "):
+        identifier = parse_window_identifier(line)
+        return icon_for_app(
+            toplevel_app_ids.get(identifier or ""),
+            line,
+            desktop_icons,
+        )
+
+    return APP_FALLBACK_ICON
+
+
+def display_for_line(line: str) -> str:
+    if line.startswith("Monitor: "):
+        return line.removeprefix("Monitor: ")
+
+    if line.startswith("Window: "):
+        display = line.removeprefix("Window: ")
+        identifier = parse_window_identifier(line)
+        if identifier:
+            display = display.removesuffix(f" ({identifier})")
+        return display
+
+    return line
+
+
+def append_fuzzel_entry(buffer: bytearray, display: str, icon: str | None = None) -> None:
+    buffer += display.encode("utf-8")
+    if icon:
+        # Rofi/fuzzel extended dmenu protocol: append NUL + metadata only for UI.
+        buffer += b"\0icon\x1f" + icon.encode("utf-8")
+    buffer += b"\n"
+
+
+def main() -> int:
+    lines = sys.stdin.buffer.read().splitlines()
+    if not lines:
+        return 0
+
+    toplevel_app_ids = sway_toplevel_app_ids()
+    desktop_icons = desktop_icon_index()
+
+    monitor_lines: list[bytes] = []
+    window_lines: list[bytes] = []
+    other_lines: list[bytes] = []
+    for raw_line in lines:
+        line = raw_line.decode("utf-8", errors="replace")
+        if line.startswith("Monitor: "):
+            monitor_lines.append(raw_line)
+        elif line.startswith("Window: "):
+            window_lines.append(raw_line)
+        else:
+            other_lines.append(raw_line)
+
+    raw_by_index: list[bytes | None] = []
+    fuzzel_input = bytearray()
+
+    def add_selectable(raw_line: bytes) -> None:
+        line = raw_line.decode("utf-8", errors="replace")
+        raw_by_index.append(raw_line)
+        append_fuzzel_entry(
+            fuzzel_input,
+            display_for_line(line),
+            icon_for_line(line, toplevel_app_ids, desktop_icons),
+        )
+
+    for raw_line in monitor_lines:
+        add_selectable(raw_line)
+    if monitor_lines and window_lines:
+        raw_by_index.append(None)
+        append_fuzzel_entry(fuzzel_input, " ")
+    for raw_line in window_lines + other_lines:
+        add_selectable(raw_line)
+
+    try:
+        proc = subprocess.run(
+            [
+                "fuzzel",
+                "--dmenu",
+                "--index",
+                "--prompt=share> ",
+                "--placeholder=type app, window title, or monitor…",
+                "--lines=12",
+                "--width=100",
+                "--icon-theme=Adwaita",
+                "--counter",
+                "--no-sort",
+                "--layer=overlay",
+            ],
+            input=bytes(fuzzel_input),
+            stdout=subprocess.PIPE,
+        )
+    except FileNotFoundError:
+        return 127
+
+    if proc.returncode != 0:
+        return proc.returncode
+
+    selected = proc.stdout.splitlines()[0] if proc.stdout.splitlines() else b""
+    if not selected:
+        return 0
+
+    try:
+        index = int(selected.decode("ascii"))
+    except ValueError:
+        return 0
+
+    if 0 <= index < len(raw_by_index) and raw_by_index[index] is not None:
+        sys.stdout.buffer.write(raw_by_index[index] + b"\n")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
