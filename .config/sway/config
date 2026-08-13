@@ -128,8 +128,9 @@ bindsym --locked $mod+Shift+End exec $suspend
 # First disable PowerKey in '/etc/systemd/logind.conf' with 'HandlePowerKey=ignore'
 bindsym --locked XF86PowerOff exec $suspend
 
-# Toggle between activation of the main screen (works even when locked)
+# Toggle laptop panel only (works even when locked)
 bindsym --locked $mod+m exec swaymsg output eDP-1 toggle
+bindsym --locked $mod+Ctrl+m exec ~/.local/bin/sway-toggle-all-screens
 bindswitch lid:on output eDP-1 disable
 bindswitch lid:off output eDP-1 enable
 

@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+state_file="${XDG_RUNTIME_DIR:-/tmp}/sway-disabled-outputs"
+
+mapfile -t outputs < <(swaymsg -t get_outputs | jq -r '.[] | select(.active) | .name')
+
+if [[ -f "$state_file" ]]; then
+  mapfile -t restore < "$state_file"
+  if (( ${#restore[@]} > 0 )); then
+    for o in "${restore[@]}"; do
+      swaymsg "output $o enable" >/dev/null
+    done
+  fi
+  rm -f "$state_file"
+else
+  printf '%s
+' "${outputs[@]}" > "$state_file"
+  for o in "${outputs[@]}"; do
+    swaymsg "output $o disable" >/dev/null
+  done
+fi
