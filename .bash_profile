@@ -20,6 +20,8 @@ esac
 # <<< juliaup initialize <<<
 
 # Start Sway automatically on TTY1
-if [ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]; then
-    exec sway
+if [ -z "$WAYLAND_DISPLAY" ] && [ -z "$DISPLAY" ] && [ "${XDG_VTNR:-}" = 1 ]; then
+    export XDG_CURRENT_DESKTOP=sway
+    export XDG_SESSION_TYPE=wayland
+    exec dbus-run-session -- sway
 fi

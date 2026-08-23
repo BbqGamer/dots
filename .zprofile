@@ -9,5 +9,7 @@ export PATH="$PATH:/home/adam/.local/share/coursier/bin"
 # <<< coursier install directory <<<
 
 if [[ -z $WAYLAND_DISPLAY && -z $DISPLAY && $(tty) == /dev/tty1 ]]; then
-  exec sway
+  export XDG_CURRENT_DESKTOP=sway
+  export XDG_SESSION_TYPE=wayland
+  exec dbus-run-session -- sway
 fi
