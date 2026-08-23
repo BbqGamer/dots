@@ -1,0 +1,47 @@
+# mako notification daemon config
+# Lightweight Sway/wlroots-native notifications, themed to match your Kanagawa Sway setup.
+
+font=Roboto Mono NerdFont 10
+anchor=top-right
+layer=overlay
+width=420
+height=160
+outer-margin=10
+margin=8
+padding=12
+border-size=2
+border-radius=8
+
+icons=1
+icon-path=/home/adam/.local/share/icons/hicolor:/usr/share/icons/Adwaita:/usr/share/icons/hicolor:/usr/share/pixmaps
+icon-location=left
+max-icon-size=48
+icon-border-radius=6
+markup=1
+actions=1
+history=1
+max-history=100
+max-visible=5
+sort=-time
+
+# 5 seconds for normal notifications. Critical notifications stay until dismissed.
+default-timeout=5000
+ignore-timeout=0
+
+# Kanagawa-ish colors
+background-color=#1f1f28ee
+text-color=#dcd7ba
+border-color=#7e9cd8
+progress-color=over #7e9cd8
+
+[urgency=low]
+border-color=#54546d
+default-timeout=3000
+
+[urgency=normal]
+border-color=#7e9cd8
+default-timeout=5000
+
+[urgency=high]
+border-color=#c34043
+default-timeout=0
