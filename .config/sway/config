@@ -6,8 +6,7 @@ exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CU
 exec hash dbus-update-activation-environment 2>/dev/null && \
         dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE
 exec copyq --start-server
-
-# Notifications are handled by the user mako.service.
+exec mako
 
 # Setup wobsock
 set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
@@ -77,8 +76,6 @@ client.background       $background
 
 default_border pixel
 
-
-exec_always --no-startup-id pkill -x waybar
 
 bar {
     swaybar_command waybar
