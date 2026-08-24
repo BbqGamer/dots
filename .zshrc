@@ -47,10 +47,15 @@ d() {
     [[ -n "$selected" ]] && cd "$selected"
 }
 
+open() {
+    nohup xdg-open "$@" </dev/null >/dev/null 2>&1 &
+    disown
+}
+
 o() {
     local selected
     selected=$(find -maxdepth 4 -type f 2> /dev/null | fzf) || return
-    [[ -n "$selected" ]] && xdg-open "$selected"
+    [[ -n "$selected" ]] && open "$selected"
 }
 
 gco() {
@@ -110,3 +115,7 @@ path=('/home/adam/.juliaup/bin' $path)
 export PATH
 
 # <<< juliaup initialize <<<
+
+# >>> railway initialize >>>
+source "$HOME/.railway/env"
+# <<< railway initialize <<<

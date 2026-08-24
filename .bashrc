@@ -100,7 +100,13 @@ fi
 
 alias c='selected=$(find ~ -maxdepth 3 -type d | fzf) && cd "$selected"'
 alias d='selected=$(find -maxdepth 3 -type d | fzf) && cd "$selected"'
-alias o='selected=$(find -maxdepth 4 -type f | fzf) && xdg-open "$selected"'
+
+open() {
+    nohup xdg-open "$@" </dev/null >/dev/null 2>&1 &
+    disown
+}
+
+alias o='selected=$(find -maxdepth 4 -type f | fzf) && open "$selected"'
 
 export EDITOR=nvim
 export FZF_DEFAULT_OPTS='--color=bg+:#5e81ac,gutter:-1,pointer:#d8dee9'
