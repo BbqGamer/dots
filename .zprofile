@@ -11,5 +11,5 @@ export PATH="$PATH:/home/adam/.local/share/coursier/bin"
 if [[ -z $WAYLAND_DISPLAY && -z $DISPLAY && $(tty) == /dev/tty1 ]]; then
   export XDG_CURRENT_DESKTOP=sway
   export XDG_SESSION_TYPE=wayland
-  exec dbus-run-session -- sway
+  exec sway
 fi

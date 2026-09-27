@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+save_dir="$HOME/media/screenshots"
+mkdir -p "$save_dir"
+
+stamp="$(date +'%Y%m%d-%H%M%S')"
+path="$save_dir/screenshot-$stamp.png"
+index=1
+while [[ -e "$path" ]]; do
+    path="$save_dir/screenshot-$stamp-$index.png"
+    ((index++))
+done
+
+grim -t png "$path"
+notify-send -a screenshot -t 2500 "Screenshot saved" "$path"

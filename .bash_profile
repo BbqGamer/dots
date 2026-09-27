@@ -23,5 +23,5 @@ esac
 if [ -z "$WAYLAND_DISPLAY" ] && [ -z "$DISPLAY" ] && [ "${XDG_VTNR:-}" = 1 ]; then
     export XDG_CURRENT_DESKTOP=sway
     export XDG_SESSION_TYPE=wayland
-    exec dbus-run-session -- sway
+    exec sway
 fi

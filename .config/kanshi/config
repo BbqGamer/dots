@@ -1,0 +1,11 @@
+# Keep the global desktop origin populated so screenshot overlays work correctly.
+# Output identifiers are manufacturer + model + serial from `swaymsg -t get_outputs`.
+
+profile docked {
+    output "Fujitsu Siemens Computers GmbH P27T-7 LED YV6F012604" enable position 0,0
+    output "Lenovo Group Limited 0x403D Unknown" enable position 2560,0
+}
+
+profile undocked {
+    output "Lenovo Group Limited 0x403D Unknown" enable position 0,0
+}

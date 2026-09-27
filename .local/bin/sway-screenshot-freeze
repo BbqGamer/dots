@@ -1,0 +1,156 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+delay="${1:-0}"
+if [[ ! "$delay" =~ ^[0-9]+$ ]]; then
+    printf 'usage: %s [delay-seconds]\n' "$0" >&2
+    exit 2
+fi
+
+for command in grim slurp swayimg swaymsg jq magick notify-send; do
+    if ! command -v "$command" >/dev/null 2>&1; then
+        notify-send -u critical "Screenshot failed" "Missing required command: $command"
+        exit 1
+    fi
+done
+
+logfile="$HOME/.cache/sway-screenshot-freeze.log"
+mkdir -p "$(dirname "$logfile")"
+: >"$logfile"
+exec 2>>"$logfile"
+printf '[%(%F %T)T] starting with delay=%s\n' -1 "$delay" >&2
+
+workdir="$(mktemp -d "${XDG_RUNTIME_DIR:-/tmp}/screenshot-freeze.XXXXXX")"
+full_image="$workdir/desktop.png"
+selected_image="$workdir/selection.png"
+declare -a viewer_pids=()
+declare -a output_names=()
+declare -a output_x=()
+declare -a output_y=()
+declare -a output_width=()
+declare -a output_height=()
+declare -a overlay_images=()
+
+stop_viewers() {
+    local pid
+    for pid in "${viewer_pids[@]}"; do
+        kill -TERM "$pid" 2>/dev/null || true
+    done
+    for pid in "${viewer_pids[@]}"; do
+        wait "$pid" 2>/dev/null || true
+    done
+    viewer_pids=()
+}
+
+cleanup() {
+    stop_viewers
+    rm -rf "$workdir"
+}
+
+report_error() {
+    local status="$1" line="$2"
+    trap - ERR
+    printf 'failed with status %s at line %s\n' "$status" "$line" >&2
+    notify-send -u critical "Frozen screenshot failed" \
+        "See $logfile for details" || true
+}
+
+trap cleanup EXIT INT TERM
+trap 'report_error "$?" "$LINENO"' ERR
+
+if (( delay > 0 )); then
+    # Notifications do not steal pointer focus, so hover text can be revealed
+    # while the countdown runs.
+    while (( delay > 0 )); do
+        notify-send -a screenshot -r 99173 -t 900 \
+            "Screenshot in $delay" "Position the pointer over the transient UI"
+        sleep 1
+        ((delay--)) || true
+    done
+fi
+
+mapfile -t output_rows < <(
+    swaymsg -t get_outputs -r |
+        jq -r '.[] | select(.active) | [.name, .rect.x, .rect.y, .rect.width, .rect.height] | @tsv'
+)
+for row in "${output_rows[@]}"; do
+    IFS=$'\t' read -r name x y width height <<<"$row"
+    output_names+=("$name")
+    output_x+=("$x")
+    output_y+=("$y")
+    output_width+=("$width")
+    output_height+=("$height")
+done
+
+# Capture before opening Slurp: transient menus, tooltips, and animation frames
+# are now fixed in the source image even if they disappear during selection.
+# With one output, the same PNG is both the crop source and visual overlay,
+# avoiding the redundant second Grim capture.
+if (( ${#output_names[@]} == 1 )); then
+    grim -t png -o "${output_names[0]}" "$full_image"
+    overlay_images+=("$full_image")
+else
+    grim -t png "$full_image"
+    for index in "${!output_names[@]}"; do
+        overlay="$workdir/output-$index.png"
+        grim -t png -o "${output_names[$index]}" "$overlay"
+        overlay_images+=("$overlay")
+    done
+fi
+printf 'captured frozen desktop: %s\n' "$full_image" >&2
+
+# Display each captured output at its exact position and size. The dedicated
+# config removes Swayimg's filename/status text from the frozen frame.
+for index in "${!output_names[@]}"; do
+    appid="screenshot-freeze-$$-$index"
+    swayimg -v -F \
+        -c "$HOME/.config/swayimg/freeze.lua" \
+        -a "$appid" \
+        -P "${output_x[$index]},${output_y[$index]}" \
+        -S "${output_width[$index]},${output_height[$index]}" \
+        "${overlay_images[$index]}" >/dev/null 2>&1 &
+    viewer_pids+=("$!")
+done
+
+# Swayimg usually maps in under 100 ms. Slurp remains above the viewer even if
+# mapping completes during this short grace period.
+sleep 0.1
+
+if [[ -n "${SCREENSHOT_FREEZE_SELECTION:-}" ]]; then
+    # Non-interactive override used by the self-test.
+    selection="$SCREENSHOT_FREEZE_SELECTION"
+else
+    selection="$(slurp -d -f '%x %y %w %h')" || true
+    if [[ -z "$selection" ]]; then
+        printf 'selection cancelled\n' >&2
+        notify-send -a screenshot -t 1500 "Screenshot cancelled" || true
+        exit 0
+    fi
+fi
+read -r selection_x selection_y selection_w selection_h <<<"$selection"
+printf 'selection: x=%s y=%s width=%s height=%s\n' \
+    "$selection_x" "$selection_y" "$selection_w" "$selection_h" >&2
+
+stop_viewers
+
+# Grim lays out the combined image from the top-left active output. Convert
+# Slurp's global coordinates into offsets relative to that image.
+origin="$(
+    swaymsg -t get_outputs -r |
+        jq -r '[.[] | select(.active) | .rect] | ([.[].x] | min) as $x | ([.[].y] | min) as $y | "\($x) \($y)"'
+)"
+read -r origin_x origin_y <<<"$origin"
+crop_x=$((selection_x - origin_x))
+crop_y=$((selection_y - origin_y))
+printf 'crop offset: x=%s y=%s\n' "$crop_x" "$crop_y" >&2
+
+magick "$full_image" \
+    -crop "${selection_w}x${selection_h}+${crop_x}+${crop_y}" \
+    +repage "$selected_image"
+printf 'opening Swappy: %s\n' "$selected_image" >&2
+
+/home/adam/.local/bin/swappy -f "$selected_image" &
+swappy_pid=$!
+sleep 0.2
+swaymsg '[app_id="swappy"] focus' >/dev/null || true
+wait "$swappy_pid"

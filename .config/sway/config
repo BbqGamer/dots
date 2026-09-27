@@ -5,6 +5,8 @@
 exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE
 exec hash dbus-update-activation-environment 2>/dev/null && \
         dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE
+# Apply docked/undocked output positions automatically.
+exec kanshi
 exec copyq --start-server
 exec mako
 
@@ -102,9 +104,15 @@ bindsym $mod+a exec ~/.local/bin/select-default-audio
 bindsym XF86MonBrightnessDown exec brightnessctl set 5%- | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
 bindsym XF86MonBrightnessUp exec brightnessctl set 5%+ | sed -En 's/.*\(([0-9]+)%\).*/\1/p' > $WOBSOCK
 
-# Screenshots (requires grim, slurp, swappy and wl-clipboard)
-bindsym Print exec grim -g "$(slurp)" -t png - | wl-copy -t image/png
-bindsym Ctrl+Print exec grim -g "$(slurp)" -t png - | swappy -f - -o - | wl-copy -t image/png
+# Screenshots (native Wayland tools).
+# Print: select a live region, then annotate; Ctrl+C copies and closes Swappy.
+bindsym Print exec grim -g "$(slurp)" -t png - | /home/adam/.local/bin/swappy -f -
+# Ctrl+Print: freeze immediately, then select from the frozen frame.
+bindsym Ctrl+Print exec /home/adam/.local/bin/sway-screenshot-freeze
+# Ctrl+Shift+Print: three-second countdown, freeze, select, then annotate.
+bindsym Ctrl+Shift+Print exec /home/adam/.local/bin/sway-screenshot-freeze 3
+# Shift+Print: save the whole desktop directly without opening an editor.
+bindsym Shift+Print exec /home/adam/.local/bin/sway-screenshot-full
 
 # Run scripts
 bindsym $mod+x exec ~/.local/bin/window_switcher
@@ -157,11 +165,9 @@ set $monitor "Fujitsu Siemens Computers GmbH P27T-7 LED YV6F012604"
 workspace 1 output $monitor
 workspace 2 output $monitor
 
-output $monitor pos 0 0
+# Output positions are managed by Kanshi profiles.
 bindsym $mod+greater move workspace to output right
 bindsym $mod+less move workspace to output left
-
-output eDP-1 pos 2560 0
 
 #
 # Moving around:
