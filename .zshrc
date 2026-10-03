@@ -34,6 +34,11 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias python='python3'
+alias cw='claude --worktree'
+alias ffmpeg='ffmpeg -hide_banner'
+alias ffprobe='ffprobe -hide_banner'
+alias l='ls -Art'
+alias nvimj='nvim $(date -Idate).md'
 
 c() {
     local selected
@@ -119,3 +124,56 @@ export PATH
 # >>> railway initialize >>>
 source "$HOME/.railway/env"
 # <<< railway initialize <<<
+
+# Added by the Hunk installer (https://hunk.dev)
+export PATH='/home/adam/.hunk/bin':"$PATH"
+
+unalias l 2>/dev/null
+
+if [[ -z ${LS_COLORS-} ]]; then
+    if [[ -f ~/.dircolors ]]; then
+        eval "$(dircolors -b ~/.dircolors)"
+    else
+        eval "$(dircolors -b)"
+    fi
+fi
+export LS_COLORS
+
+l() {
+    local color=never
+    [[ -t 1 ]] && color=always
+
+    command ls -lAhtrgG --time=birth \
+        --time-style='+%d.%m.%y %H:%M' \
+        --quoting-style=escape --color="$color" "$@" |
+    awk -v use_color="$color" '
+        BEGIN {
+            if (use_color == "always") {
+                gray   = "\033[90m"
+                yellow = "\033[33m"
+                orange = "\033[1;38;5;208m"
+                reset  = "\033[0m"
+            }
+        }
+        NR == 1 && $1 == "total" { next }
+        {
+            name = $0
+            sub(/^[^ ]+ +[^ ]+ +[^ ]+ +[^ ]+ +[^ ]+ +/, "", name)
+            sub(/ -> .*$/, "", name)
+
+            size = $3
+            tone = gray
+            if (size ~ /[GTPE]$/)
+                tone = orange
+            else if (size ~ /M$/ && (size + 0) >= 100)
+                tone = yellow
+
+            printf "%s%-7s%s  %s%8s %5s%s  %s\n",
+                tone, size, reset, gray, $4, $5, reset, name
+        }
+    '
+}
+
+zstyle ':completion:*' file-sort modification
+setopt MENU_COMPLETE
+LISTMAX=1000000

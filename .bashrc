@@ -170,4 +170,24 @@ case ":$PATH:" in
         ;;
 esac
 
+unalias l 2>/dev/null
+
+l() {
+    local color=never
+    [[ -t 1 ]] && color=always
+
+    command ls -lAhtrgG --time=birth \
+        --time-style='+%d.%m.%y %H:%M' \
+        --quoting-style=escape --color="$color" "$@" |
+    awk '
+        NR == 1 && $1 == "total" { next }
+        {
+            name = $0
+            sub(/^[^ ]+ +[^ ]+ +[^ ]+ +[^ ]+ +[^ ]+ +/, "", name)
+            sub(/ -> .*$/, "", name)
+            printf "%7s  %8s %5s  %s\n", $3, $4, $5, name
+        }
+    '
+}
+
 # <<< juliaup initialize <<<
