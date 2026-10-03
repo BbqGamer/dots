@@ -6,6 +6,7 @@
     ],
     "modules-center": [
         "clock",
+        "custom/next-event",
         "custom/voxtype"
     ],
     "modules-right": [
@@ -19,6 +20,13 @@
     ],
     "clock": {
         "format": "{:%H:%M - %d/%m/%Y}"
+    },
+    "custom/next-event": {
+        "exec": "~/.config/waybar/next_event.py",
+        "return-type": "json",
+        "interval": 30,
+        "tooltip": true,
+        "on-click": "~/.local/bin/waylandar-dashboard-toggle"
     },
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"

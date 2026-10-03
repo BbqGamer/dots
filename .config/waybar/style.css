@@ -169,3 +169,30 @@ label:focus {
     background-color: #E82424;
     color: #DCD7BA;
 }
+
+/* Next calendar event (custom/next-event, fed by Waylandar's cache) */
+#custom-next-event {
+    padding: 0 10px;
+    margin: 6px 3px;
+    background-color: #2A2A37;
+    color: #DCD7BA;
+}
+
+#custom-next-event.later {
+    color: #727169;
+}
+
+#custom-next-event.soon {
+    color: #16161D;
+    background-color: #C0A36E;
+}
+
+#custom-next-event.now {
+    color: #16161D;
+    background-color: #E46876;
+}
+
+#custom-next-event.stale {
+    color: #727169;
+    font-style: italic;
+}
