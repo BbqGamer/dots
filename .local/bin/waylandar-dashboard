@@ -1,0 +1,4 @@
+#!/bin/sh
+# The QML frontend shells out to `waylandar` (and uv), so make sure ~/.local/bin is on PATH.
+export PATH="$HOME/.local/bin:$PATH"
+exec quickshell -p "$HOME/src/waylandar/frontend/dashboard.qml"

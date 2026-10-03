@@ -1,0 +1,4 @@
+#!/bin/sh
+# Close the month view if it's open, otherwise open it.
+# (Lives in a script so pkill's pattern isn't in this shell's own command line.)
+pkill -f 'quickshell -p .*/frontend/dashboard\.qml' || exec "$HOME/.local/bin/waylandar-dashboard"

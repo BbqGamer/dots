@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+TITLE_PREFIX="__auto_mirror__"
+
+if pgrep -af "wl-mirror.*${TITLE_PREFIX}" >/dev/null; then
+  pkill -f "wl-mirror.*${TITLE_PREFIX}"
+  notify-send "Sway mirror" "Stopped mirroring"
+  exit 0
+fi
+
+outputs_json="$(swaymsg -t get_outputs)"
+
+mapfile -t active_outputs < <(
+  jq -r '.[] | select(.active) | .name' <<<"$outputs_json"
+)
+
+if [ "${#active_outputs[@]}" -lt 2 ]; then
+  notify-send "Sway mirror" "Connect another display first"
+  exit 1
+fi
+
+source_output="$({
+  jq -r '[.[] | select(.active and (.name | test("^(eDP|LVDS)-"))) | .name][0] // empty' <<<"$outputs_json"
+} || true)"
+
+if [ -z "$source_output" ]; then
+  source_output="$({
+    jq -r '[.[] | select(.active and .focused) | .name][0] // empty' <<<"$outputs_json"
+  } || true)"
+fi
+
+if [ -z "$source_output" ]; then
+  source_output="${active_outputs[0]}"
+fi
+
+mapfile -t target_outputs < <(
+  jq -r --arg source "$source_output" '.[] | select(.active and .name != $source) | .name' <<<"$outputs_json"
+)
+
+for target_output in "${target_outputs[@]}"; do
+  wl-mirror --fullscreen-output "$target_output" --title "${TITLE_PREFIX}:${target_output}" "$source_output" >/dev/null 2>&1 &
+done
+
+notify-send "Sway mirror" "Mirroring ${source_output} to ${target_outputs[*]}"

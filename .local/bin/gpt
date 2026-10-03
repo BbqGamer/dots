@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+MODEL="gpt-4.1"
+SYSTEM_PROMPT="You are a helpful coding-assistant, don't write anything except the answer to the user's question"
+PROMPT="$(cat)"
+
+JSON=$(jq -n --arg model "$MODEL" --arg sys "SYSTEM_PROMPT" --arg prompt "$PROMPT" \
+    '{model:$model,messages:[{role:"system",content:$sys}, {role:"user", content:$prompt}]}')
+
+curl https://api.openai.com/v1/chat/completions \
+    -H "Authorization: Bearer $(pass OPENAI_API_KEY)" \
+    --json "$JSON" 2> /dev/null | jq -r ".choices[0].message.content"

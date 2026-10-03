@@ -1,0 +1,2 @@
+mbsync -a
+vdirsyncer sync
