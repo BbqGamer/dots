@@ -1,0 +1,32 @@
+#!/bin/python3
+
+import subprocess
+
+def get_pia_state() -> str:
+    command = "piactl get connectionstate"
+    
+    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    state = process.communicate()[0]
+    return state.decode('utf-8').rstrip()
+
+
+def prompt_wofi_for_connected():
+    options = ["Disconnect", "Change region"]
+    prompt = "\n".join(options).encode('utf-8')
+    command = "wofi -p \"Option for PIA\" -d -i"
+    process = subprocess.Popen(command, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    return process.communicate(input=prompt)[0]
+
+def disconnect_pia():
+    command = "piactl disconnect"
+    process = subprocess.Popen(command, shell=True, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+    return process.communicate()
+
+
+if __name__ == "__main__":
+    state = get_pia_state()
+
+    if state == "Connected":
+        action = prompt_wofi_for_connected()
+        if action == "Disconnect":
+            disconnect_pia()

@@ -1,0 +1,7 @@
+venv
+.swp
+.envrc
+*.wav
+.tools
+.hidden
+tags
