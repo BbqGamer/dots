@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Ad-hoc work lives in ~/scratch/YYYY-MM-DD-name and is reviewed after 30 days.
+#
+#   scratch NAME      create ~/scratch/<today>-NAME and print its path
+#                     (zsh: `s NAME` cds into it, see .zshrc)
+#   scratch           list scratch dirs, oldest first, with age and size
+#   scratch --stale   only the ones untouched for 30+ days
+#
+# For each stale dir decide: promote (scratch-promote: private GitHub repo +
+# move to ~/code), archive (archive-repo -d ~/archive-staging DIR), or rm -r.
+set -euo pipefail
+ROOT=${SCRATCH_ROOT:-$HOME/scratch}
+mkdir -p "$ROOT"
+
+if [ $# -gt 0 ] && [ "$1" != "--stale" ]; then
+    dir="$ROOT/$(date +%F)-$(echo "$*" | tr ' /' '--')"
+    mkdir -p "$dir"
+    echo "$dir"
+    exit
+fi
+
+now=$(date +%s)
+for d in "$ROOT"/*/; do
+    [ -d "$d" ] || continue
+    last=$(find "$d" -xdev \( -name .venv -o -name node_modules -o -name .git \) -prune -o -type f -printf '%T@\n' 2>/dev/null | sort -n | tail -1)
+    last=${last%.*}; last=${last:-$now}
+    days=$(( (now - last) / 86400 ))
+    [ "${1:-}" = "--stale" ] && [ "$days" -lt 30 ] && continue
+    printf '%4sd  %6s  %s\n' "$days" "$(du -sh "$d" 2>/dev/null | cut -f1)" "$(basename "$d")"
+done | sort -rn

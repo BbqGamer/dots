@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Turn a scratch dir into a real project: private GitHub repo + move under ~/code.
+#   scratch-promote [DIR] [REPO_NAME]   (defaults: current dir, its name minus the date)
+set -euo pipefail
+dir=$(realpath "${1:-.}")
+name=${2:-$(basename "$dir" | sed -E 's/^[0-9]{4}-[0-9]{2}-[0-9]{2}-//')}
+cd "$dir"
+[ -d .git ] || { git init -q; git add -A; git commit -qm "Initial commit"; }
+gh repo create "$name" --private --source . --push
+owner=$(gh api user -q .login)
+dest="$HOME/code/github.com/$owner/$name"
+mkdir -p "$(dirname "$dest")"
+mv "$dir" "$dest"
+echo "$dest"

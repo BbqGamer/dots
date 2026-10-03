@@ -1,0 +1,6 @@
+[Unit]
+Description=Report repos with local-only work
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/repo-health --notify

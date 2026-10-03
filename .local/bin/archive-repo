@@ -1,0 +1,126 @@
+#!/usr/bin/env bash
+# Archive git repos (or plain directories) into a compact, restorable form.
+#
+#   archive-repo [-d DEST] [-i] [-p] PATH...
+#     -d DEST  archive root (default: $ARCHIVE_DEST or ./archive)
+#     -i       also keep git-ignored files (data, checkpoints, mlruns), minus
+#              reproducible junk (.venv, node_modules, caches, build dirs)
+#     -p       patch-only: for third-party clones, keep only the remote URL,
+#              base commit and your local changes, not the whole history
+#
+# Output per repo, at DEST/<path relative to $HOME>/:
+#   repo.bundle         all branches + tags + stashes (as refs/archive/stash-N)
+#   uncommitted.patch   tracked changes vs HEAD (readable)
+#   worktree.tar.zst    modified + untracked (non-ignored) files
+#   ignored.tar.zst     with -i only
+#   files.tar.zst       for non-git directories
+#   META                remotes, branches, last commit, what was kept
+#
+# Restore:  GIT_LFS_SKIP_SMUDGE=1 git clone repo.bundle NAME && cd NAME && tar --zstd -xf ../worktree.tar.zst
+#           (stashes: git fetch ../repo.bundle 'refs/archive/*:refs/archive/*')
+set -euo pipefail
+
+DEST=${ARCHIVE_DEST:-./archive}
+WITH_IGNORED=0
+PATCH_ONLY=0
+while getopts "d:ip" opt; do
+    case $opt in
+        d) DEST=$OPTARG ;;
+        i) WITH_IGNORED=1 ;;
+        p) PATCH_ONLY=1 ;;
+        *) sed -n '2,25p' "$0"; exit 2 ;;
+    esac
+done
+shift $((OPTIND - 1))
+[ $# -gt 0 ] || { sed -n '2,25p' "$0"; exit 2; }
+mkdir -p "$DEST"
+DEST=$(realpath "$DEST")
+
+JUNK=(--exclude=.venv --exclude=venv --exclude=node_modules --exclude=__pycache__
+      --exclude=.mypy_cache --exclude=.pytest_cache --exclude=.ruff_cache --exclude=.tox
+      --exclude=target --exclude=.gradle --exclude=.next --exclude=dist --exclude=build
+      --exclude=.claude/worktrees)
+
+tarz() { # tarz OUT (file list on stdin, NUL-separated, relative to cwd)
+    tar --null --no-recursion -T - -cf - | zstd -q -T0 -19 -o "$1"
+}
+
+archive_one() {
+    local src rel out
+    src=$(realpath "$1")
+    rel=${src#"$HOME"/}
+    out="$DEST/$rel"
+    mkdir -p "$out"
+    cd "$src"
+
+    {
+        echo "path:     $rel"
+        echo "archived: $(date -Iseconds)"
+    } > "$out/META"
+
+    if ! git rev-parse --git-dir >/dev/null 2>&1; then
+        tar "${JUNK[@]}" -cf - . | zstd -q -T0 -19 -o "$out/files.tar.zst"
+        echo "type:     directory" >> "$out/META"
+        echo "ok  $rel (directory)"
+        return
+    fi
+
+    local has_commits=0
+    git rev-parse -q --verify HEAD >/dev/null && has_commits=1
+    {
+        echo "type:     git$([ $PATCH_ONLY = 1 ] && echo ' (patch-only)')"
+        git remote -v | awk '$3=="(fetch)"{print "remote:   "$1" "$2}'
+        [ $has_commits = 1 ] && git log -1 --format='head:     %H %cs %s'
+        echo "branches: $(git branch --format='%(refname:short)' | tr '\n' ' ')"
+        echo "stashes:  $(git stash list | wc -l)"
+        echo "dirty:    $(git status --porcelain | wc -l)"
+    } >> "$out/META"
+
+    # tracked changes, readable
+    [ $has_commits = 1 ] && git diff HEAD --binary > "$out/uncommitted.patch"
+    [ -s "$out/uncommitted.patch" ] || rm -f "$out/uncommitted.patch"
+
+    # modified + untracked, non-ignored files that exist
+    git ls-files -z -m -o --exclude-standard | while IFS= read -r -d '' f; do
+        [ -e "$f" ] && [ "$PATCH_ONLY" = 0 -o "$(stat -c%s "$f")" -lt 5000000 ] && printf '%s\0' "$f"
+    done | sort -zu > "$out/.wt"
+    if [ -s "$out/.wt" ]; then tarz "$out/worktree.tar.zst" < "$out/.wt"; fi
+    rm -f "$out/.wt"
+
+    if [ $has_commits = 1 ]; then
+        local n i
+        n=$(git stash list | wc -l)
+        if [ $PATCH_ONLY = 1 ]; then
+            for ((i = 0; i < n; i++)); do git stash show -p --include-untracked "stash@{$i}" > "$out/stash-$i.patch" 2>/dev/null || git stash show -p "stash@{$i}" > "$out/stash-$i.patch"; done
+            if git log --branches --not --remotes --format=%h | grep -q .; then
+                git format-patch -q -o "$out/unpushed" --branches --not --remotes
+            fi
+        else
+            for ((i = 0; i < n; i++)); do git update-ref "refs/archive/stash-$i" "stash@{$i}"; done
+            git bundle create -q "$out/repo.bundle" --all 2>/dev/null
+            for ((i = 0; i < n; i++)); do git update-ref -d "refs/archive/stash-$i"; done
+            git bundle verify -q "$out/repo.bundle" >/dev/null 2>&1
+            # bundles don't carry LFS objects
+            local gd
+            gd=$(git rev-parse --git-common-dir)
+            if [ -d "$gd/lfs/objects" ]; then
+                tar -C "$gd/lfs" -cf - objects | zstd -q -T0 -10 -o "$out/lfs.tar.zst"
+                echo "lfs:      objects in lfs.tar.zst (restore: GIT_LFS_SKIP_SMUDGE=1 git clone, extract into .git/lfs, git lfs checkout)" >> "$out/META"
+            fi
+        fi
+    fi
+
+    if [ $WITH_IGNORED = 1 ]; then
+        git ls-files -z -o -i --exclude-standard --directory \
+            | tar --null -T - "${JUNK[@]}" -cf - 2>/dev/null | zstd -q -T0 -10 -o "$out/ignored.tar.zst"
+        echo "ignored:  kept (minus .venv/node_modules/caches/build)" >> "$out/META"
+    fi
+
+    printf '%s\t%s\t%s\t%s\n' "$rel" "$(git remote get-url origin 2>/dev/null || echo -)" \
+        "$([ $has_commits = 1 ] && git log -1 --format=%cs || echo -)" "$(du -sh "$out" | cut -f1)" >> "$DEST/INDEX.tsv"
+    echo "ok  $rel ($(du -sh "$out" | cut -f1))"
+}
+
+for p in "$@"; do
+    ( archive_one "$p" ) || echo "FAIL $p" >&2
+done

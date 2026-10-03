@@ -177,3 +177,6 @@ l() {
 zstyle ':completion:*' file-sort modification
 setopt MENU_COMPLETE
 LISTMAX=1000000
+
+# scratch dirs: `s name` creates ~/scratch/<date>-name and cds into it
+s() { cd "$(scratch "$@")" || return; }

@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Report git repos that hold work existing only on this machine.
+#   repo-health [--notify] [ROOT...]   (default roots: ~/code ~/scratch)
+# Flags: NOREMOTE, UNPUSHED n, STASH n, DIRTY n (dirty only if untouched 7+ days),
+# IDLE (fully pushed, untouched 90+ days: safe to delete the local clone).
+set -uo pipefail
+NOTIFY=0
+[ "${1:-}" = "--notify" ] && { NOTIFY=1; shift; }
+roots=("$@")
+[ ${#roots[@]} -gt 0 ] || roots=("$HOME/code" "$HOME/scratch")
+
+now=$(date +%s)
+report=$(find "${roots[@]}" -xdev -name .git -prune -not -path '*/node_modules/*' 2>/dev/null | while read -r g; do
+    r=${g%/.git}
+    flags=()
+    # age = last commit/checkout (reflog); `git status` would refresh the index mtime
+    age=$(( (now - $(stat -c %Y "$g/logs/HEAD" 2>/dev/null || stat -c %Y "$g/index" 2>/dev/null || echo "$now")) / 86400 ))
+    if [ -z "$(git -C "$r" remote)" ]; then
+        flags+=(NOREMOTE)
+    else
+        u=$(git -C "$r" log --branches --not --remotes --format=%h | wc -l)
+        [ "$u" -gt 0 ] && flags+=("UNPUSHED $u")
+    fi
+    s=$(git -C "$r" stash list | wc -l)
+    [ "$s" -gt 0 ] && flags+=("STASH $s")
+    d=$(git -C "$r" status --porcelain | wc -l)
+    [ "$d" -gt 0 ] && [ "$age" -ge 7 ] && flags+=("DIRTY $d")
+    [ ${#flags[@]} -eq 0 ] && [ "$age" -ge 90 ] && flags+=(IDLE)
+    [ ${#flags[@]} -gt 0 ] && printf '%-40s %s\n' "$(IFS=,; echo "${flags[*]}")" "${r#"$HOME"/}"
+done | sort)
+
+stale=$(scratch --stale 2>/dev/null)
+[ -n "$stale" ] && report+=$'\n\nScratch dirs untouched 30+ days:\n'"$stale"
+
+if [ -z "${report//[[:space:]]/}" ]; then
+    echo "All clean."
+    exit 0
+fi
+echo "$report"
+if [ $NOTIFY = 1 ]; then
+    n=$(grep -c . <<<"$report")
+    notify-send -u normal "repo-health" "$n item(s) need attention. Run: repo-health"
+fi
