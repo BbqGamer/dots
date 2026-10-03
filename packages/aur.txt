@@ -1,0 +1,16 @@
+# AUR (installed with paru; review PKGBUILD diffs on first install)
+paru-bin
+limine-snapper-sync
+limine-mkinitcpio-hook
+dotool
+voxtype-bin
+visual-studio-code-bin
+google-chrome
+zotero-bin
+bruno-bin
+anydesk-bin
+piavpn-bin
+juliaup
+google-cloud-cli
+rustdesk-bin
+# forticlient        # prefer openfortivpn (official repo); uncomment if the VPN needs the full client

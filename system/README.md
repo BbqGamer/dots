@@ -5,7 +5,7 @@ Run `./install.sh` (add `--ath11k` only if Wi-Fi breaks after suspend).
 
 | File | What |
 |------|------|
-| `etc/interception/udevmon.yaml` | caps2esc: Caps = Esc on tap, Ctrl on hold (needs interception-tools + caps2esc) |
+| `etc/interception/udevmon.yaml` | caps2esc: Caps = Esc on tap, Ctrl on hold (Arch: `interception-tools` + `interception-caps2esc`; the binary is `intercept`) |
 | `usr/local/sbin/set-battery-thresholds` + `battery-charge-thresholds.service` | Charge battery only between 75% and 85% |
 | `usr/local/bin/auto-power-profile` + `.service`/`.timer` + `90-auto-power-profile.rules` | performance on AC, power-saver on battery |
 | `etc/udev/rules.d/80-dotool.rules` | dotool/uinput without root (group `input`) |

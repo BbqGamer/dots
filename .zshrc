@@ -88,8 +88,12 @@ if command -v direnv >/dev/null 2>&1; then
 fi
 
 export NVM_DIR="$HOME/.nvm"
-[[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
-[[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
+if [[ -s "$NVM_DIR/nvm.sh" ]]; then
+    source "$NVM_DIR/nvm.sh"
+    [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
+elif [[ -r /usr/share/nvm/init-nvm.sh ]]; then
+    source /usr/share/nvm/init-nvm.sh   # Arch package
+fi
 
 path=("$HOME/.local/bin" "$HOME/.opencode/bin" "$HOME/.cargo/bin" $path)
 export PATH
@@ -122,7 +126,7 @@ export PATH
 # <<< juliaup initialize <<<
 
 # >>> railway initialize >>>
-source "$HOME/.railway/env"
+[ -r "$HOME/.railway/env" ] && source "$HOME/.railway/env"
 # <<< railway initialize <<<
 
 # Added by the Hunk installer (https://hunk.dev)

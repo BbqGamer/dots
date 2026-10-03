@@ -1,4 +1,4 @@
-. "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 # Cap pytest-xdist "-n auto" so parallel worktree suites don't OOM the laptop
 export PYTEST_XDIST_AUTO_NUM_WORKERS=4

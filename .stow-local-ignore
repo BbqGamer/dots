@@ -4,3 +4,4 @@ LICENSE
 .gitignore
 ^/system
 WORKFLOW.md
+^/packages

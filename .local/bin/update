@@ -1,0 +1,19 @@
+#!/bin/bash
+# Arch update routine. snap-pac snapshots root before and after the transaction,
+# so a bad update is a reboot into the previous snapshot (Limine menu) away.
+set -euo pipefail
+
+echo "== Unread Arch news"
+paru -Pw || true
+read -rp "Anything above that needs manual steps? Continue with the upgrade [y/N] " ok
+[ "$ok" = y ] || exit 0
+
+paru -Syu
+flatpak update -y || true
+
+echo "== Config files with pending .pacnew/.pacsave (merge with: sudo DIFFPROG='nvim -d' pacdiff)"
+pacdiff -o || true
+
+if [ ! -d "/usr/lib/modules/$(uname -r)" ]; then
+    echo "!! Kernel was updated: reboot soon (new modules can't load into the running kernel)."
+fi

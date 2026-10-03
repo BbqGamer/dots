@@ -106,7 +106,7 @@ bindsym XF86MonBrightnessUp exec brightnessctl set 5%+ | sed -En 's/.*\(([0-9]+)
 
 # Screenshots (native Wayland tools).
 # Print: select a live region, then annotate; Ctrl+C copies and closes Swappy.
-bindsym Print exec grim -g "$(slurp)" -t png - | /home/adam/.local/bin/swappy -f -
+bindsym Print exec grim -g "$(slurp)" -t png - | swappy -f -
 # Ctrl+Print: freeze immediately, then select from the frozen frame.
 bindsym Ctrl+Print exec /home/adam/.local/bin/sway-screenshot-freeze
 # Ctrl+Shift+Print: three-second countdown, freeze, select, then annotate.
