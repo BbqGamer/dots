@@ -1,0 +1,9 @@
+[Unit]
+Description=Apply automatic power profile shortly after boot
+
+[Timer]
+OnBootSec=30s
+Unit=auto-power-profile.service
+
+[Install]
+WantedBy=timers.target

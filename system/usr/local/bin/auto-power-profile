@@ -1,0 +1,38 @@
+#!/bin/sh
+set -eu
+
+AC_ONLINE=0
+for supply in /sys/class/power_supply/*; do
+    [ -r "$supply/type" ] || continue
+    [ -r "$supply/online" ] || continue
+
+    if [ "$(cat "$supply/type")" = "Mains" ] && [ "$(cat "$supply/online")" = "1" ]; then
+        AC_ONLINE=1
+        break
+    fi
+done
+
+if [ "$AC_ONLINE" = "1" ]; then
+    TARGET=performance
+    FALLBACK=balanced
+else
+    TARGET=power-saver
+    FALLBACK=balanced
+fi
+
+# power-profiles-daemon may not be ready during early boot/power uevents.
+# Wait briefly, then exit cleanly if profiles are still unavailable.
+i=0
+while [ "$i" -lt 20 ]; do
+    if powerprofilesctl list 2>/dev/null | grep -q "^[ *]*$TARGET:"; then
+        exec powerprofilesctl set "$TARGET"
+    fi
+    i=$((i + 1))
+    sleep 0.25
+done
+
+if powerprofilesctl list 2>/dev/null | grep -q "^[ *]*$FALLBACK:"; then
+    exec powerprofilesctl set "$FALLBACK"
+fi
+
+exit 0

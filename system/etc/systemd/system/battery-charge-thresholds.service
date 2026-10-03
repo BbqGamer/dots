@@ -1,0 +1,11 @@
+[Unit]
+Description=Set ThinkPad battery charge thresholds
+ConditionPathExistsGlob=/sys/class/power_supply/BAT*/charge_*threshold
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/set-battery-thresholds
+
+[Install]
+WantedBy=multi-user.target

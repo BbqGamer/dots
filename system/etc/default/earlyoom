@@ -1,0 +1,7 @@
+# Default settings for earlyoom. This file is sourced by /bin/sh from
+# /etc/init.d/earlyoom or by systemd from earlyoom.service.
+
+# Kill when available RAM < 5% AND free swap < 50% (i.e. >10 GiB of the 20 GiB
+# swap in use — deep thrash territory). Prefer dev-stack processes (pytest
+# workers, node/vite, browsers); never touch the desktop session or editors.
+EARLYOOM_ARGS="-r 3600 -m 5 -s 50 --avoid '(^|/)(sway|waybar|Xwayland|pipewire|pipewire-pulse|wireplumber|systemd|dbus|slack|nvim)' --prefer '(^|/)(pytest|python[0-9.]*|node|chromium|chrome|vite|esbuild)'"

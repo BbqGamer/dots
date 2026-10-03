@@ -1,0 +1,18 @@
+#!/bin/sh
+set -eu
+
+START=75
+STOP=85
+
+for bat in /sys/class/power_supply/BAT*; do
+    [ -d "$bat" ] || continue
+
+    # Newer kernel names
+    [ -w "$bat/charge_control_start_threshold" ] && echo "$START" > "$bat/charge_control_start_threshold"
+    [ -w "$bat/charge_control_end_threshold" ] && echo "$STOP" > "$bat/charge_control_end_threshold"
+
+    # ThinkPad/older compatibility names
+    [ -w "$bat/charge_start_threshold" ] && echo "$START" > "$bat/charge_start_threshold"
+    [ -w "$bat/charge_stop_threshold" ] && echo "$STOP" > "$bat/charge_stop_threshold"
+
+done
