@@ -276,3 +276,7 @@ for_window [app_id="Bitwarden"] floating enable
 for_window [app_id="Todoist"] floating enable
 for_window [app_id="copyq"] floating enable
 for_window [app_id="thunderbird" title="^(?!.*Thunderbird).*$"] floating enable
+
+# Waylandar calendar: agenda widget on the desktop layer, month dashboard on $mod+d (Esc closes)
+exec ~/.local/bin/waylandar-widget
+bindsym $mod+d exec ~/.local/bin/waylandar-dashboard-toggle
