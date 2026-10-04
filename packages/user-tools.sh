@@ -2,9 +2,9 @@
 # Per-user toolchains and CLIs (not system packages). Safe to re-run.
 set -u
 rustup default stable
-cargo install --locked himalaya impala podlet reddix stylua tree-sitter-cli code-radio-cli
+cargo install --locked himalaya impala podlet stylua tree-sitter-cli code-radio-cli
 uv tool install ruff; uv tool install ty; uv tool install basedpyright
-uv tool install aider-chat; uv tool install apyanki; uv tool install ezdxf
+uv tool install apyanki; uv tool install ezdxf
 uv tool install litellm; uv tool install pyzotero; uv tool install zotero-mcp-server
 go install golang.org/x/tools/gopls@latest
 go install honnef.co/go/tools/cmd/staticcheck@latest
