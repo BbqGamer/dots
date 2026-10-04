@@ -156,6 +156,7 @@ restic
 rclone
 syncthing
 snapper
+inotify-tools    # limine-snapper-sync watcher (inotifywait)
 snap-pac
 btrfs-assistant
 limine
