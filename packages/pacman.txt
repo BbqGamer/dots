@@ -202,6 +202,7 @@ docker-buildx
 podman
 qemu-full
 libvirt
+dmidecode        # libvirt optdep (host capabilities)
 virt-manager
 dnsmasq
 kubectl
