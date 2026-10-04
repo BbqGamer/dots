@@ -42,6 +42,46 @@ yt-dlp
 sqlite
 pacman-contrib
 reflector
+bash-completion
+android-tools
+ctags
+bear
+ccache
+entr
+just
+parallel
+moreutils
+cloc
+graphviz
+inotify-tools
+dos2unix
+lsof
+lshw
+usbutils
+dmidecode
+powertop
+radeontop
+mesa-utils
+vulkan-tools
+whois
+traceroute
+openbsd-netcat
+tcpdump
+socat
+sshfs
+unrar
+exfatprogs
+ntfs-3g
+fastfetch
+yamllint
+qpdf
+tesseract
+tesseract-data-eng
+tesseract-data-pol
+rust-analyzer
+opencode
+postgresql      # psql client
+valkey          # redis replacement
 # --- sway desktop
 sway
 swaybg
@@ -83,6 +123,8 @@ qt5-wayland
 qt6-wayland
 adwaita-icon-theme
 gnome-themes-extra
+vulkan-radeon
+upower
 # --- audio / bluetooth
 pipewire
 pipewire-pulse
@@ -95,6 +137,7 @@ easyeffects
 bluez
 bluez-utils
 blueman
+bluez-obex
 # --- fonts
 ttf-firacode-nerd
 ttf-roboto-mono-nerd
@@ -109,6 +152,7 @@ lm_sensors
 s-tui
 fwupd
 smartmontools
+sof-firmware
 interception-tools
 interception-caps2esc
 # --- security
@@ -227,6 +271,8 @@ gthumb
 simple-scan
 cups
 system-config-printer
+cups-browsed
+nss-mdns
 ollama
 whisper-cpp
 anki

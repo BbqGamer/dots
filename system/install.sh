@@ -45,7 +45,7 @@ done
 
 echo
 echo "Done. Not handled here (do manually if needed):"
-echo "  - kernel args: sudo grubby --update-kernel=ALL --args='amdgpu.gpu_recovery=1 amdgpu.dpm=1'"
+echo "  - kernel args: append to KERNEL_CMDLINE[default] in /etc/default/limine (e.g. amdgpu.gpu_recovery=1), then sudo limine-update"
 echo "  - homelab CIFS mount in /etc/fstab (+ cifs-utils, ~/.smbcredentials)"
 echo "  - printer: Brother DCP-J105 (needs Brother's driver)"
 echo "  - re-login for new group membership"

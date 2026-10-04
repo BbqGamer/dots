@@ -1,6 +1,6 @@
 #!/bin/bash
 # Set up dotfiles on a new machine.
-#   ./install.sh              stow dotfiles, zsh + plugins, tmux + plugins
+#   ./install.sh              stow dotfiles, zsh + plugins, tmux
 #   ./install.sh --packages   also install packages/{pacman,aur,flatpak}.txt (Arch)
 set -e
 
@@ -71,10 +71,5 @@ if [ ! -d $SYNTAX_PATH ]; then
 fi
 
 
-# Install tmux and plugins using tpm
+# tmux (.tmux.conf uses no plugins)
 pkg_install tmux
-TPM_PATH=$HOME/.tmux/plugins/tpm
-if [ ! -d $TPM_PATH ]; then
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-fi
-bash ~/.tmux/plugins/tpm/bin/install_plugins

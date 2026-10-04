@@ -8,7 +8,7 @@ A wiped disk costs reinstall time, never work.
 
 | Layer | Where | Source of truth | Lost disk means |
 |-------|-------|-----------------|-----------------|
-| **System** | btrfs `root` subvolume | Fedora + `dotfiles/system/` | reinstall |
+| **System** | btrfs `root` subvolume | Arch + `dotfiles/system/` | reinstall |
 | **Config** | dotfiles in `~` | this repo (public) + `~/.secrets` (private, see below) | `stow`, restore secrets |
 | **Data** | top-level folders in `~` (btrfs `home` subvolume) | the table below | restore from backup |
 

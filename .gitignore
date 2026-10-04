@@ -3,3 +3,5 @@ __pycache__/
 *.bak
 *.bak-*
 *.swp
+.zsh/zsh-autosuggestions/
+.zsh/zsh-syntax-highlighting/
