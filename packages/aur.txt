@@ -1,5 +1,5 @@
 # AUR (installed with paru; review PKGBUILD diffs on first install)
-paru-bin
+paru            # -bin breaks when libalpm bumps soname
 limine-snapper-sync
 limine-mkinitcpio-hook
 dotool
@@ -11,6 +11,5 @@ bruno-bin
 anydesk-bin
 piavpn-bin
 juliaup
-google-cloud-cli
 rustdesk-bin
 # forticlient        # prefer openfortivpn (official repo); uncomment if the VPN needs the full client

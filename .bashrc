@@ -98,6 +98,11 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# __git_ps1: Debian loads it with bash-completion, Arch ships it separately
+if ! type __git_ps1 >/dev/null 2>&1 && [ -f /usr/share/git/completion/git-prompt.sh ]; then
+  . /usr/share/git/completion/git-prompt.sh
+fi
+
 alias c='selected=$(find ~ -maxdepth 3 -type d | fzf) && cd "$selected"'
 alias d='selected=$(find -maxdepth 3 -type d | fzf) && cd "$selected"'
 

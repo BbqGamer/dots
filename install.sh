@@ -30,9 +30,11 @@ if [ "${1:-}" = "--packages" ]; then
     [ -z "$missing" ] || echo "Not in official repos (check names): $missing"
 
     if ! command -v paru >/dev/null; then
+        # built from source: paru-bin breaks whenever libalpm bumps its soname
+        rustup default stable    # cargo comes from rustup (pacman.txt)
         tmp=$(mktemp -d)
-        git clone https://aur.archlinux.org/paru-bin.git "$tmp/paru-bin"
-        (cd "$tmp/paru-bin" && makepkg -si --noconfirm)
+        git clone https://aur.archlinux.org/paru.git "$tmp/paru"
+        (cd "$tmp/paru" && makepkg -si --noconfirm)
         rm -rf "$tmp"
     fi
     # one at a time so a single broken AUR package doesn't block the rest

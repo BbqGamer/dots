@@ -17,11 +17,8 @@ bat
 jq
 yq
 htop
-btop
-ncdu
 lazygit
 lf
-ranger
 direnv
 tree
 unzip
@@ -33,7 +30,6 @@ openssh
 rsync
 man-db
 man-pages
-tldr
 translate-shell
 perl-image-exiftool
 imagemagick
@@ -43,45 +39,25 @@ sqlite
 pacman-contrib
 reflector
 bash-completion
-android-tools
 ctags
-bear
-ccache
-entr
 just
-parallel
 moreutils
 cloc
 graphviz
-inotify-tools
-dos2unix
 lsof
-lshw
 usbutils
-dmidecode
 powertop
-radeontop
-mesa-utils
-vulkan-tools
-whois
 traceroute
 openbsd-netcat
-tcpdump
-socat
 sshfs
 unrar
 exfatprogs
 ntfs-3g
-fastfetch
 yamllint
 qpdf
 tesseract
 tesseract-data-eng
 tesseract-data-pol
-rust-analyzer
-opencode
-postgresql      # psql client
-valkey          # redis replacement
 # --- sway desktop
 sway
 swaybg
@@ -149,7 +125,6 @@ noto-fonts-emoji
 power-profiles-daemon
 earlyoom
 lm_sensors
-s-tui
 fwupd
 smartmontools
 sof-firmware
@@ -173,30 +148,24 @@ openvpn
 wireguard-tools
 tailscale
 cifs-utils
-nfs-utils
 bind
 nmap
 wireshark-qt
 # --- backup / sync
 restic
-borg
 rclone
 syncthing
-unison
 snapper
 snap-pac
 btrfs-assistant
 limine
 # --- mail / pim
-neomutt
 notmuch
 isync
-offlineimap
 khard
 vdirsyncer
 calcurse
 newsboat
-weechat
 w3m
 # --- dev
 python
@@ -211,18 +180,15 @@ r
 gcc
 clang
 llvm
-lldb
 gdb
-valgrind
 strace
-ltrace
 cmake
 meson
 ninja
 zig
 lua-language-server
+typescript-language-server
 pyright
-bash-language-server
 shellcheck
 texlive-basic
 texlive-latexextra
@@ -238,7 +204,6 @@ libvirt
 virt-manager
 dnsmasq
 kubectl
-helm
 k9s
 minikube
 opentofu
@@ -248,7 +213,6 @@ firefox
 chromium
 thunderbird
 telegram-desktop
-keepassxc
 bitwarden
 element-desktop
 obsidian
