@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 # Archive git repos (or plain directories) into a compact, restorable form.
 #
-#   archive-repo [-d DEST] [-i] [-p] PATH...
+#   archive-repo [-d DEST] [-i] [-p] [-s MB] PATH...
 #     -d DEST  archive root (default: $ARCHIVE_DEST or ./archive)
 #     -i       also keep git-ignored files (data, checkpoints, mlruns), minus
 #              reproducible junk (.venv, node_modules, caches, build dirs)
 #     -p       patch-only: for third-party clones, keep only the remote URL,
 #              base commit and your local changes, not the whole history
+#     -s MB    skip untracked files bigger than MB (listed in META as skipped);
+#              patch-only mode always skips files over 5 MB
 #
 # Output per repo, at DEST/<path relative to $HOME>/:
 #   repo.bundle         all branches + tags + stashes (as refs/archive/stash-N)
@@ -23,11 +25,13 @@ set -euo pipefail
 DEST=${ARCHIVE_DEST:-./archive}
 WITH_IGNORED=0
 PATCH_ONLY=0
-while getopts "d:ip" opt; do
+MAX_MB=0
+while getopts "d:ips:" opt; do
     case $opt in
         d) DEST=$OPTARG ;;
         i) WITH_IGNORED=1 ;;
         p) PATCH_ONLY=1 ;;
+        s) MAX_MB=$OPTARG ;;
         *) sed -n '2,25p' "$0"; exit 2 ;;
     esac
 done
@@ -81,8 +85,15 @@ archive_one() {
     [ -s "$out/uncommitted.patch" ] || rm -f "$out/uncommitted.patch"
 
     # modified + untracked, non-ignored files that exist
+    local max=0
+    [ "$PATCH_ONLY" = 1 ] && max=5000000
+    [ "$MAX_MB" -gt 0 ] && max=$((MAX_MB * 1048576))
     git ls-files -z -m -o --exclude-standard | while IFS= read -r -d '' f; do
-        [ -e "$f" ] && [ "$PATCH_ONLY" = 0 -o "$(stat -c%s "$f")" -lt 5000000 ] && printf '%s\0' "$f"
+        [ -e "$f" ] || continue
+        if [ "$max" -gt 0 ] && [ "$(stat -c%s "$f")" -gt "$max" ]; then
+            echo "skipped:  $f ($(du -h "$f" | cut -f1))" >> "$out/META"; continue
+        fi
+        printf '%s\0' "$f"
     done | sort -zu > "$out/.wt"
     if [ -s "$out/.wt" ]; then tarz "$out/worktree.tar.zst" < "$out/.wt"; fi
     rm -f "$out/.wt"

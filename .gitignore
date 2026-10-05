@@ -5,3 +5,10 @@ __pycache__/
 *.swp
 .zsh/zsh-autosuggestions/
 .zsh/zsh-syntax-highlighting/
+# secrets live in ~/.secrets, never here
+.config/gh/hosts.yml
+.pi/agent/auth.json
+.pi/agent/models-store.json
+.pi/agent/mcp*.json
+.pi/loops/
+.pi/tasks/
