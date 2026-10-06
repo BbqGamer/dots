@@ -194,6 +194,10 @@ shellcheck
 texlive-basic
 texlive-latexextra
 texlive-fontsextra
+texlive-fontsrecommended
+texlive-xetex          # xelatex (resume)
+otf-latin-modern
+otf-latinmodern-math
 pandoc-cli
 # --- containers / cloud
 docker
