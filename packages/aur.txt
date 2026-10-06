@@ -12,4 +12,5 @@ anydesk-bin
 piavpn-bin
 juliaup
 rustdesk-bin
+herdr-bin
 # forticlient        # prefer openfortivpn (official repo); uncomment if the VPN needs the full client
